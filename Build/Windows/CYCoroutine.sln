@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CYCoroutine", "CYCoroutine.vcxproj", "{8CEB26E4-5EDD-4466-8089-E7AF9CFDA215}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A60A423B-B1DC-468F-9F49-D29817C5930D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CYCoroutineTest", "..\..\Example\CYCoroutineTest\CYCoroutineTest.vcxproj", "{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8CEB26E4-5EDD-4466-8089-E7AF9CFDA215}.Debug|x64.ActiveCfg = Debug|x64
+		{8CEB26E4-5EDD-4466-8089-E7AF9CFDA215}.Debug|x64.Build.0 = Debug|x64
+		{8CEB26E4-5EDD-4466-8089-E7AF9CFDA215}.Debug|x86.ActiveCfg = Debug|Win32
+		{8CEB26E4-5EDD-4466-8089-E7AF9CFDA215}.Debug|x86.Build.0 = Debug|Win32
+		{8CEB26E4-5EDD-4466-8089-E7AF9CFDA215}.Release|x64.ActiveCfg = Release|x64
+		{8CEB26E4-5EDD-4466-8089-E7AF9CFDA215}.Release|x64.Build.0 = Release|x64
+		{8CEB26E4-5EDD-4466-8089-E7AF9CFDA215}.Release|x86.ActiveCfg = Release|Win32
+		{8CEB26E4-5EDD-4466-8089-E7AF9CFDA215}.Release|x86.Build.0 = Release|Win32
+		{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}.Debug|x64.ActiveCfg = Debug|x64
+		{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}.Debug|x64.Build.0 = Debug|x64
+		{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}.Debug|x86.ActiveCfg = Debug|Win32
+		{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}.Debug|x86.Build.0 = Debug|Win32
+		{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}.Release|x64.ActiveCfg = Release|x64
+		{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}.Release|x64.Build.0 = Release|x64
+		{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}.Release|x86.ActiveCfg = Release|Win32
+		{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19} = {A60A423B-B1DC-468F-9F49-D29817C5930D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D9543A32-EA1D-48FB-BD5B-80A7E082D506}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{15a04061-353e-4d2d-a858-944c6642fba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{19ddf4b8-d7a9-475e-8564-b6b145c88784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine">
+      <UniqueIdentifier>{b8ca2a71-f7f0-4ec5-a54a-7360dc4bc826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Executors">
+      <UniqueIdentifier>{6baa9e38-1934-4209-8666-d523ebb7745b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Results">
+      <UniqueIdentifier>{0b8d6592-ff0b-4049-9504-c604432f01a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Results\Impl">
+      <UniqueIdentifier>{db35d27b-18a2-4f5c-9377-268c6e9f6866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Timers">
+      <UniqueIdentifier>{a74950f7-25ce-44f9-b014-f86982c8bb0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Threads">
+      <UniqueIdentifier>{e311bd6c-4554-49e6-8cb6-3d4b9a81c15d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Executors">
+      <UniqueIdentifier>{3409f72b-a4d6-4906-b098-de6b4b6d2993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Results">
+      <UniqueIdentifier>{3bdf7daa-e2fa-40c7-b5d5-e708f932501c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Results\Impl">
+      <UniqueIdentifier>{b73ae67c-690f-4996-8624-6a39b73758a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Threads">
+      <UniqueIdentifier>{6751651c-c5d3-4f83-84a6-052e44bc2f63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Timers">
+      <UniqueIdentifier>{7935702e-3860-49be-a05c-4c96fadaaff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Common">
+      <UniqueIdentifier>{02bdd4a1-42da-43b5-9947-b9493881a5de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Task">
+      <UniqueIdentifier>{41c8c98f-cfa3-4b49-b9de-f8641c6a2ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Task">
+      <UniqueIdentifier>{a5b19128-7369-4930-9860-2fbd6696818d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common">
+      <UniqueIdentifier>{f8245adb-2979-41ad-b57f-c1cd3d74b5ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Engine">
+      <UniqueIdentifier>{a144df6a-668a-4186-92e9-98a295c37e2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Engine">
+      <UniqueIdentifier>{09fb9a79-bd4b-4385-b83e-319093df46ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Common\Exception">
+      <UniqueIdentifier>{662b4459-582c-4220-a4f5-f9cc4d455780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Common\Message">
+      <UniqueIdentifier>{579934af-afe1-477e-a563-93a37ae9b135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Common\Structure">
+      <UniqueIdentifier>{f4e7d106-48c1-49a8-9afd-4708f5a2011e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\CYCoroutine\Common\Time">
+      <UniqueIdentifier>{b177d517-4c3c-4bec-9477-e807f04f768b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common\Exception">
+      <UniqueIdentifier>{c0ac3071-e90e-48f1-b885-df13c180468c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common\Message">
+      <UniqueIdentifier>{7ebc33c4-983b-4deb-8f28-7d8b807b0461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common\Time">
+      <UniqueIdentifier>{36ff6e63-a798-438d-8ee0-d3bb9aa53c98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Common\Structure">
+      <UniqueIdentifier>{5956808c-27ec-4ecb-8e1a-2dbc0dbac748}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Executors\CYDerivableExecutor.hpp">
+      <Filter>Inc\CYCoroutine\Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Executors\CYExecutor.hpp">
+      <Filter>Inc\CYCoroutine\Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Executors\CYInlineExecutor.hpp">
+      <Filter>Inc\CYCoroutine\Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Executors\CYManualExecutor.hpp">
+      <Filter>Inc\CYCoroutine\Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Executors\CYThreadExecutor.hpp">
+      <Filter>Inc\CYCoroutine\Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Executors\CYThreadPoolExecutor.hpp">
+      <Filter>Inc\CYCoroutine\Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Executors\CYWorkerThreadExecutor.hpp">
+      <Filter>Inc\CYCoroutine\Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYGenerator.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYLazyResult.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYLazyResultAwaitable.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYMakeResult.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYPromises.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYResult.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYResultAwaitable.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYResumeOn.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYSharedResult.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYSharedResultAwaitable.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYWhenResult.hpp">
+      <Filter>Inc\CYCoroutine\Results</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYConsumerContext.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYGeneratorState.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYLazyResultState.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYProducerContext.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYResultState.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYReturnValueStruct.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYSharedResultState.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\threads\CYAsyncCondition.hpp">
+      <Filter>Inc\CYCoroutine\Threads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\threads\CYAsyncLock.hpp">
+      <Filter>Inc\CYCoroutine\Threads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\threads\CYCacheLine.hpp">
+      <Filter>Inc\CYCoroutine\Threads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\threads\CYThread.hpp">
+      <Filter>Inc\CYCoroutine\Threads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\CYCoroutine.hpp">
+      <Filter>Inc\CYCoroutine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\CYCoroutineDefine.hpp">
+      <Filter>Inc\CYCoroutine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Common\CYBind.hpp">
+      <Filter>Inc\CYCoroutine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Common\CYList.hpp">
+      <Filter>Inc\CYCoroutine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Timers\CYTimer.hpp">
+      <Filter>Inc\CYCoroutine\Timers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Timers\CYTimerQueue.hpp">
+      <Filter>Inc\CYCoroutine\Timers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Task\CYTask.hpp">
+      <Filter>Inc\CYCoroutine\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Engine\CYCoroutineEngine.hpp">
+      <Filter>Inc\CYCoroutine\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Engine\CYCoroutineEngineDefine.hpp">
+      <Filter>Inc\CYCoroutine\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Engine\CYExecutorCollection.hpp">
+      <Filter>Src\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\CYCoroutinePrivDefine.hpp">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Executors\CYExecutorDefine.hpp">
+      <Filter>Src\Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\CYTypeDefine.hpp">
+      <Filter>Inc\CYCoroutine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Exception\CYBaseException.hpp">
+      <Filter>Inc\CYCoroutine\Common\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Exception\CYException.hpp">
+      <Filter>Inc\CYCoroutine\Common\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Message\CYBaseMessage.hpp">
+      <Filter>Inc\CYCoroutine\Common\Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Time\CYTimeStamps.hpp">
+      <Filter>Inc\CYCoroutine\Common\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Structure\CYStringUtils.hpp">
+      <Filter>Inc\CYCoroutine\Common\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Common\CYDebugString.hpp">
+      <Filter>Inc\CYCoroutine\Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Src\Executors\CYExecutor.cpp">
+      <Filter>Src\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Executors\CYManualExecutor.cpp">
+      <Filter>Src\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Executors\CYThreadExecutor.cpp">
+      <Filter>Src\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Executors\CYThreadPoolExecutor.cpp">
+      <Filter>Src\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Executors\CYWorkerThreadExecutor.cpp">
+      <Filter>Src\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Results\Impl\CYConsumerContext.cpp">
+      <Filter>Src\Results\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Results\Impl\CYResultState.cpp">
+      <Filter>Src\Results\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Results\Impl\CYSharedResultState.cpp">
+      <Filter>Src\Results\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Timers\CYTimer.cpp">
+      <Filter>Src\Timers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Timers\CYTimerQueue.cpp">
+      <Filter>Src\Timers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Threads\CYAsyncCondition.cpp">
+      <Filter>Src\Threads</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Threads\CYAsyncLock.cpp">
+      <Filter>Src\Threads</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Threads\CYThread.cpp">
+      <Filter>Src\Threads</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Task\CYTask.cpp">
+      <Filter>Src\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Engine\CYCoroutineEngine.cpp">
+      <Filter>Src\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Engine\CYExecutorCollection.cpp">
+      <Filter>Src\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Engine\CYCoroutineEngineDefine.cpp">
+      <Filter>Src\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Executors\CYInlineExecutor.cpp">
+      <Filter>Src\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\Exception\CYBaseException.cpp">
+      <Filter>Src\Common\Exception</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\Message\CYBaseMessage.cpp">
+      <Filter>Src\Common\Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\Time\CYTimeStamps.cpp">
+      <Filter>Src\Common\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\CYDebugString.cpp">
+      <Filter>Src\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Common\Structure\CYStringUtils.cpp">
+      <Filter>Src\Common\Structure</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

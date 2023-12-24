@@ -1,0 +1,798 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9BEF8A812B383FBE00D6D12D /* CYTimer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A222B383FBE00D6D12D /* CYTimer.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A822B383FBE00D6D12D /* CYTimerQueue.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A232B383FBE00D6D12D /* CYTimerQueue.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A832B383FBE00D6D12D /* CYCoroutineDefine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A242B383FBE00D6D12D /* CYCoroutineDefine.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A842B383FBE00D6D12D /* CYTypeDefine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A252B383FBE00D6D12D /* CYTypeDefine.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A852B383FBE00D6D12D /* CYGeneratorState.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A282B383FBE00D6D12D /* CYGeneratorState.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A862B383FBE00D6D12D /* CYSharedResultState.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A292B383FBE00D6D12D /* CYSharedResultState.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A872B383FBE00D6D12D /* CYResultState.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A2A2B383FBE00D6D12D /* CYResultState.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A882B383FBE00D6D12D /* CYConsumerContext.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A2B2B383FBE00D6D12D /* CYConsumerContext.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A892B383FBE00D6D12D /* CYProducerContext.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A2C2B383FBE00D6D12D /* CYProducerContext.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A8A2B383FBE00D6D12D /* CYLazyResultState.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A2D2B383FBE00D6D12D /* CYLazyResultState.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A8B2B383FBE00D6D12D /* CYReturnValueStruct.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A2E2B383FBE00D6D12D /* CYReturnValueStruct.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A8C2B383FBE00D6D12D /* CYSharedResultAwaitable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A2F2B383FBE00D6D12D /* CYSharedResultAwaitable.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A8D2B383FBE00D6D12D /* CYPromises.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A302B383FBE00D6D12D /* CYPromises.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A8E2B383FBE00D6D12D /* CYLazyResult.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A312B383FBE00D6D12D /* CYLazyResult.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A8F2B383FBE00D6D12D /* CYLazyResultAwaitable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A322B383FBE00D6D12D /* CYLazyResultAwaitable.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A902B383FBE00D6D12D /* CYSharedResult.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A332B383FBE00D6D12D /* CYSharedResult.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A912B383FBE00D6D12D /* CYGenerator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A342B383FBE00D6D12D /* CYGenerator.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A922B383FBE00D6D12D /* CYResult.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A352B383FBE00D6D12D /* CYResult.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A932B383FBE00D6D12D /* CYWhenResult.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A362B383FBE00D6D12D /* CYWhenResult.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A942B383FBE00D6D12D /* CYResultAwaitable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A372B383FBE00D6D12D /* CYResultAwaitable.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A952B383FBE00D6D12D /* CYResumeOn.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A382B383FBE00D6D12D /* CYResumeOn.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A962B383FBE00D6D12D /* CYMakeResult.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A392B383FBE00D6D12D /* CYMakeResult.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A972B383FBE00D6D12D /* CYList.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A3B2B383FBE00D6D12D /* CYList.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A982B383FBE00D6D12D /* CYBaseMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A3D2B383FBE00D6D12D /* CYBaseMessage.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A992B383FBE00D6D12D /* CYTimeStamps.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A3F2B383FBE00D6D12D /* CYTimeStamps.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A9A2B383FBE00D6D12D /* CYStringUtils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A412B383FBE00D6D12D /* CYStringUtils.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A9B2B383FBE00D6D12D /* CYException.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A432B383FBE00D6D12D /* CYException.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A9C2B383FBE00D6D12D /* CYBaseException.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A442B383FBE00D6D12D /* CYBaseException.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A9D2B383FBE00D6D12D /* CYDebugString.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A452B383FBE00D6D12D /* CYDebugString.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A9E2B383FBE00D6D12D /* CYBind.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A462B383FBE00D6D12D /* CYBind.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8A9F2B383FBE00D6D12D /* CYCacheLine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A482B383FBE00D6D12D /* CYCacheLine.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA02B383FBE00D6D12D /* CYThread.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A492B383FBE00D6D12D /* CYThread.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA12B383FBE00D6D12D /* CYAsyncCondition.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A4A2B383FBE00D6D12D /* CYAsyncCondition.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA22B383FBE00D6D12D /* CYAsyncLock.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A4B2B383FBE00D6D12D /* CYAsyncLock.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA32B383FBE00D6D12D /* CYThreadExecutor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A4D2B383FBE00D6D12D /* CYThreadExecutor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA42B383FBE00D6D12D /* CYDerivableExecutor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A4E2B383FBE00D6D12D /* CYDerivableExecutor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA52B383FBE00D6D12D /* CYExecutor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A4F2B383FBE00D6D12D /* CYExecutor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA62B383FBE00D6D12D /* CYManualExecutor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A502B383FBE00D6D12D /* CYManualExecutor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA72B383FBF00D6D12D /* CYWorkerThreadExecutor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A512B383FBE00D6D12D /* CYWorkerThreadExecutor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA82B383FBF00D6D12D /* CYInlineExecutor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A522B383FBE00D6D12D /* CYInlineExecutor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AA92B383FBF00D6D12D /* CYThreadPoolExecutor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A532B383FBE00D6D12D /* CYThreadPoolExecutor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AAA2B383FBF00D6D12D /* CYTask.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A552B383FBE00D6D12D /* CYTask.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AAB2B383FBF00D6D12D /* CYCoroutine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A562B383FBE00D6D12D /* CYCoroutine.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AAC2B383FBF00D6D12D /* CYCoroutineEngineDefine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A582B383FBE00D6D12D /* CYCoroutineEngineDefine.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AAD2B383FBF00D6D12D /* CYCoroutineEngine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A592B383FBE00D6D12D /* CYCoroutineEngine.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AAE2B383FBF00D6D12D /* CYTimerQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A5C2B383FBE00D6D12D /* CYTimerQueue.cpp */; };
+		9BEF8AAF2B383FBF00D6D12D /* CYTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A5D2B383FBE00D6D12D /* CYTimer.cpp */; };
+		9BEF8AB02B383FBF00D6D12D /* CYSharedResultState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A602B383FBE00D6D12D /* CYSharedResultState.cpp */; };
+		9BEF8AB12B383FBF00D6D12D /* CYConsumerContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A612B383FBE00D6D12D /* CYConsumerContext.cpp */; };
+		9BEF8AB22B383FBF00D6D12D /* CYResultState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A622B383FBE00D6D12D /* CYResultState.cpp */; };
+		9BEF8AB32B383FBF00D6D12D /* CYDebugString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A642B383FBE00D6D12D /* CYDebugString.cpp */; };
+		9BEF8AB42B383FBF00D6D12D /* CYBaseMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A662B383FBE00D6D12D /* CYBaseMessage.cpp */; };
+		9BEF8AB52B383FBF00D6D12D /* CYTimeStamps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A682B383FBE00D6D12D /* CYTimeStamps.cpp */; };
+		9BEF8AB62B383FBF00D6D12D /* CYStringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A6A2B383FBE00D6D12D /* CYStringUtils.cpp */; };
+		9BEF8AB72B383FBF00D6D12D /* CYBaseException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A6C2B383FBE00D6D12D /* CYBaseException.cpp */; };
+		9BEF8AB82B383FBF00D6D12D /* CYAsyncLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A6E2B383FBE00D6D12D /* CYAsyncLock.cpp */; };
+		9BEF8AB92B383FBF00D6D12D /* CYAsyncCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A6F2B383FBE00D6D12D /* CYAsyncCondition.cpp */; };
+		9BEF8ABA2B383FBF00D6D12D /* CYThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A702B383FBE00D6D12D /* CYThread.cpp */; };
+		9BEF8ABB2B383FBF00D6D12D /* CYThreadPoolExecutor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A722B383FBE00D6D12D /* CYThreadPoolExecutor.cpp */; };
+		9BEF8ABC2B383FBF00D6D12D /* CYInlineExecutor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A732B383FBE00D6D12D /* CYInlineExecutor.cpp */; };
+		9BEF8ABD2B383FBF00D6D12D /* CYWorkerThreadExecutor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A742B383FBE00D6D12D /* CYWorkerThreadExecutor.cpp */; };
+		9BEF8ABE2B383FBF00D6D12D /* CYExecutor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A752B383FBE00D6D12D /* CYExecutor.cpp */; };
+		9BEF8ABF2B383FBF00D6D12D /* CYManualExecutor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A762B383FBE00D6D12D /* CYManualExecutor.cpp */; };
+		9BEF8AC02B383FBF00D6D12D /* CYExecutorDefine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A772B383FBE00D6D12D /* CYExecutorDefine.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AC12B383FBF00D6D12D /* CYThreadExecutor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A782B383FBE00D6D12D /* CYThreadExecutor.cpp */; };
+		9BEF8AC22B383FBF00D6D12D /* CYTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A7A2B383FBE00D6D12D /* CYTask.cpp */; };
+		9BEF8AC32B383FBF00D6D12D /* CYExecutorCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A7C2B383FBE00D6D12D /* CYExecutorCollection.cpp */; };
+		9BEF8AC42B383FBF00D6D12D /* CYCoroutineEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A7D2B383FBE00D6D12D /* CYCoroutineEngine.cpp */; };
+		9BEF8AC52B383FBF00D6D12D /* CYCoroutineEngineDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEF8A7E2B383FBE00D6D12D /* CYCoroutineEngineDefine.cpp */; };
+		9BEF8AC62B383FBF00D6D12D /* CYExecutorCollection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A7F2B383FBE00D6D12D /* CYExecutorCollection.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		9BEF8AC72B383FBF00D6D12D /* CYCoroutinePrivDefine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9BEF8A802B383FBE00D6D12D /* CYCoroutinePrivDefine.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9BEF88C52B38326E00D6D12D /* libCYCoroutine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libCYCoroutine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9BEF8A222B383FBE00D6D12D /* CYTimer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYTimer.hpp; sourceTree = "<group>"; };
+		9BEF8A232B383FBE00D6D12D /* CYTimerQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYTimerQueue.hpp; sourceTree = "<group>"; };
+		9BEF8A242B383FBE00D6D12D /* CYCoroutineDefine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYCoroutineDefine.hpp; sourceTree = "<group>"; };
+		9BEF8A252B383FBE00D6D12D /* CYTypeDefine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYTypeDefine.hpp; sourceTree = "<group>"; };
+		9BEF8A282B383FBE00D6D12D /* CYGeneratorState.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYGeneratorState.hpp; sourceTree = "<group>"; };
+		9BEF8A292B383FBE00D6D12D /* CYSharedResultState.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYSharedResultState.hpp; sourceTree = "<group>"; };
+		9BEF8A2A2B383FBE00D6D12D /* CYResultState.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYResultState.hpp; sourceTree = "<group>"; };
+		9BEF8A2B2B383FBE00D6D12D /* CYConsumerContext.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYConsumerContext.hpp; sourceTree = "<group>"; };
+		9BEF8A2C2B383FBE00D6D12D /* CYProducerContext.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYProducerContext.hpp; sourceTree = "<group>"; };
+		9BEF8A2D2B383FBE00D6D12D /* CYLazyResultState.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYLazyResultState.hpp; sourceTree = "<group>"; };
+		9BEF8A2E2B383FBE00D6D12D /* CYReturnValueStruct.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYReturnValueStruct.hpp; sourceTree = "<group>"; };
+		9BEF8A2F2B383FBE00D6D12D /* CYSharedResultAwaitable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYSharedResultAwaitable.hpp; sourceTree = "<group>"; };
+		9BEF8A302B383FBE00D6D12D /* CYPromises.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYPromises.hpp; sourceTree = "<group>"; };
+		9BEF8A312B383FBE00D6D12D /* CYLazyResult.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYLazyResult.hpp; sourceTree = "<group>"; };
+		9BEF8A322B383FBE00D6D12D /* CYLazyResultAwaitable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYLazyResultAwaitable.hpp; sourceTree = "<group>"; };
+		9BEF8A332B383FBE00D6D12D /* CYSharedResult.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYSharedResult.hpp; sourceTree = "<group>"; };
+		9BEF8A342B383FBE00D6D12D /* CYGenerator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYGenerator.hpp; sourceTree = "<group>"; };
+		9BEF8A352B383FBE00D6D12D /* CYResult.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYResult.hpp; sourceTree = "<group>"; };
+		9BEF8A362B383FBE00D6D12D /* CYWhenResult.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYWhenResult.hpp; sourceTree = "<group>"; };
+		9BEF8A372B383FBE00D6D12D /* CYResultAwaitable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYResultAwaitable.hpp; sourceTree = "<group>"; };
+		9BEF8A382B383FBE00D6D12D /* CYResumeOn.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYResumeOn.hpp; sourceTree = "<group>"; };
+		9BEF8A392B383FBE00D6D12D /* CYMakeResult.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYMakeResult.hpp; sourceTree = "<group>"; };
+		9BEF8A3B2B383FBE00D6D12D /* CYList.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYList.hpp; sourceTree = "<group>"; };
+		9BEF8A3D2B383FBE00D6D12D /* CYBaseMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYBaseMessage.hpp; sourceTree = "<group>"; };
+		9BEF8A3F2B383FBE00D6D12D /* CYTimeStamps.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYTimeStamps.hpp; sourceTree = "<group>"; };
+		9BEF8A412B383FBE00D6D12D /* CYStringUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYStringUtils.hpp; sourceTree = "<group>"; };
+		9BEF8A432B383FBE00D6D12D /* CYException.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYException.hpp; sourceTree = "<group>"; };
+		9BEF8A442B383FBE00D6D12D /* CYBaseException.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYBaseException.hpp; sourceTree = "<group>"; };
+		9BEF8A452B383FBE00D6D12D /* CYDebugString.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYDebugString.hpp; sourceTree = "<group>"; };
+		9BEF8A462B383FBE00D6D12D /* CYBind.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYBind.hpp; sourceTree = "<group>"; };
+		9BEF8A482B383FBE00D6D12D /* CYCacheLine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYCacheLine.hpp; sourceTree = "<group>"; };
+		9BEF8A492B383FBE00D6D12D /* CYThread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYThread.hpp; sourceTree = "<group>"; };
+		9BEF8A4A2B383FBE00D6D12D /* CYAsyncCondition.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYAsyncCondition.hpp; sourceTree = "<group>"; };
+		9BEF8A4B2B383FBE00D6D12D /* CYAsyncLock.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYAsyncLock.hpp; sourceTree = "<group>"; };
+		9BEF8A4D2B383FBE00D6D12D /* CYThreadExecutor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYThreadExecutor.hpp; sourceTree = "<group>"; };
+		9BEF8A4E2B383FBE00D6D12D /* CYDerivableExecutor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYDerivableExecutor.hpp; sourceTree = "<group>"; };
+		9BEF8A4F2B383FBE00D6D12D /* CYExecutor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYExecutor.hpp; sourceTree = "<group>"; };
+		9BEF8A502B383FBE00D6D12D /* CYManualExecutor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYManualExecutor.hpp; sourceTree = "<group>"; };
+		9BEF8A512B383FBE00D6D12D /* CYWorkerThreadExecutor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYWorkerThreadExecutor.hpp; sourceTree = "<group>"; };
+		9BEF8A522B383FBE00D6D12D /* CYInlineExecutor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYInlineExecutor.hpp; sourceTree = "<group>"; };
+		9BEF8A532B383FBE00D6D12D /* CYThreadPoolExecutor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYThreadPoolExecutor.hpp; sourceTree = "<group>"; };
+		9BEF8A552B383FBE00D6D12D /* CYTask.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYTask.hpp; sourceTree = "<group>"; };
+		9BEF8A562B383FBE00D6D12D /* CYCoroutine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYCoroutine.hpp; sourceTree = "<group>"; };
+		9BEF8A582B383FBE00D6D12D /* CYCoroutineEngineDefine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYCoroutineEngineDefine.hpp; sourceTree = "<group>"; };
+		9BEF8A592B383FBE00D6D12D /* CYCoroutineEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYCoroutineEngine.hpp; sourceTree = "<group>"; };
+		9BEF8A5C2B383FBE00D6D12D /* CYTimerQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYTimerQueue.cpp; sourceTree = "<group>"; };
+		9BEF8A5D2B383FBE00D6D12D /* CYTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYTimer.cpp; sourceTree = "<group>"; };
+		9BEF8A602B383FBE00D6D12D /* CYSharedResultState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYSharedResultState.cpp; sourceTree = "<group>"; };
+		9BEF8A612B383FBE00D6D12D /* CYConsumerContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYConsumerContext.cpp; sourceTree = "<group>"; };
+		9BEF8A622B383FBE00D6D12D /* CYResultState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYResultState.cpp; sourceTree = "<group>"; };
+		9BEF8A642B383FBE00D6D12D /* CYDebugString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYDebugString.cpp; sourceTree = "<group>"; };
+		9BEF8A662B383FBE00D6D12D /* CYBaseMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYBaseMessage.cpp; sourceTree = "<group>"; };
+		9BEF8A682B383FBE00D6D12D /* CYTimeStamps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYTimeStamps.cpp; sourceTree = "<group>"; };
+		9BEF8A6A2B383FBE00D6D12D /* CYStringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYStringUtils.cpp; sourceTree = "<group>"; };
+		9BEF8A6C2B383FBE00D6D12D /* CYBaseException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYBaseException.cpp; sourceTree = "<group>"; };
+		9BEF8A6E2B383FBE00D6D12D /* CYAsyncLock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYAsyncLock.cpp; sourceTree = "<group>"; };
+		9BEF8A6F2B383FBE00D6D12D /* CYAsyncCondition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYAsyncCondition.cpp; sourceTree = "<group>"; };
+		9BEF8A702B383FBE00D6D12D /* CYThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYThread.cpp; sourceTree = "<group>"; };
+		9BEF8A722B383FBE00D6D12D /* CYThreadPoolExecutor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYThreadPoolExecutor.cpp; sourceTree = "<group>"; };
+		9BEF8A732B383FBE00D6D12D /* CYInlineExecutor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYInlineExecutor.cpp; sourceTree = "<group>"; };
+		9BEF8A742B383FBE00D6D12D /* CYWorkerThreadExecutor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYWorkerThreadExecutor.cpp; sourceTree = "<group>"; };
+		9BEF8A752B383FBE00D6D12D /* CYExecutor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYExecutor.cpp; sourceTree = "<group>"; };
+		9BEF8A762B383FBE00D6D12D /* CYManualExecutor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYManualExecutor.cpp; sourceTree = "<group>"; };
+		9BEF8A772B383FBE00D6D12D /* CYExecutorDefine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYExecutorDefine.hpp; sourceTree = "<group>"; };
+		9BEF8A782B383FBE00D6D12D /* CYThreadExecutor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYThreadExecutor.cpp; sourceTree = "<group>"; };
+		9BEF8A7A2B383FBE00D6D12D /* CYTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYTask.cpp; sourceTree = "<group>"; };
+		9BEF8A7C2B383FBE00D6D12D /* CYExecutorCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYExecutorCollection.cpp; sourceTree = "<group>"; };
+		9BEF8A7D2B383FBE00D6D12D /* CYCoroutineEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYCoroutineEngine.cpp; sourceTree = "<group>"; };
+		9BEF8A7E2B383FBE00D6D12D /* CYCoroutineEngineDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CYCoroutineEngineDefine.cpp; sourceTree = "<group>"; };
+		9BEF8A7F2B383FBE00D6D12D /* CYExecutorCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYExecutorCollection.hpp; sourceTree = "<group>"; };
+		9BEF8A802B383FBE00D6D12D /* CYCoroutinePrivDefine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CYCoroutinePrivDefine.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9BEF88C32B38326E00D6D12D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9BEF88BC2B38326E00D6D12D = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A1F2B383FBE00D6D12D /* Inc */,
+				9BEF8A5A2B383FBE00D6D12D /* Src */,
+				9BEF88C62B38326E00D6D12D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9BEF88C62B38326E00D6D12D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF88C52B38326E00D6D12D /* libCYCoroutine.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9BEF8A1F2B383FBE00D6D12D /* Inc */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A202B383FBE00D6D12D /* CYCoroutine */,
+			);
+			name = Inc;
+			path = ../../../Inc;
+			sourceTree = "<group>";
+		};
+		9BEF8A202B383FBE00D6D12D /* CYCoroutine */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A212B383FBE00D6D12D /* Timers */,
+				9BEF8A242B383FBE00D6D12D /* CYCoroutineDefine.hpp */,
+				9BEF8A252B383FBE00D6D12D /* CYTypeDefine.hpp */,
+				9BEF8A262B383FBE00D6D12D /* Results */,
+				9BEF8A3A2B383FBE00D6D12D /* Common */,
+				9BEF8A472B383FBE00D6D12D /* Threads */,
+				9BEF8A4C2B383FBE00D6D12D /* Executors */,
+				9BEF8A542B383FBE00D6D12D /* Task */,
+				9BEF8A562B383FBE00D6D12D /* CYCoroutine.hpp */,
+				9BEF8A572B383FBE00D6D12D /* Engine */,
+			);
+			path = CYCoroutine;
+			sourceTree = "<group>";
+		};
+		9BEF8A212B383FBE00D6D12D /* Timers */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A222B383FBE00D6D12D /* CYTimer.hpp */,
+				9BEF8A232B383FBE00D6D12D /* CYTimerQueue.hpp */,
+			);
+			path = Timers;
+			sourceTree = "<group>";
+		};
+		9BEF8A262B383FBE00D6D12D /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A272B383FBE00D6D12D /* Impl */,
+				9BEF8A2F2B383FBE00D6D12D /* CYSharedResultAwaitable.hpp */,
+				9BEF8A302B383FBE00D6D12D /* CYPromises.hpp */,
+				9BEF8A312B383FBE00D6D12D /* CYLazyResult.hpp */,
+				9BEF8A322B383FBE00D6D12D /* CYLazyResultAwaitable.hpp */,
+				9BEF8A332B383FBE00D6D12D /* CYSharedResult.hpp */,
+				9BEF8A342B383FBE00D6D12D /* CYGenerator.hpp */,
+				9BEF8A352B383FBE00D6D12D /* CYResult.hpp */,
+				9BEF8A362B383FBE00D6D12D /* CYWhenResult.hpp */,
+				9BEF8A372B383FBE00D6D12D /* CYResultAwaitable.hpp */,
+				9BEF8A382B383FBE00D6D12D /* CYResumeOn.hpp */,
+				9BEF8A392B383FBE00D6D12D /* CYMakeResult.hpp */,
+			);
+			path = Results;
+			sourceTree = "<group>";
+		};
+		9BEF8A272B383FBE00D6D12D /* Impl */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A282B383FBE00D6D12D /* CYGeneratorState.hpp */,
+				9BEF8A292B383FBE00D6D12D /* CYSharedResultState.hpp */,
+				9BEF8A2A2B383FBE00D6D12D /* CYResultState.hpp */,
+				9BEF8A2B2B383FBE00D6D12D /* CYConsumerContext.hpp */,
+				9BEF8A2C2B383FBE00D6D12D /* CYProducerContext.hpp */,
+				9BEF8A2D2B383FBE00D6D12D /* CYLazyResultState.hpp */,
+				9BEF8A2E2B383FBE00D6D12D /* CYReturnValueStruct.hpp */,
+			);
+			path = Impl;
+			sourceTree = "<group>";
+		};
+		9BEF8A3A2B383FBE00D6D12D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A3B2B383FBE00D6D12D /* CYList.hpp */,
+				9BEF8A3C2B383FBE00D6D12D /* Message */,
+				9BEF8A3E2B383FBE00D6D12D /* Time */,
+				9BEF8A402B383FBE00D6D12D /* Structure */,
+				9BEF8A422B383FBE00D6D12D /* Exception */,
+				9BEF8A452B383FBE00D6D12D /* CYDebugString.hpp */,
+				9BEF8A462B383FBE00D6D12D /* CYBind.hpp */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		9BEF8A3C2B383FBE00D6D12D /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A3D2B383FBE00D6D12D /* CYBaseMessage.hpp */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		9BEF8A3E2B383FBE00D6D12D /* Time */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A3F2B383FBE00D6D12D /* CYTimeStamps.hpp */,
+			);
+			path = Time;
+			sourceTree = "<group>";
+		};
+		9BEF8A402B383FBE00D6D12D /* Structure */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A412B383FBE00D6D12D /* CYStringUtils.hpp */,
+			);
+			path = Structure;
+			sourceTree = "<group>";
+		};
+		9BEF8A422B383FBE00D6D12D /* Exception */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A432B383FBE00D6D12D /* CYException.hpp */,
+				9BEF8A442B383FBE00D6D12D /* CYBaseException.hpp */,
+			);
+			path = Exception;
+			sourceTree = "<group>";
+		};
+		9BEF8A472B383FBE00D6D12D /* Threads */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A482B383FBE00D6D12D /* CYCacheLine.hpp */,
+				9BEF8A492B383FBE00D6D12D /* CYThread.hpp */,
+				9BEF8A4A2B383FBE00D6D12D /* CYAsyncCondition.hpp */,
+				9BEF8A4B2B383FBE00D6D12D /* CYAsyncLock.hpp */,
+			);
+			path = Threads;
+			sourceTree = "<group>";
+		};
+		9BEF8A4C2B383FBE00D6D12D /* Executors */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A4D2B383FBE00D6D12D /* CYThreadExecutor.hpp */,
+				9BEF8A4E2B383FBE00D6D12D /* CYDerivableExecutor.hpp */,
+				9BEF8A4F2B383FBE00D6D12D /* CYExecutor.hpp */,
+				9BEF8A502B383FBE00D6D12D /* CYManualExecutor.hpp */,
+				9BEF8A512B383FBE00D6D12D /* CYWorkerThreadExecutor.hpp */,
+				9BEF8A522B383FBE00D6D12D /* CYInlineExecutor.hpp */,
+				9BEF8A532B383FBE00D6D12D /* CYThreadPoolExecutor.hpp */,
+			);
+			path = Executors;
+			sourceTree = "<group>";
+		};
+		9BEF8A542B383FBE00D6D12D /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A552B383FBE00D6D12D /* CYTask.hpp */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		9BEF8A572B383FBE00D6D12D /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A582B383FBE00D6D12D /* CYCoroutineEngineDefine.hpp */,
+				9BEF8A592B383FBE00D6D12D /* CYCoroutineEngine.hpp */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		9BEF8A5A2B383FBE00D6D12D /* Src */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A5B2B383FBE00D6D12D /* Timers */,
+				9BEF8A5E2B383FBE00D6D12D /* Results */,
+				9BEF8A632B383FBE00D6D12D /* Common */,
+				9BEF8A6D2B383FBE00D6D12D /* Threads */,
+				9BEF8A712B383FBE00D6D12D /* Executors */,
+				9BEF8A792B383FBE00D6D12D /* Task */,
+				9BEF8A7B2B383FBE00D6D12D /* Engine */,
+				9BEF8A802B383FBE00D6D12D /* CYCoroutinePrivDefine.hpp */,
+			);
+			name = Src;
+			path = ../../../Src;
+			sourceTree = "<group>";
+		};
+		9BEF8A5B2B383FBE00D6D12D /* Timers */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A5C2B383FBE00D6D12D /* CYTimerQueue.cpp */,
+				9BEF8A5D2B383FBE00D6D12D /* CYTimer.cpp */,
+			);
+			path = Timers;
+			sourceTree = "<group>";
+		};
+		9BEF8A5E2B383FBE00D6D12D /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A5F2B383FBE00D6D12D /* Impl */,
+			);
+			path = Results;
+			sourceTree = "<group>";
+		};
+		9BEF8A5F2B383FBE00D6D12D /* Impl */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A602B383FBE00D6D12D /* CYSharedResultState.cpp */,
+				9BEF8A612B383FBE00D6D12D /* CYConsumerContext.cpp */,
+				9BEF8A622B383FBE00D6D12D /* CYResultState.cpp */,
+			);
+			path = Impl;
+			sourceTree = "<group>";
+		};
+		9BEF8A632B383FBE00D6D12D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A642B383FBE00D6D12D /* CYDebugString.cpp */,
+				9BEF8A652B383FBE00D6D12D /* Message */,
+				9BEF8A672B383FBE00D6D12D /* Time */,
+				9BEF8A692B383FBE00D6D12D /* Structure */,
+				9BEF8A6B2B383FBE00D6D12D /* Exception */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		9BEF8A652B383FBE00D6D12D /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A662B383FBE00D6D12D /* CYBaseMessage.cpp */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		9BEF8A672B383FBE00D6D12D /* Time */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A682B383FBE00D6D12D /* CYTimeStamps.cpp */,
+			);
+			path = Time;
+			sourceTree = "<group>";
+		};
+		9BEF8A692B383FBE00D6D12D /* Structure */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A6A2B383FBE00D6D12D /* CYStringUtils.cpp */,
+			);
+			path = Structure;
+			sourceTree = "<group>";
+		};
+		9BEF8A6B2B383FBE00D6D12D /* Exception */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A6C2B383FBE00D6D12D /* CYBaseException.cpp */,
+			);
+			path = Exception;
+			sourceTree = "<group>";
+		};
+		9BEF8A6D2B383FBE00D6D12D /* Threads */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A6E2B383FBE00D6D12D /* CYAsyncLock.cpp */,
+				9BEF8A6F2B383FBE00D6D12D /* CYAsyncCondition.cpp */,
+				9BEF8A702B383FBE00D6D12D /* CYThread.cpp */,
+			);
+			path = Threads;
+			sourceTree = "<group>";
+		};
+		9BEF8A712B383FBE00D6D12D /* Executors */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A722B383FBE00D6D12D /* CYThreadPoolExecutor.cpp */,
+				9BEF8A732B383FBE00D6D12D /* CYInlineExecutor.cpp */,
+				9BEF8A742B383FBE00D6D12D /* CYWorkerThreadExecutor.cpp */,
+				9BEF8A752B383FBE00D6D12D /* CYExecutor.cpp */,
+				9BEF8A762B383FBE00D6D12D /* CYManualExecutor.cpp */,
+				9BEF8A772B383FBE00D6D12D /* CYExecutorDefine.hpp */,
+				9BEF8A782B383FBE00D6D12D /* CYThreadExecutor.cpp */,
+			);
+			path = Executors;
+			sourceTree = "<group>";
+		};
+		9BEF8A792B383FBE00D6D12D /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A7A2B383FBE00D6D12D /* CYTask.cpp */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		9BEF8A7B2B383FBE00D6D12D /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				9BEF8A7C2B383FBE00D6D12D /* CYExecutorCollection.cpp */,
+				9BEF8A7D2B383FBE00D6D12D /* CYCoroutineEngine.cpp */,
+				9BEF8A7E2B383FBE00D6D12D /* CYCoroutineEngineDefine.cpp */,
+				9BEF8A7F2B383FBE00D6D12D /* CYExecutorCollection.hpp */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		9BEF88C12B38326E00D6D12D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9BEF8A892B383FBE00D6D12D /* CYProducerContext.hpp in Headers */,
+				9BEF8A992B383FBE00D6D12D /* CYTimeStamps.hpp in Headers */,
+				9BEF8A8F2B383FBE00D6D12D /* CYLazyResultAwaitable.hpp in Headers */,
+				9BEF8A9A2B383FBE00D6D12D /* CYStringUtils.hpp in Headers */,
+				9BEF8A8C2B383FBE00D6D12D /* CYSharedResultAwaitable.hpp in Headers */,
+				9BEF8AA92B383FBF00D6D12D /* CYThreadPoolExecutor.hpp in Headers */,
+				9BEF8AAC2B383FBF00D6D12D /* CYCoroutineEngineDefine.hpp in Headers */,
+				9BEF8A8A2B383FBE00D6D12D /* CYLazyResultState.hpp in Headers */,
+				9BEF8AAB2B383FBF00D6D12D /* CYCoroutine.hpp in Headers */,
+				9BEF8A9F2B383FBE00D6D12D /* CYCacheLine.hpp in Headers */,
+				9BEF8A8E2B383FBE00D6D12D /* CYLazyResult.hpp in Headers */,
+				9BEF8A912B383FBE00D6D12D /* CYGenerator.hpp in Headers */,
+				9BEF8A8B2B383FBE00D6D12D /* CYReturnValueStruct.hpp in Headers */,
+				9BEF8A882B383FBE00D6D12D /* CYConsumerContext.hpp in Headers */,
+				9BEF8A942B383FBE00D6D12D /* CYResultAwaitable.hpp in Headers */,
+				9BEF8AC72B383FBF00D6D12D /* CYCoroutinePrivDefine.hpp in Headers */,
+				9BEF8AC62B383FBF00D6D12D /* CYExecutorCollection.hpp in Headers */,
+				9BEF8A972B383FBE00D6D12D /* CYList.hpp in Headers */,
+				9BEF8A862B383FBE00D6D12D /* CYSharedResultState.hpp in Headers */,
+				9BEF8AA52B383FBE00D6D12D /* CYExecutor.hpp in Headers */,
+				9BEF8A922B383FBE00D6D12D /* CYResult.hpp in Headers */,
+				9BEF8A832B383FBE00D6D12D /* CYCoroutineDefine.hpp in Headers */,
+				9BEF8A822B383FBE00D6D12D /* CYTimerQueue.hpp in Headers */,
+				9BEF8A9B2B383FBE00D6D12D /* CYException.hpp in Headers */,
+				9BEF8A902B383FBE00D6D12D /* CYSharedResult.hpp in Headers */,
+				9BEF8AA82B383FBF00D6D12D /* CYInlineExecutor.hpp in Headers */,
+				9BEF8AAD2B383FBF00D6D12D /* CYCoroutineEngine.hpp in Headers */,
+				9BEF8AA32B383FBE00D6D12D /* CYThreadExecutor.hpp in Headers */,
+				9BEF8A852B383FBE00D6D12D /* CYGeneratorState.hpp in Headers */,
+				9BEF8A872B383FBE00D6D12D /* CYResultState.hpp in Headers */,
+				9BEF8AA42B383FBE00D6D12D /* CYDerivableExecutor.hpp in Headers */,
+				9BEF8A8D2B383FBE00D6D12D /* CYPromises.hpp in Headers */,
+				9BEF8AC02B383FBF00D6D12D /* CYExecutorDefine.hpp in Headers */,
+				9BEF8AA62B383FBE00D6D12D /* CYManualExecutor.hpp in Headers */,
+				9BEF8AA22B383FBE00D6D12D /* CYAsyncLock.hpp in Headers */,
+				9BEF8AA02B383FBE00D6D12D /* CYThread.hpp in Headers */,
+				9BEF8A9E2B383FBE00D6D12D /* CYBind.hpp in Headers */,
+				9BEF8A932B383FBE00D6D12D /* CYWhenResult.hpp in Headers */,
+				9BEF8A982B383FBE00D6D12D /* CYBaseMessage.hpp in Headers */,
+				9BEF8AAA2B383FBF00D6D12D /* CYTask.hpp in Headers */,
+				9BEF8A812B383FBE00D6D12D /* CYTimer.hpp in Headers */,
+				9BEF8A952B383FBE00D6D12D /* CYResumeOn.hpp in Headers */,
+				9BEF8A842B383FBE00D6D12D /* CYTypeDefine.hpp in Headers */,
+				9BEF8AA12B383FBE00D6D12D /* CYAsyncCondition.hpp in Headers */,
+				9BEF8AA72B383FBF00D6D12D /* CYWorkerThreadExecutor.hpp in Headers */,
+				9BEF8A962B383FBE00D6D12D /* CYMakeResult.hpp in Headers */,
+				9BEF8A9D2B383FBE00D6D12D /* CYDebugString.hpp in Headers */,
+				9BEF8A9C2B383FBE00D6D12D /* CYBaseException.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		9BEF88C42B38326E00D6D12D /* CYCoroutine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9BEF88D02B38326E00D6D12D /* Build configuration list for PBXNativeTarget "CYCoroutine" */;
+			buildPhases = (
+				9BEF88C12B38326E00D6D12D /* Headers */,
+				9BEF88C22B38326E00D6D12D /* Sources */,
+				9BEF88C32B38326E00D6D12D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CYCoroutine;
+			productName = CYCoroutine;
+			productReference = 9BEF88C52B38326E00D6D12D /* libCYCoroutine.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9BEF88BD2B38326E00D6D12D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1510;
+				TargetAttributes = {
+					9BEF88C42B38326E00D6D12D = {
+						CreatedOnToolsVersion = 15.1;
+					};
+				};
+			};
+			buildConfigurationList = 9BEF88C02B38326E00D6D12D /* Build configuration list for PBXProject "CYCoroutine" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9BEF88BC2B38326E00D6D12D;
+			productRefGroup = 9BEF88C62B38326E00D6D12D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9BEF88C42B38326E00D6D12D /* CYCoroutine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9BEF88C22B38326E00D6D12D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9BEF8ABE2B383FBF00D6D12D /* CYExecutor.cpp in Sources */,
+				9BEF8AB42B383FBF00D6D12D /* CYBaseMessage.cpp in Sources */,
+				9BEF8AB82B383FBF00D6D12D /* CYAsyncLock.cpp in Sources */,
+				9BEF8ABB2B383FBF00D6D12D /* CYThreadPoolExecutor.cpp in Sources */,
+				9BEF8ABA2B383FBF00D6D12D /* CYThread.cpp in Sources */,
+				9BEF8AB02B383FBF00D6D12D /* CYSharedResultState.cpp in Sources */,
+				9BEF8ABC2B383FBF00D6D12D /* CYInlineExecutor.cpp in Sources */,
+				9BEF8AAE2B383FBF00D6D12D /* CYTimerQueue.cpp in Sources */,
+				9BEF8ABF2B383FBF00D6D12D /* CYManualExecutor.cpp in Sources */,
+				9BEF8AC32B383FBF00D6D12D /* CYExecutorCollection.cpp in Sources */,
+				9BEF8AAF2B383FBF00D6D12D /* CYTimer.cpp in Sources */,
+				9BEF8AC22B383FBF00D6D12D /* CYTask.cpp in Sources */,
+				9BEF8ABD2B383FBF00D6D12D /* CYWorkerThreadExecutor.cpp in Sources */,
+				9BEF8AB52B383FBF00D6D12D /* CYTimeStamps.cpp in Sources */,
+				9BEF8AC12B383FBF00D6D12D /* CYThreadExecutor.cpp in Sources */,
+				9BEF8AB22B383FBF00D6D12D /* CYResultState.cpp in Sources */,
+				9BEF8AC42B383FBF00D6D12D /* CYCoroutineEngine.cpp in Sources */,
+				9BEF8AB72B383FBF00D6D12D /* CYBaseException.cpp in Sources */,
+				9BEF8AB62B383FBF00D6D12D /* CYStringUtils.cpp in Sources */,
+				9BEF8AC52B383FBF00D6D12D /* CYCoroutineEngineDefine.cpp in Sources */,
+				9BEF8AB32B383FBF00D6D12D /* CYDebugString.cpp in Sources */,
+				9BEF8AB92B383FBF00D6D12D /* CYAsyncCondition.cpp in Sources */,
+				9BEF8AB12B383FBF00D6D12D /* CYConsumerContext.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9BEF88CE2B38326E00D6D12D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9BEF88CF2B38326E00D6D12D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9BEF88D12B38326E00D6D12D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6KUBQ5K5V7;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../../../",
+					"${PROJECT_DIR}/../../../Inc/",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		9BEF88D22B38326E00D6D12D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6KUBQ5K5V7;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../../",
+					"${PROJECT_DIR}/../../Inc/",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9BEF88C02B38326E00D6D12D /* Build configuration list for PBXProject "CYCoroutine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9BEF88CE2B38326E00D6D12D /* Debug */,
+				9BEF88CF2B38326E00D6D12D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9BEF88D02B38326E00D6D12D /* Build configuration list for PBXNativeTarget "CYCoroutine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9BEF88D12B38326E00D6D12D /* Debug */,
+				9BEF88D22B38326E00D6D12D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9BEF88BD2B38326E00D6D12D /* Project object */;
+}
