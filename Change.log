@@ -1,0 +1,10 @@
+CYCoroutine V1.0.0 features:
+1. Base C++ 20 coroutine implementation
+2. The interface is simple and easy to use and supports cross-platform.
+3. Thread Pool.
+4. Timer.
+5. Ranges.
+6. concept constraint.
+7. coroutine lock.
+
+Included plugins:

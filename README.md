@@ -1,7 +1,7 @@
 # CYCorotine
 Coroutine library based on C++20
 
-Coroutine library based on C 20, supports cross-platform, has a simple and easy-to-use interface, and is continuously updated.
+Coroutine library based on C++ 20, supports cross-platform, has a simple and easy-to-use interface, and is continuously updated.
 
 ```
 #include "CYCoroutine/CYCoroutine.hpp"
