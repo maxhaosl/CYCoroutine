@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CYCoroutine", "CYCoroutine.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A60A423B-B1DC-468F-9F49-D29817C5930D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CYCoroutineTest", "..\..\Example\CYCoroutineTest\CYCoroutineTest.vcxproj", "{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CYCoroutineTest", "..\..\Example\Windows\CYCoroutineTest\CYCoroutineTest.vcxproj", "{8D79B632-91A5-4DBF-95C9-F9D40D4C7B19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

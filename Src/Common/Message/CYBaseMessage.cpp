@@ -28,7 +28,7 @@ CYBaseMessage::CYBaseMessage(const TString& strChannel, int nMsgType, int nServe
 
 /**
  * @param strChannel message channel.
- * @param eLogLevel message type
+ * @param nMsgType message type
  * @param nServerCode  message severity code
  * @param strMsg text of the message
 */

@@ -9,7 +9,7 @@ CYCOROUTINE_NAMESPACE_BEGIN
 std::string CYStringUtils::WString2String(const std::wstring strSrc)
 {
     const wchar_t* begin = strSrc.c_str();
-    const wchar_t* end = begin + strSrc.size();
+    [[maybe_unused]]const wchar_t* end = begin + strSrc.size();
 
     std::string strLoc = setlocale(LC_ALL, nullptr);
     setlocale(LC_ALL, "chs");

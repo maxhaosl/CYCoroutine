@@ -55,7 +55,7 @@
 
 CYCOROUTINE_NAMESPACE_BEGIN
 
-[[noreturn]] CYCOROUTINE_API void ThrowRuntimeShutdownException(std::string_view strExecutorName);
+/*[[noreturn]]*/ CYCOROUTINE_API void ThrowRuntimeShutdownException(std::string_view strExecutorName);
 CYCOROUTINE_API std::string MakeExecutorWorkerName(std::string_view strExecutorName);
 
 class CYCOROUTINE_API CYExecutor

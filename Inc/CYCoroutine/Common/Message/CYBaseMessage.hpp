@@ -55,8 +55,7 @@ public:
 	* @param nMsgType message type
 	* @param nServerCode message severity code
 	* @param strFunction code location - can be function name or anything else
-	* @param m_strMsg text of the message
-	* @param inThrowMode if true cannot throw
+	* @param strMsg text of the message
 	*/
 	CYBaseMessage(const TString& strChannel, int nMsgType, int nServerCode, const TString& strMsg, const TString& strFile, const TString& strFunction, int nLine);
 

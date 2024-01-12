@@ -92,8 +92,6 @@ public:
 public:
     /**
     * Inherited from CYBaseMessage, the result is in the following format: [YYYYMMDD hh:mm:ss.nnnnnn |{T,D,I,W,E,F,U}: severCode] location message [(errno=x system message)] [***caused by***] \r\n
-    * @param strMsg a reference where the result (formatted message, explaining the exception) will be put
-    * @return strMsg.c_str()
     */
     virtual const TString GetFormatMessage() const override;
 

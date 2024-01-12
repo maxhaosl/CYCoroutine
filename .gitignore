@@ -31,3 +31,7 @@
 *.out
 *.app
 .DS_Store
+Bin/
+Build/Windows/.vs/
+Build/Windows/x64/
+Example/CYCoroutineTest/x64/

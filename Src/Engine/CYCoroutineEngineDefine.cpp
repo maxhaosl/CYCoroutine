@@ -18,11 +18,11 @@ namespace
 
     constexpr auto DEFAULT_MAX_WORKER_WAIT_TIME = std::chrono::seconds(MAX_THREAD_POOL_WORKER_WAIT_TIME_SEC);
 
-    std::once_flag  g_objTimerFlag;
-    std::once_flag  g_objInlineFlag;
-    std::once_flag  g_objThreadFlag;
-    std::once_flag  g_objThreadPoolFlag;
-    std::once_flag  g_objBackgroundFlag;
+    [[maybe_unused]]std::once_flag  g_objTimerFlag;
+    [[maybe_unused]]std::once_flag  g_objInlineFlag;
+    [[maybe_unused]]std::once_flag  g_objThreadFlag;
+    [[maybe_unused]]std::once_flag  g_objThreadPoolFlag;
+    [[maybe_unused]]std::once_flag  g_objBackgroundFlag;
 
 }// namespace
 
