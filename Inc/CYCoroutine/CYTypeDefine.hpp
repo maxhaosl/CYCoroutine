@@ -117,7 +117,7 @@ typedef std::stringstream       TStringStream;
 #define cy_mkdir                _mkdir
 #define cy_splitpath            _splitpath
 #define cy_strcpy               strcpy
-#define cy_fullpath             fullpath
+#define cy_fullpath             _fullpath
 #define cy_sprintf_s            sprintf_s
 #define cy_strcat_s             strcat_s
 #define cy_tcscpy_s             strcpy_s
