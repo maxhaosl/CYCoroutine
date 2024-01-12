@@ -34,4 +34,4 @@
 Bin/
 Build/Windows/.vs/
 Build/Windows/x64/
-Example/CYCoroutineTest/x64/
+Example/Windows/CYCoroutineTest/x64/
