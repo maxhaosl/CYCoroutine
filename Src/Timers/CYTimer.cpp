@@ -102,7 +102,7 @@ void CYTimer::Cancel()
 void CYTimer::SetFrequency(milliseconds nFrequency)
 {
     IfEmptyThrow("CYTimer::SetFrequency() - timer is empty.");
-    return m_ptrState->SetNewFrequency(nFrequency.count());
+    return m_ptrState->SetNewFrequency(static_cast<size_t>(nFrequency.count()));
 }
 
 CYTimer& CYTimer::operator=(CYTimer&& rhs) noexcept

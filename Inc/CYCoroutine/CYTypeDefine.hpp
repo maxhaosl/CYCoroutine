@@ -51,6 +51,7 @@
 #include <memory>
 #include <mutex>
 #include <functional>
+#include <cassert>
 
 #ifdef _WIN32
 #include <direct.h>
@@ -137,6 +138,48 @@ using UniqueLock                = std::unique_lock<std::mutex>;
 using LockGuard                 = std::lock_guard<std::mutex>;
 using FuncThreadDelegate        = std::function<void(std::string_view thread_name)>;
 
+
+template<class F>
+struct function_traits;
+
+template<class R, class... Args>
+struct function_traits<R(*)(Args...)> : public function_traits<R(Args...)>
+{
+};
+
+template<class R, class... Args>
+struct function_traits<R(Args...)>
+{
+    using return_type = R;
+    static constexpr std::size_t size = sizeof...(Args);
+    template<std::size_t N>
+    struct argument
+    {
+        static_assert(N < size, "error: invalid parameter index.");
+        using type = typename std::tuple_element<N, std::tuple<Args...>>::type;
+    };
+};
+
+template<auto Fn>
+struct PointerDel final
+{
+    template<typename T>
+    void operator()(T* p) const
+    {
+        if (!p || !Fn)
+            return;
+
+        using Traits = function_traits<decltype(Fn)>;
+        if constexpr (std::is_same_v<typename Traits::template argument<0>::type, T**>)
+            Fn(&p);
+        else if constexpr (std::is_same_v<typename Traits::template argument<0>::type, T*>)
+            Fn(p);
+        else
+            assert(false && "Wrong PointerDel Function");
+    }
+};
+
+//////////////////////////////////////////////////////////////////////////
 #define UNKNOWN_SEVER_CODE      -1
 
 #if defined(_WIN32) && CY_USE_UNICODE
