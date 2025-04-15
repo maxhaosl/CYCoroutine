@@ -35,3 +35,4 @@ Bin/
 Build/Windows/.vs/
 Build/Windows/x64/
 Example/Windows/CYCoroutineTest/x64/
+Build/Windows/CYCoroutine/

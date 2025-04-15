@@ -127,17 +127,32 @@ typedef std::stringstream       TStringStream;
 #define cy_strstr               strstr
 #endif
 
+#ifndef SharePtr
 #define SharePtr                std::shared_ptr
+#endif
+#ifndef UniquePtr
 #define UniquePtr               std::unique_ptr
+#endif
+#ifndef WeakPtr
 #define WeakPtr                 std::weak_ptr
+#endif
+#ifndef MakeShared
 #define MakeShared              std::make_shared
+#endif
+#ifndef MakeUnique
 #define MakeUnique              std::make_unique
+#endif
+#ifndef MakeTuple
 #define MakeTuple               std::make_tuple
+#endif
 
-using UniqueLock                = std::unique_lock<std::mutex>;
-using LockGuard                 = std::lock_guard<std::mutex>;
+#ifndef UniqueLock
+#define UniqueLock              std::unique_lock<std::mutex>
+#endif
+#ifndef LockGuard
+#define LockGuard               std::lock_guard<std::mutex>
+#endif
 using FuncThreadDelegate        = std::function<void(std::string_view thread_name)>;
-
 
 template<class F>
 struct function_traits;
