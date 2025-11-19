@@ -91,12 +91,12 @@
 #endif
 
 #if defined(CYCOROUTINE_WIN_OS)
-#    if defined(CRCPP_EXPORT_API)
+#    if defined(CYCOROUTINE_EXPORT_API)
 #        define CYCOROUTINE_API __declspec(dllexport)
-#    elif defined(CRCPP_IMPORT_API)
+#    elif defined(CYCOROUTINE_IMPORT_API)
 #        define CYCOROUTINE_API __declspec(dllimport)
 #    endif
-#elif (defined(CRCPP_EXPORT_API) || defined(CRCPP_IMPORT_API)) && __has_cpp_attribute(gnu::visibility)
+#elif (defined(CYCOROUTINE_EXPORT_API) || defined(CYCOROUTINE_IMPORT_API)) && __has_cpp_attribute(gnu::visibility)
 #    define CYCOROUTINE_API __attribute__((visibility("default")))
 #endif
 
@@ -107,7 +107,7 @@
 #include <exception>
 
 #if defined(_LIBCPP_VERSION)
-#    define CRCPP_LIBCPP_LIB
+#    define CYCOROUTINE_LIBCPP_LIB
 #endif
 
 CYCOROUTINE_NAMESPACE_BEGIN
