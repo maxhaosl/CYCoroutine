@@ -31,19 +31,20 @@
  *
  * ===============================================================================
  */
-/*
- * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
- * VERSION:  1.0.0
- * PURPOSE:  A cross-platform efficient and stable Coroutine library.
- * CREATION: 2023.04.15
- * LCHANGE:  2023.04.15
- * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
- */
+ /*
+  * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
+  * VERSION:  1.0.0
+  * PURPOSE:  A cross-platform efficient and stable Coroutine library.
+  * CREATION: 2023.04.15
+  * LCHANGE:  2023.04.15
+  * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
+  */
 
 #ifndef __CY_CONSUMER_CONTEXT_CORO_HPP__
 #define __CY_CONSUMER_CONTEXT_CORO_HPP__
 
 #include "CYCoroutine/CYCoroutineDefine.hpp"
+#include "CYCoroutine/Results/Impl/CYBinarySemaphore.hpp"
 
 #include <atomic>
 #include <semaphore>
@@ -91,7 +92,6 @@ private:
 class CYSharedResultStateBase;
 class CYCOROUTINE_API CYConsumerContext
 {
-
 public:
     virtual ~CYConsumerContext() noexcept;
 
@@ -99,7 +99,7 @@ public:
     void ResumeConsumer(CYResultStateBase& self) const;
 
     void SetAwaitHandle(coroutine_handle<void> handleCaller) noexcept;
-    void SetWaitForContext(const SharePtr<std::binary_semaphore>& ptrWaitCtx) noexcept;
+    void SetWaitForContext(const SharePtr<cy_binary_semaphore>& ptrWaitCtx) noexcept;
     void SetWhenAnyContext(const SharePtr<CYWhenAnyContext>& ptrWhenAnyCtx) noexcept;
     void SetSharedContext(const SharePtr<CYSharedResultStateBase>& ptrSharedCtx) noexcept;
 
@@ -115,7 +115,7 @@ private:
     union CYStorage
     {
         coroutine_handle<void> handleCaller;
-        SharePtr<std::binary_semaphore> wait_for_ctx;
+        SharePtr<cy_binary_semaphore> wait_for_ctx;
         SharePtr<CYWhenAnyContext> ptrWhenAnyCtx;
         WeakPtr<CYSharedResultStateBase> ptrSharedCtx;
 
@@ -133,6 +133,5 @@ private:
 };
 
 CYCOROUTINE_NAMESPACE_END
-
 
 #endif //__CY_CONSUMER_CONTEXT_CORO_HPP__

@@ -31,14 +31,14 @@
  *
  * ===============================================================================
  */
-/*
- * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
- * VERSION:  1.0.0
- * PURPOSE:  A cross-platform efficient and stable Coroutine library.
- * CREATION: 2023.04.15
- * LCHANGE:  2023.04.15
- * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
- */
+ /*
+  * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
+  * VERSION:  1.0.0
+  * PURPOSE:  A cross-platform efficient and stable Coroutine library.
+  * CREATION: 2023.04.15
+  * LCHANGE:  2023.04.15
+  * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
+  */
 
 #ifndef __CY_EXCEPTION_HPP__
 #define __CY_EXCEPTION_HPP__
@@ -53,75 +53,75 @@ template<int _LEVEL = K_LOG_LEVEL_UNKNOWN, int _SEVER_CODE = UNKNOWN_SEVER_CODE>
 class CYException : public CYBaseException
 {
 public:
-	/**
-	* @brief The level of the exception
-	*/
-	static const int LEVEL = _LEVEL;
+    /**
+    * @brief The level of the exception
+    */
+    static const int LEVEL = _LEVEL;
 
-	/**
-	* @brief The severity code of the exception
-	*/
-	static const int SEVER_CODE = _SEVER_CODE;
+    /**
+    * @brief The severity code of the exception
+    */
+    static const int SEVER_CODE = _SEVER_CODE;
 
-	/**
-	* @brief Constructor.
-	*/
-	CYException(const TString& strMsg, const TString strFile, const TString& strFunction, int nLine) :
-		CYBaseException(_LEVEL, _SEVER_CODE, strMsg, strFile, strFunction, nLine)
-	{
-	}
+    /**
+    * @brief Constructor.
+    */
+    CYException(const TString& strMsg, const TString strFile, const TString& strFunction, int nLine) :
+        CYBaseException(_LEVEL, _SEVER_CODE, strMsg, strFile, strFunction, nLine)
+    {
+    }
 
-	/**
-	* @brief Constructor.
-	*/
-	CYException(const TString& strMsg, const CYBaseException& objCause, const TString strFile, const TString& strFunction, int nLine) :
-		CYBaseException(_LEVEL, _SEVER_CODE, strMsg, objCause, strFile, strFunction, nLine)
-	{
-	}
+    /**
+    * @brief Constructor.
+    */
+    CYException(const TString& strMsg, const CYBaseException& objCause, const TString strFile, const TString& strFunction, int nLine) :
+        CYBaseException(_LEVEL, _SEVER_CODE, strMsg, objCause, strFile, strFunction, nLine)
+    {
+    }
 
-	/*
-	* @brief Helper to throw exception if condition is true.
-	*/
-	inline static void IfTrueThrow(bool bCondition, const TString& strMsg, const TString strFile/* = __TFILE__*/, const TString& strFunction/* = __TFUNCTION__*/, int nLine/* = __TLINE__*/)
-	{
-		if (!bCondition)
-			return;
+    /*
+    * @brief Helper to throw exception if condition is true.
+    */
+    inline static void IfTrueThrow(bool bCondition, const TString& strMsg, const TString strFile/* = __TFILE__*/, const TString& strFunction/* = __TFUNCTION__*/, int nLine/* = __TLINE__*/)
+    {
+        if (!bCondition)
+            return;
 
-		throw new CYException(strMsg, strFile, strFunction, nLine);
-	}
+        throw new CYException(strMsg, strFile, strFunction, nLine);
+    }
 
-	/*
-	* @brief Helper to throw exception if condition is true
-	*/
-	inline static void IfTrueReThrow(bool bCondition, const TString& strMsg, const CYBaseException& objCause, const TString strFile/* = __TFILE__*/, const TString& strFunction/* = __TFUNCTION__*/, int nLine/* = __TLINE__*/)
-	{
-		if (!bCondition)
-			return;
+    /*
+    * @brief Helper to throw exception if condition is true
+    */
+    inline static void IfTrueReThrow(bool bCondition, const TString& strMsg, const CYBaseException& objCause, const TString strFile/* = __TFILE__*/, const TString& strFunction/* = __TFUNCTION__*/, int nLine/* = __TLINE__*/)
+    {
+        if (!bCondition)
+            return;
 
-		throw new CYException(strMsg, objCause, strFile, strFunction, nLine);
-	}
+        throw new CYException(strMsg, objCause, strFile, strFunction, nLine);
+    }
 
-	/*
-	* @brief Helper to throw exception if condition is false.
-	*/
-	inline static void IfFalseThrow(bool bCondition, const TString& strMsg, const TString strFile/* = __TFILE__*/, const TString& strFunction/* = __TFUNCTION__*/, int nLine/* = __TLINE__*/)
-	{
-		if (bCondition)
-			return;
+    /*
+    * @brief Helper to throw exception if condition is false.
+    */
+    inline static void IfFalseThrow(bool bCondition, const TString& strMsg, const TString strFile/* = __TFILE__*/, const TString& strFunction/* = __TFUNCTION__*/, int nLine/* = __TLINE__*/)
+    {
+        if (bCondition)
+            return;
 
-		throw new CYException(strMsg, strFile, strFunction, nLine);
-	}
+        throw new CYException(strMsg, strFile, strFunction, nLine);
+    }
 
-	/*
-	* @brief Helper to throw exception if condition is false
-	*/
-	inline static void IfFalseReThrow(bool bCondition, const TString& strMsg, const CYBaseException& objCause, const TString strFile/* = __TFILE__*/, const TString& strFunction/* = __TFUNCTION__*/, int nLine/* = __TLINE__*/)
-	{
-		if (bCondition)
-			return;
+    /*
+    * @brief Helper to throw exception if condition is false
+    */
+    inline static void IfFalseReThrow(bool bCondition, const TString& strMsg, const CYBaseException& objCause, const TString strFile/* = __TFILE__*/, const TString& strFunction/* = __TFUNCTION__*/, int nLine/* = __TLINE__*/)
+    {
+        if (bCondition)
+            return;
 
-		throw new CYException(strMsg, objCause, strFile, strFunction, nLine);
-	}
+        throw new CYException(strMsg, objCause, strFile, strFunction, nLine);
+    }
 };
 
 CYCOROUTINE_NAMESPACE_END

@@ -2,6 +2,7 @@
 #include "CYCoroutine/Executors/CYThreadPoolExecutor.hpp"
 #include "CYCoroutine/Common/CYDebugString.hpp"
 #include "CYCoroutine/Common/Structure/CYStringUtils.hpp"
+#include "CYCoroutine/Results/Impl/CYBinarySemaphore.hpp"
 
 #include <semaphore>
 #include <algorithm>
@@ -27,7 +28,7 @@ namespace
             return hash(nThreadId);
         }
 
-        CYThreadPoolPerThreadData() noexcept 
+        CYThreadPoolPerThreadData() noexcept
             : pPoolWorker(nullptr)
             , nThreadIndex(static_cast<size_t>(-1))
             , nThreadHashId(CalculateHashId())
@@ -78,7 +79,7 @@ private:
     alignas(CACHE_LINE_ALIGNMENT) std::mutex m_lock;
 
     std::deque<CYTask> m_lstPublicTaskQueue;
-    std::binary_semaphore m_semaphore;
+    cy_binary_semaphore m_semaphore;
 
     std::deque<CYTask> m_lstPrivTaskQueue;
     std::vector<size_t> m_lstIdleWorker;
@@ -89,11 +90,10 @@ private:
     std::atomic_bool m_bTaskFoundOrAbort;
     const FuncThreadDelegate m_funcStartedCallBack;
     const FuncThreadDelegate m_funcTerminatedCallback;
-
 };
 
 //////////////////////////////////////////////////////////////////////////
-CYIdleWorkerSet::CYIdleWorkerSet(size_t size) 
+CYIdleWorkerSet::CYIdleWorkerSet(size_t size)
     : m_nApproxSize(0)
     , m_ptrIdleFlags(MakeUnique<CYPaddedFlag[]>(size))
     , m_nSize(size)
@@ -198,7 +198,7 @@ void CYIdleWorkerSet::FindIdleWorkers(size_t nCallerIndex, std::vector<size_t>& 
     }
 }
 
-CYThreadPoolWorker::CYThreadPoolWorker(CYThreadPoolExecutor& objParentPool, size_t index, size_t nPoolSize, std::chrono::milliseconds maxIdleTime, const FuncThreadDelegate& funStartedCallBack, const FuncThreadDelegate& funTerminatedCallBack) 
+CYThreadPoolWorker::CYThreadPoolWorker(CYThreadPoolExecutor& objParentPool, size_t index, size_t nPoolSize, std::chrono::milliseconds maxIdleTime, const FuncThreadDelegate& funStartedCallBack, const FuncThreadDelegate& funTerminatedCallBack)
     : m_bAtomicAbort(false)
     , m_objParentPool(objParentPool)
     , m_nIndex(index)
@@ -215,7 +215,7 @@ CYThreadPoolWorker::CYThreadPoolWorker(CYThreadPoolExecutor& objParentPool, size
     m_lstIdleWorker.reserve(nPoolSize);
 }
 
-CYThreadPoolWorker::CYThreadPoolWorker(CYThreadPoolWorker&& rhs) noexcept 
+CYThreadPoolWorker::CYThreadPoolWorker(CYThreadPoolWorker&& rhs) noexcept
     : m_objParentPool(rhs.m_objParentPool)
     , m_nIndex(rhs.m_nIndex)
     , m_nPoolSize(rhs.m_nPoolSize)
@@ -468,7 +468,7 @@ void CYThreadPoolWorker::EnsureWorkerActive(bool bFirstEnqueuer, UniqueLock& loc
     }
 
     auto staleWorker = std::move(m_thread);
-    m_thread = CYThread( m_strWorkerName,
+    m_thread = CYThread(m_strWorkerName,
         [this] {
             WorkLoop();
         },
@@ -606,7 +606,7 @@ bool CYThreadPoolWorker::AppearsEmpty() const noexcept
     return m_lstPrivTaskQueue.empty() && !m_bTaskFoundOrAbort.load(std::memory_order_relaxed);
 }
 
-CYThreadPoolExecutor::CYThreadPoolExecutor(std::string_view strPoolName, size_t nPoolSize, std::chrono::milliseconds maxIdleTime, const FuncThreadDelegate& funStartedCallBack, const FuncThreadDelegate& funTerminatedCallBack) 
+CYThreadPoolExecutor::CYThreadPoolExecutor(std::string_view strPoolName, size_t nPoolSize, std::chrono::milliseconds maxIdleTime, const FuncThreadDelegate& funStartedCallBack, const FuncThreadDelegate& funTerminatedCallBack)
     : CYDerivableExecutor<CYThreadPoolExecutor>(strPoolName)
     , m_nRoundRobinCursor(0)
     , m_objIdleWorkers(nPoolSize)

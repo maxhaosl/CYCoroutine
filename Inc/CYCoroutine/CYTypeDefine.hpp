@@ -55,6 +55,11 @@
 
 #ifdef _WIN32
 #include <direct.h>
+#else
+#include <cstdio>     // C++
+#include <stdio.h>    // C
+#include <cstdarg>    // va_list
+#include <sys/stat.h>
 #endif
 
 #if defined(_WIN32)
@@ -111,6 +116,7 @@ typedef std::ifstream           TIfStream;
 typedef std::ofstream           TOfStream;
 typedef std::stringstream       TStringStream;
 
+#if defined(_WIN32)
 #define cy_csrchr               strrchr
 #define cy_strlen               strlen
 #define cy_vscprintf            _vscprintf
@@ -125,6 +131,31 @@ typedef std::stringstream       TStringStream;
 #define cy_tcstok_s             strtok_s
 #define cy_tcscmp               strcmp
 #define cy_strstr               strstr
+#else
+#define cy_csrchr               strrchr
+#define cy_strlen               strlen
+inline int cy_vscprintf_impl(const char* format, va_list args)
+{
+    va_list args_copy;
+    va_copy(args_copy, args);
+    int len = vsnprintf(nullptr, 0, format, args_copy);
+    va_end(args_copy);
+    return len;
+}
+
+#define cy_vscprintf(format, args) cy_vscprintf_impl(format, args)
+#define cy_vsnprintf_s(a,b,c,d,e)  vsnprintf(a,c,d,e)
+#define cy_mkdir(a)             mkdir(a, 0755)
+#define cy_splitpath            splitpath
+#define cy_strcpy               strcpy
+#define cy_fullpath(a,b,c)      realpath(b, a)
+#define cy_sprintf_s            snprintf
+#define cy_strcat_s(a, b, c)    strcat(a, c)
+#define cy_tcscpy_s(a,b,c)      strcpy(a,c)
+#define cy_tcstok_s             strtok_r
+#define cy_tcscmp               strcmp
+#define cy_strstr               strstr
+#endif
 #endif
 
 #ifndef SharePtr

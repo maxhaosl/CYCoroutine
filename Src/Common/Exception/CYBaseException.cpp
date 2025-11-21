@@ -9,7 +9,7 @@
 #include <sstream>
 #include <string>
 
-#ifdef _WIN32
+#ifdef CYCOROUTINE_WIN_OS
 #include <windows.h>
 #endif
 

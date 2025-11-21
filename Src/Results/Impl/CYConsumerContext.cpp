@@ -2,6 +2,7 @@
 #include "CYCoroutine/Executors/CYExecutor.hpp"
 #include "CYCoroutine/Results/Impl/CYConsumerContext.hpp"
 #include "CYCoroutine/Results/Impl/CYSharedResultState.hpp"
+#include "CYCoroutine/Results/Impl/CYBinarySemaphore.hpp"
 
 using CYCOROUTINE_NAMESPACE::CYWhenAnyContext;
 using CYCOROUTINE_NAMESPACE::CYConsumerContext;
@@ -218,7 +219,7 @@ void CYConsumerContext::SetAwaitHandle(coroutine_handle<void> handleCaller) noex
     Build(m_storage.handleCaller, handleCaller);
 }
 
-void CYConsumerContext::SetWaitForContext(const SharePtr<std::binary_semaphore>& ptrWaitCtx) noexcept
+void CYConsumerContext::SetWaitForContext(const SharePtr<cy_binary_semaphore>& ptrWaitCtx) noexcept
 {
     assert(m_status == EConsumerStatus::STATUS_CONSUMER_IDLE);
     m_status = EConsumerStatus::STATUS_CONSUMER_WAITFOR;

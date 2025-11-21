@@ -31,20 +31,21 @@
  *
  * ===============================================================================
  */
-/*
- * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
- * VERSION:  1.0.0
- * PURPOSE:  A cross-platform efficient and stable Coroutine library.
- * CREATION: 2023.04.15
- * LCHANGE:  2023.04.15
- * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
- */
+ /*
+  * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
+  * VERSION:  1.0.0
+  * PURPOSE:  A cross-platform efficient and stable Coroutine library.
+  * CREATION: 2023.04.15
+  * LCHANGE:  2023.04.15
+  * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
+  */
 
 #ifndef __CY_SHARED_RESULT_STATE_CORO_HPP__
 #define __CY_SHARED_RESULT_STATE_CORO_HPP__
 
 #include "CYCoroutine/CYCoroutineDefine.hpp"
 #include "CYCoroutine/Results/Impl/CYResultState.hpp"
+#include "CYCoroutine/Results/Impl/CYCountingSemaphore.hpp"
 
 #include <atomic>
 #include <semaphore>
@@ -106,9 +107,9 @@ public:
     }
 
 protected:
-    std::atomic<EResultStatus> m_status{ EResultStatus::STATUS_RESULT_IDLE };
+    cy_atomic<EResultStatus> m_status{ EResultStatus::STATUS_RESULT_IDLE };
     std::atomic<CYSharedAwaitContext*> m_awaiters{ nullptr };
-    std::counting_semaphore<> m_semaphore{ 0 };
+    cy_counting_semaphore<> m_semaphore{ 0 };
 
     static CYSharedAwaitContext* ResultReadyConstant() noexcept;
 };
@@ -117,7 +118,7 @@ template<class TYPE>
 class CYSharedResultState final : public CYSharedResultStateBase
 {
 public:
-    CYSharedResultState(CYConsumerResultStatePtr<TYPE> CYResultState) noexcept 
+    CYSharedResultState(CYConsumerResultStatePtr<TYPE> CYResultState) noexcept
         : m_result_state(std::move(CYResultState))
     {
         assert(static_cast<bool>(m_result_state));

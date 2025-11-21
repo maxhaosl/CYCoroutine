@@ -3,7 +3,7 @@
 #include <cstdarg>
 #include <time.h>
 
-#if	defined(_DEBUG) || defined(_WIN32)
+#if	defined(_DEBUG) || defined(CYCOROUTINE_WIN_OS)
 #include <windows.h>
 #endif
 
@@ -14,7 +14,7 @@ CYCOROUTINE_NAMESPACE_BEGIN
 */
 void DebugString(const TChar* format, ...)
 {
-#if	defined(_DEBUG) || defined(_WIN32)
+#if	defined(_DEBUG) || defined(CYCOROUTINE_WIN_OS)
 	TChar	buffer[512];
 	memset(buffer, 0, sizeof(buffer));
 

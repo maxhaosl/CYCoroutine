@@ -88,18 +88,18 @@ foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
 endforeach()
 
 # 包含目录
-include_directories(${CMAKE_SOURCE_DIR}/..)
-include_directories(${CMAKE_SOURCE_DIR}/../Inc)
-include_directories(${CMAKE_SOURCE_DIR}/../Src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../Inc)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../Src)
 
 # 收集源文件
 file(GLOB_RECURSE CYCOROUTINE_SOURCES 
-    "${CMAKE_SOURCE_DIR}/../Src/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../Src/*.cpp"
 )
 
 # 收集头文件
 file(GLOB_RECURSE CYCOROUTINE_HEADERS 
-    "${CMAKE_SOURCE_DIR}/../Inc/*.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../Inc/*.hpp"
 )
 
 # 函数：设置目标属性
@@ -213,7 +213,7 @@ endif()
 # 添加构建示例的选项
 option(BUILD_EXAMPLES "Build example applications" ON)
 
-if(BUILD_EXAMPLES)
+if(BUILD_EXAMPLES AND EXISTS ${CMAKE_SOURCE_DIR}/../Example)
     # 添加示例子目录
     add_subdirectory(${CMAKE_SOURCE_DIR}/../Example ${CMAKE_BINARY_DIR}/example)
 endif()

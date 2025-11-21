@@ -31,14 +31,14 @@
  *
  * ===============================================================================
  */
-/*
- * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
- * VERSION:  1.0.0
- * PURPOSE:  A cross-platform efficient and stable Coroutine library.
- * CREATION: 2023.04.15
- * LCHANGE:  2023.04.15
- * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
- */
+ /*
+  * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
+  * VERSION:  1.0.0
+  * PURPOSE:  A cross-platform efficient and stable Coroutine library.
+  * CREATION: 2023.04.15
+  * LCHANGE:  2023.04.15
+  * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
+  */
 
 #ifndef __CY_WORKER_THREAD_EXECUTOR_CORO_HPP__
 #define __CY_WORKER_THREAD_EXECUTOR_CORO_HPP__
@@ -47,6 +47,7 @@
 #include "CYCoroutine/Executors/CYDerivableExecutor.hpp"
 #include "CYCoroutine/Threads/CYCacheLine.hpp"
 #include "CYCoroutine/Threads/CYThread.hpp"
+#include "CYCoroutine/Results/Impl/CYBinarySemaphore.hpp"
 
 #include <deque>
 #include <mutex>
@@ -90,7 +91,7 @@ private:
 
     CYThread m_thread;
     std::atomic_bool m_bAtomicAbort;
-    std::binary_semaphore m_semaphore;
+    cy_binary_semaphore m_semaphore;
 
     const std::function<void(std::string_view)> m_funcStartedCallBack;
     const std::function<void(std::string_view)> m_funcTerminatedCallback;

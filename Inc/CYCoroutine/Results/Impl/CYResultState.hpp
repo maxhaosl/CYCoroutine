@@ -31,14 +31,14 @@
  *
  * ===============================================================================
  */
-/*
- * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
- * VERSION:  1.0.0
- * PURPOSE:  A cross-platform efficient and stable Coroutine library.
- * CREATION: 2023.04.15
- * LCHANGE:  2023.04.15
- * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
- */
+ /*
+  * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
+  * VERSION:  1.0.0
+  * PURPOSE:  A cross-platform efficient and stable Coroutine library.
+  * CREATION: 2023.04.15
+  * LCHANGE:  2023.04.15
+  * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
+  */
 
 #ifndef __CY_RESULT_STATE_CORO_HPP__
 #define __CY_RESULT_STATE_CORO_HPP__
@@ -46,12 +46,8 @@
 #include "CYCoroutine/CYCoroutineDefine.hpp"
 #include "CYCoroutine/Results/Impl/CYConsumerContext.hpp"
 #include "CYCoroutine/Results/Impl/CYProducerContext.hpp"
-
-#include <atomic>
-#include <cassert>
-#include <type_traits>
-
-CYCOROUTINE_NAMESPACE_BEGIN
+#include "CYCoroutine/Results/Impl/CYAtomicEx.hpp"
+#include "CYCoroutine/Results/Impl/CYBinarySemaphore.hpp"
 
 class CYCOROUTINE_API CYResultStateBase
 {
@@ -74,7 +70,7 @@ protected:
     void AssertDone() const noexcept;
 
 protected:
-    std::atomic<EResultState> m_eResultState{ EResultState::STATE_RESULT_IDLE };
+    cy_atomic<EResultState> m_eResultState{ EResultState::STATE_RESULT_IDLE };
     CYConsumerContext m_objConsumer;
     coroutine_handle<void> m_handleDone;
 };
@@ -119,7 +115,7 @@ public:
             return m_objProducer.Status();
         }
 
-        const auto objWaitCtx = MakeShared<std::binary_semaphore>(0);
+        const auto objWaitCtx = MakeShared<cy_binary_semaphore>(0);
         m_objConsumer.SetWaitForContext(objWaitCtx);
 
         std::atomic_thread_fence(std::memory_order_release);
@@ -276,7 +272,6 @@ private:
 #endif
     }
 
-
     template<class CALLABLE_TYPE>
     void FromCallable(std::true_type /*is_void_type*/, CALLABLE_TYPE&& callable)
     {
@@ -292,7 +287,6 @@ private:
 
 private:
     CYProducerContext<TYPE> m_objProducer;
-
 };
 
 template<class TYPE>
@@ -333,7 +327,6 @@ using CYJoinedConsumerResultStatePtr = UniquePtr<CYResultState<TYPE>, JoinedCons
 
 template<class TYPE>
 using CYProducerResultStatePtr = UniquePtr<CYResultState<TYPE>, ProducerResultStateDeleter<TYPE>>;
-
 
 CYCOROUTINE_NAMESPACE_END
 
