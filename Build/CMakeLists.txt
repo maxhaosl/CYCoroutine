@@ -13,8 +13,12 @@ if(MSVC)
 endif()
 
 # 添加库类型选项
-option(BUILD_SHARED_LIBS "Build shared libraries" ON)
-option(BUILD_STATIC_LIBS "Build static libraries" OFF)
+if(NOT DEFINED BUILD_SHARED_LIBS)
+    option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+endif()
+if(NOT DEFINED BUILD_STATIC_LIBS)
+    option(BUILD_STATIC_LIBS "Build static libraries" ON)
+endif()
 
 # Windows运行时库选项
 if(WIN32)
