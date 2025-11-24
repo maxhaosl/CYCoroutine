@@ -1,197 +1,143 @@
 #!/bin/bash
 
-# 设置变量
+set -euo pipefail
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_DIR="$(dirname "$SCRIPT_DIR")"
-BUILD_DIR="$SCRIPT_DIR/build_mac"
-INSTALL_DIR="$SOURCE_DIR/Bin"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+CMAKE_SOURCE_DIR="$PROJECT_ROOT/Build"
+OUTPUT_BASE="$PROJECT_ROOT/Bin"
+mkdir -p "$OUTPUT_BASE"
 
-# 获取传递的架构参数
-TARGET_ARCH=${1:-"universal"}
-
-echo "========================================"
-echo "Building CYCoroutine for macOS ($TARGET_ARCH)"
-echo "========================================"
-
-# 检测操作系统
-OS=$(uname -s)
-if [[ "$OS" != "Darwin" ]]; then
-    echo "Error: This script is intended for macOS only."
+if [[ "$(uname -s)" != "Darwin" ]]; then
+    echo "This script must be run on macOS."
     exit 1
 fi
 
-# 检测Xcode
-if ! xcode-select -p &> /dev/null; then
-    echo "Error: Xcode command line tools are not installed."
-    echo "Run 'xcode-select --install' to install them."
+if ! command -v cmake >/dev/null 2>&1; then
+    echo "CMake is required but was not found in PATH."
     exit 1
 fi
 
-# 检测CMake
-if ! command -v cmake &> /dev/null; then
-    echo "Error: CMake is not installed or not in PATH."
+if ! xcode-select -p >/dev/null 2>&1; then
+    echo "Xcode command line tools are missing. Run 'xcode-select --install' first."
     exit 1
 fi
 
-# 检测编译器
-if ! command -v clang++ &> /dev/null; then
-    echo "Error: Clang++ is not installed or not in PATH."
-    exit 1
-fi
+MACOS_DEPLOYMENT_TARGET=${MACOS_DEPLOYMENT_TARGET:-"11.0"}
+BUILD_TYPES=(${CYCOROUTINE_BUILD_TYPES:-Release})
+MAC_ARCHES=(${CYCOROUTINE_MAC_ARCHES:-arm64 x86_64})
+SHARED_KINDS=(${CYCOROUTINE_SHARED_KINDS:-OFF ON})
 
-# 设置编译器
-export CC=clang
-export CXX=clang++
-echo "Using Clang compiler"
+detect_jobs() {
+    if command -v sysctl >/dev/null 2>&1; then
+        sysctl -n hw.ncpu 2>/dev/null && return
+    fi
+    if command -v nproc >/dev/null 2>&1; then
+        nproc && return
+    fi
+    echo 4
+}
+BUILD_JOBS=${BUILD_JOBS:-$(detect_jobs)}
 
-# 设置最低macOS版本
-MACOS_MIN_VERSION="11.0"
-
-build_libraries() {
+build_slice() {
     local arch=$1
-    local lib_type=$2
-    
-    echo ""
-    echo "Building $lib_type library for $arch architecture..."
-    
-    local build_subdir="build_mac_${arch}_${lib_type}"
-    local build_path="$SCRIPT_DIR/$build_subdir"
-    mkdir -p "$build_path"
-    cd "$build_path"
-    
-    # 配置CMake
-    if [ "$lib_type" = "shared" ]; then
-        cmake -DCMAKE_BUILD_TYPE=Release \
-              -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOS_MIN_VERSION" \
-              -DCMAKE_OSX_ARCHITECTURES="$arch" \
-              -DCMAKE_SYSTEM_PROCESSOR="$arch" \
-              -DBUILD_EXAMPLES=OFF \
-              -DBUILD_SHARED_LIBS=ON \
-              -DBUILD_STATIC_LIBS=OFF \
-              "$SOURCE_DIR/Build"
+    local build_type=$2
+    local shared_flag=$3
+
+    local shared_tag static_flag target_name
+    if [ "$shared_flag" = "ON" ]; then
+        shared_tag="shared"
+        static_flag="OFF"
+        target_name="CYCoroutine_shared"
     else
-        cmake -DCMAKE_BUILD_TYPE=Release \
-              -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOS_MIN_VERSION" \
-              -DCMAKE_OSX_ARCHITECTURES="$arch" \
-              -DCMAKE_SYSTEM_PROCESSOR="$arch" \
-              -DBUILD_EXAMPLES=OFF \
-              -DBUILD_SHARED_LIBS=OFF \
-              -DBUILD_STATIC_LIBS=ON \
-              "$SOURCE_DIR/Build"
+        shared_tag="static"
+        static_flag="ON"
+        target_name="CYCoroutine_static"
     fi
-    
-    if [ $? -ne 0 ]; then
-        echo "Error: CMake configuration failed for $arch $lib_type library."
-        exit 1
-    fi
-    
-    # 构建
-    if [ "$lib_type" = "shared" ]; then
-        make -j$(sysctl -n hw.ncpu) CYCoroutine_shared
-    else
-        make -j$(sysctl -n hw.ncpu) CYCoroutine_static
-    fi
-    
-    if [ $? -ne 0 ]; then
-        echo "Error: Build failed for $arch $lib_type library."
-        exit 1
-    fi
-    
-    cd "$SCRIPT_DIR"
+
+    local build_dir="$SCRIPT_DIR/build_macos_${arch}_${build_type}_${shared_tag}"
+
+    echo "=== macOS / $arch / $build_type / $shared_tag ==="
+
+    cmake -S "$CMAKE_SOURCE_DIR" \
+          -B "$build_dir" \
+          -DCMAKE_BUILD_TYPE="$build_type" \
+          -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOS_DEPLOYMENT_TARGET" \
+          -DCMAKE_OSX_ARCHITECTURES="$arch" \
+          -DBUILD_SHARED_LIBS="$shared_flag" \
+          -DBUILD_STATIC_LIBS="$static_flag" \
+          -DBUILD_EXAMPLES=OFF
+
+    cmake --build "$build_dir" --target "$target_name" --parallel "$BUILD_JOBS"
+
+    local arch_dir="$OUTPUT_BASE/macOS/$arch/$build_type"
+    echo "Artifacts: $arch_dir"
 }
 
-# 根据目标架构构建
-case "$TARGET_ARCH" in
-    "x86_64")
-        build_libraries "x86_64" "static"
-        build_libraries "x86_64" "shared"
-        ;;
-    "arm64")
-        build_libraries "arm64" "static"
-        build_libraries "arm64" "shared"
-        ;;
-    "universal"|"")
-        # 默认行为，构建通用二进制
-        # 创建构建目录
-        mkdir -p "$BUILD_DIR"
-        cd "$BUILD_DIR"
-        
-        # 构建动态库
-        echo ""
-        echo "Building shared library for all macOS architectures (ARM64, x64)..."
-        
-        # 配置CMake，同时构建ARM64和x64
-        cmake -DCMAKE_BUILD_TYPE=Release \
-              -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOS_MIN_VERSION" \
-              -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
-              -DBUILD_EXAMPLES=ON \
-              -DBUILD_SHARED_LIBS=ON \
-              -DBUILD_STATIC_LIBS=OFF \
-              "$SOURCE_DIR/Build"
-        
-        if [ $? -ne 0 ]; then
-            echo "Error: CMake configuration failed for macOS shared library."
-            exit 1
-        fi
-        
-        # 构建
-        make -j$(sysctl -n hw.ncpu) CYCoroutine_shared
-        
-        if [ $? -ne 0 ]; then
-            echo "Error: Build failed for macOS shared library."
-            exit 1
-        fi
-        
-        # 构建示例
-        make -j$(sysctl -n hw.ncpu) CYCoroutineExample
-        
-        if [ $? -ne 0 ]; then
-            echo "Error: Example build failed for macOS shared library."
-            exit 1
-        fi
-        
-        # 构建静态库
-        echo ""
-        echo "Building static library for all macOS architectures (ARM64, x64)..."
-        
-        # 配置CMake，同时构建ARM64和x64
-        cmake -DCMAKE_BUILD_TYPE=Release \
-              -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOS_MIN_VERSION" \
-              -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
-              -DBUILD_EXAMPLES=ON \
-              -DBUILD_SHARED_LIBS=OFF \
-              -DBUILD_STATIC_LIBS=ON \
-              "$SOURCE_DIR/Build"
-        
-        if [ $? -ne 0 ]; then
-            echo "Error: CMake configuration failed for macOS static library."
-            exit 1
-        fi
-        
-        # 构建
-        make -j$(sysctl -n hw.ncpu) CYCoroutine_static
-        
-        if [ $? -ne 0 ]; then
-            echo "Error: Build failed for macOS static library."
-            exit 1
-        fi
-        
-        # 构建示例
-        make -j$(sysctl -n hw.ncpu) CYCoroutineExample
-        
-        if [ $? -ne 0 ]; then
-            echo "Error: Example build failed for macOS static library."
-            exit 1
-        fi
-        ;;
-    *)
-        echo "Error: Unknown architecture '$TARGET_ARCH'. Supported architectures: x86_64, arm64, universal"
-        exit 1
-        ;;
-esac
+combine_universal() {
+    local build_type=$1
+    local shared_flag=$2
 
-echo ""
+    if ! command -v lipo >/dev/null 2>&1; then
+        echo "Skipping macOS universal ${build_type}/${shared_flag}: lipo not found."
+        return
+    fi
+
+    local suffix lib_desc
+    if [ "$shared_flag" = "ON" ]; then
+        suffix="dylib"
+        lib_desc="shared"
+    else
+        suffix="a"
+        lib_desc="static"
+    fi
+
+    local src_arm="$OUTPUT_BASE/macOS/arm64/$build_type/libCYCoroutine.$suffix"
+    local src_x86="$OUTPUT_BASE/macOS/x86_64/$build_type/libCYCoroutine.$suffix"
+
+    if [ ! -f "$src_arm" ] || [ ! -f "$src_x86" ]; then
+        echo "Skipping macOS $build_type $lib_desc universal library: missing slices."
+        [ ! -f "$src_arm" ] && echo "  Missing: $src_arm"
+        [ ! -f "$src_x86" ] && echo "  Missing: $src_x86"
+        return
+    fi
+
+    local dest_dir="$OUTPUT_BASE/macOS/universal/$build_type"
+    mkdir -p "$dest_dir"
+    local dest="$dest_dir/libCYCoroutine.$suffix"
+
+    echo "Creating macOS $build_type $lib_desc universal library..."
+    lipo -create "$src_arm" "$src_x86" -output "$dest"
+
+    if [ "$shared_flag" = "ON" ]; then
+        local versioned
+        for versioned in "$OUTPUT_BASE/macOS/arm64/$build_type"/libCYCoroutine.*.dylib; do
+            [ -e "$versioned" ] || continue
+            local base="$(basename "$versioned")"
+            [ "$base" = "libCYCoroutine.dylib" ] && continue
+            ln -sf "libCYCoroutine.dylib" "$dest_dir/$base"
+        done
+    fi
+
+    echo "Universal artifact: $dest"
+}
+
 echo "========================================"
-echo "macOS build completed successfully!"
-echo "Output files are in: $INSTALL_DIR"
+echo "Building CYCoroutine for macOS"
+echo "Output root: $OUTPUT_BASE"
+echo "Architectures: ${MAC_ARCHES[*]}"
+echo "Build types: ${BUILD_TYPES[*]}"
+echo "Shared kinds: ${SHARED_KINDS[*]}"
 echo "========================================"
+
+for build_type in "${BUILD_TYPES[@]}"; do
+    for shared_flag in "${SHARED_KINDS[@]}"; do
+        for arch in "${MAC_ARCHES[@]}"; do
+            build_slice "$arch" "$build_type" "$shared_flag"
+        done
+        combine_universal "$build_type" "$shared_flag"
+    done
+done
+
+echo "macOS builds complete. See $OUTPUT_BASE/macOS/* for artifacts."
+
