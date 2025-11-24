@@ -64,7 +64,7 @@ class AtomicBase : public std::atomic<T>
 {
 public:
     using Base = std::atomic<T>;
-    using Base::Base;  // 继承 std::atomic<T> 的构造函数（C++20）
+    using Base::Base;  
 
     void wait(const T& oldValue)
     {

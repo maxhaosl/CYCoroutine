@@ -5,7 +5,11 @@
 #include <iomanip>
 #include <chrono>
 #include <cstring>
+#if defined(_MSC_VER)
 #include <format>
+#elif defined(USE_FMT_LIBRARY)
+#include <fmt/core.h>
+#endif
 
 CYCOROUTINE_NAMESPACE_BEGIN
 
@@ -98,8 +102,10 @@ const int64_t CYTimeStamps::GetTime() const
 */
 const TString CYTimeStamps::GetTimeStr() const
 {
-#ifdef WIN32
+#if defined(_MSC_VER)
 	return std::format(TEXT("{:0>4}{:0>2}{:0>2}{:0>2}{:0>2}{:0>2}"), m_nYY, m_nMM, m_nDD, m_nHR, m_nMN, m_nSC);
+#elif defined(USE_FMT_LIBRARY)
+	return fmt::format(TEXT("{:0>4}{:0>2}{:0>2}{:0>2}{:0>2}{:0>2}"), m_nYY, m_nMM, m_nDD, m_nHR, m_nMN, m_nSC);
 #else
     TOStringStream ss;
     ss << std::setw(4) << std::setfill(TEXT('0')) << m_nYY <<
@@ -123,8 +129,10 @@ const TString CYTimeStamps::GetTimeStr() const
 */
 const TString CYTimeStamps::ToString() const
 {
-#ifdef WIN32
+#if defined(_MSC_VER)
 	return std::format(TEXT("{:0>4}-{:0>2}-{:0>2} {:0>2}:{:0>2}:{:0>2}.{:0>3}"), m_nYY, m_nMM, m_nDD, m_nHR, m_nMN, m_nSC, m_nMMN);
+#elif defined(USE_FMT_LIBRARY)
+	return fmt::format(TEXT("{:0>4}-{:0>2}-{:0>2} {:0>2}:{:0>2}:{:0>2}.{:0>3}"), m_nYY, m_nMM, m_nDD, m_nHR, m_nMN, m_nSC, m_nMMN);
 #else
     TOStringStream ss;
     ss << std::setw(4) << std::setfill(TEXT('0')) << m_nYY <<

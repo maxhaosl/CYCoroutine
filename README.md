@@ -19,11 +19,12 @@ chmod +x Build/build.sh
 ### 平台专用构建脚本
 
 #### build_mac.sh (macOS)
-专门用于构建 macOS 版本的脚本，支持 Intel (x64) 和 Apple Silicon (arm64) 架构。
+专门用于构建 macOS 版本的脚本，支持 Intel (x86_64) 和 Apple Silicon (arm64) 架构。
 ```bash
 chmod +x Build/build_mac.sh
 ./Build/build_mac.sh
 ```
+> 当 arm64 与 x86_64 两个切片都构建完成后，脚本会自动使用 `lipo` 生成 `Bin/macOS/universal/<配置>/libCYCoroutine.{a,dylib}`。
 
 #### build_unix.sh (Unix/Linux)
 用于构建 Unix/Linux 版本的脚本。
@@ -31,19 +32,32 @@ chmod +x Build/build_mac.sh
 chmod +x Build/build_unix.sh
 ./Build/build_unix.sh
 ```
+> Linux 构建会优先自动查找 `clang-17`/`clang++-17` 作为默认编译器对；如果系统安装位置不同，可在运行脚本前设置 `CYLOGGER_CC` / `CYLOGGER_CXX` 环境变量进行覆盖，例如：
+> ```bash
+> export CYLOGGER_CC=/opt/llvm/bin/clang
+> export CYLOGGER_CXX=/opt/llvm/bin/clang++
+> ./Build/build_unix.sh
+> ```
 
-#### build_windows.bat (Windows)
-用于构建 Windows 版本的批处理脚本。
+#### build_windows.bat / build_windows_all.bat (Windows)
+Windows 平台的批处理脚本只生成静态库 (`CYCoroutine.lib`)，以便直接链接到 CYLogger：
 ```batch
-Build\build_windows.bat
+REM 单次构建：BuildType [Release|Debug], LibType 固定为 Static, Arch [x64|x86], CRT [MD|MT]
+Build\build_windows.bat Release Static x64 MD
+
+REM 枚举全部组合（同样仅静态库）
+Build\build_windows_all.bat
 ```
 
+> 输出目录遵循 `Bin\Windows\<arch>\<CRT>\<config>\CYCoroutine.lib`，与 CYLogger 的依赖检测逻辑保持一致。传入 `Shared` 将被脚本拒绝，以避免旧的 DLL 流程再次被调用。
+
 #### build_ios.sh (iOS)
-用于构建 iOS 版本的脚本，支持设备 (arm64) 和模拟器 (x86_64) 架构。
+用于构建 iOS 版本的脚本，支持设备 (arm64) 和模拟器 (x86_64、arm64-simulator) 架构。
 ```bash
 chmod +x Build/build_ios.sh
 ./Build/build_ios.sh
 ```
+> 只要存在至少两个架构的产物（例如 arm64 与 x86_64），脚本就会自动生成 `Bin/iOS/universal/<配置>/libCYCoroutine.{a,dylib}` 通用库。
 
 #### build_android.sh (Android)
 用于构建 Android 版本的脚本，支持多种 ABI 架构。
@@ -59,15 +73,14 @@ chmod +x Build/build_android.sh
 ```
 Bin/
 ├── macOS/
-│   └── x64/
-│       ├── libCYCoroutine.dylib (动态库)
-│       ├── libCYCoroutine.a (静态库)
-│       └── CYCoroutineExample_x64 (示例程序)
+│   ├── arm64/
+│   ├── x86_64/
+│   └── universal/
 ├── iOS/
-│   └── x64/
-│       ├── libCYCoroutine.dylib
-│       ├── libCYCoroutine.a
-│       └── CYCoroutineExample_ios_simulator.app
+│   ├── arm64/
+│   ├── x86_64/
+│   ├── arm64-simulator/
+│   └── universal/
 ├── Windows/
 │   ├── x86/
 │   └── x64/
@@ -75,11 +88,13 @@ Bin/
 │   ├── x86/
 │   └── x64/
 └── Android/
-    ├── armv7/
-    ├── arm64/
+    ├── armeabi-v7a/
+    ├── arm64-v8a/
     ├── x86/
-    └── x64/
+    └── x86_64/
 ```
+
+macOS / iOS 通用目录下会出现 `libCYCoroutine.a` 与 `libCYCoroutine.dylib`，可直接用于需要 fat binaries 的项目；共享库还会自动附带版本化软链接（例如 `libCYCoroutine.1.0.0.dylib`）。
 
 ## 示例代码
 

@@ -48,7 +48,6 @@
 #include "CYCoroutine/Results/Impl/CYCountingSemaphore.hpp"
 
 #include <atomic>
-#include <semaphore>
 #include <chrono>
 #include <cassert>
 

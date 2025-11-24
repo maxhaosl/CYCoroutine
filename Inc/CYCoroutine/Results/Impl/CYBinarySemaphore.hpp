@@ -50,6 +50,7 @@
 #include <chrono>
 
 #if defined(__APPLE__) && defined(__clang__)
+#elif defined(CYCOROUTINE_UNIX_OS)
 
 #else
 #include <semaphore>
@@ -133,6 +134,8 @@ private:
 };
 
 #if defined(__APPLE__)
+using cy_binary_semaphore = BinarySemaphore;
+#elif defined(CYCOROUTINE_UNIX_OS)
 using cy_binary_semaphore = BinarySemaphore;
 #else
 using cy_binary_semaphore = std::binary_semaphore;

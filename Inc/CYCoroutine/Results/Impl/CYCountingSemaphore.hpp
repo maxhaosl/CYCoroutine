@@ -53,6 +53,7 @@
 #include <algorithm>
 
 #if defined(__APPLE__) && defined(__clang__)
+#elif defined(CYCOROUTINE_UNIX_OS)
 
 #else
 #include <semaphore>
@@ -160,6 +161,9 @@ private:
 };
 
 #if defined(__APPLE__)
+template <ptrdiff_t Max = std::numeric_limits<ptrdiff_t>::max()>
+using cy_counting_semaphore = CYCountingSemaphore<Max>;
+#elif defined(CYCOROUTINE_UNIX_OS)
 template <ptrdiff_t Max = std::numeric_limits<ptrdiff_t>::max()>
 using cy_counting_semaphore = CYCountingSemaphore<Max>;
 #else

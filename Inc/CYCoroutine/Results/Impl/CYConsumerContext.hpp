@@ -47,7 +47,6 @@
 #include "CYCoroutine/Results/Impl/CYBinarySemaphore.hpp"
 
 #include <atomic>
-#include <semaphore>
 
 CYCOROUTINE_NAMESPACE_BEGIN
 

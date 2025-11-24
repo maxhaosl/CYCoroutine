@@ -51,7 +51,6 @@
 
 #include <deque>
 #include <mutex>
-#include <semaphore>
 
 CYCOROUTINE_NAMESPACE_BEGIN
 

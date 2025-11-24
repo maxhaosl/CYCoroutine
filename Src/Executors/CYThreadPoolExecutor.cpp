@@ -4,7 +4,6 @@
 #include "CYCoroutine/Common/Structure/CYStringUtils.hpp"
 #include "CYCoroutine/Results/Impl/CYBinarySemaphore.hpp"
 
-#include <semaphore>
 #include <algorithm>
 
 using CYCOROUTINE_NAMESPACE::CYThreadPoolExecutor;

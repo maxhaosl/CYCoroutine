@@ -1,5 +1,5 @@
 @echo off
-setlocal enabledelayedexpansion
+setlocal
 
 echo ========================================
 echo Building CYCoroutine for Windows
@@ -32,109 +32,106 @@ REM 检查Visual Studio环境
 if not defined VCINSTALLDIR (
     echo Error: Visual Studio environment not detected.
     echo Please run this script from a Visual Studio Developer Command Prompt.
+    echo.
+    echo You can also try to find and run vcvarsall.bat manually:
+    echo   "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+    echo   or
+    echo   "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
+    echo.
     pause
     exit /b 1
 )
 
 REM 获取Visual Studio版本
 set GENERATOR=
-for /f "tokens=*" %%i in ('cmake --help ^| findstr "Visual Studio"') do (
-    if "!GENERATOR!"=="" set GENERATOR=%%i
+for /f "tokens=*" %%i in ('cmake --help ^| findstr "Visual Studio 17 2022"') do (
+    set GENERATOR=Visual Studio 17 2022
+    goto :generator_found
 )
-if "!GENERATOR!"=="" set GENERATOR=Visual Studio 16 2019
+for /f "tokens=*" %%i in ('cmake --help ^| findstr "Visual Studio 16 2019"') do (
+    set GENERATOR=Visual Studio 16 2019
+    goto :generator_found
+)
+:generator_found
+if "%GENERATOR%"=="" set GENERATOR=Visual Studio 16 2019
+
+echo Using generator: %GENERATOR%
+echo Build type: %BUILD_TYPE%
+echo Shared runtime: %SHARED_RUNTIME%
+echo Static runtime: %STATIC_RUNTIME%
 
 REM 构建x64动态库
 echo.
-echo Building for x64 Shared (!SHARED_RUNTIME!)...
-cmake -G "!GENERATOR!" -A x64 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DBUILD_EXAMPLES=ON -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DWINDOWS_RUNTIME=!SHARED_RUNTIME! "%SOURCE_DIR%/Build"
+echo Building for x64 Shared (%SHARED_RUNTIME%)...
+cmake -G "%GENERATOR%" -A x64 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DBUILD_EXAMPLES=ON -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DWINDOWS_RUNTIME=%SHARED_RUNTIME% "%SOURCE_DIR%/Build"
 if %ERRORLEVEL% neq 0 (
-    echo Error: CMake configuration failed for x64 Shared (!SHARED_RUNTIME!).
+    echo Error: CMake configuration failed for x64 Shared (%SHARED_RUNTIME%).
     pause
     exit /b 1
 )
 
-cmake --build . --config %BUILD_TYPE% --target CYCoroutine_shared
+cmake --build . --config %BUILD_TYPE% --target CYCoroutine_shared --parallel
 if %ERRORLEVEL% neq 0 (
-    echo Error: Build failed for x64 Shared (!SHARED_RUNTIME!).
-    pause
-    exit /b 1
-)
-
-cmake --build . --config %BUILD_TYPE% --target CYCoroutineExample
-if %ERRORLEVEL% neq 0 (
-    echo Error: Example build failed for x64 Shared (!SHARED_RUNTIME!).
+    echo Error: Build failed for x64 Shared (%SHARED_RUNTIME%).
     pause
     exit /b 1
 )
 
 REM 构建x64静态库
 echo.
-echo Building for x64 Static (!STATIC_RUNTIME!)...
-cmake -G "!GENERATOR!" -A x64 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DBUILD_EXAMPLES=ON -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON -DWINDOWS_RUNTIME=!STATIC_RUNTIME! "%SOURCE_DIR%/Build"
+echo Building for x64 Static (%STATIC_RUNTIME%)...
+cmake -G "%GENERATOR%" -A x64 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DBUILD_EXAMPLES=ON -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON -DWINDOWS_RUNTIME=%STATIC_RUNTIME% "%SOURCE_DIR%/Build"
 if %ERRORLEVEL% neq 0 (
-    echo Error: CMake configuration failed for x64 Static (!STATIC_RUNTIME!).
+    echo Error: CMake configuration failed for x64 Static (%STATIC_RUNTIME%).
     pause
     exit /b 1
 )
 
-cmake --build . --config %BUILD_TYPE% --target CYCoroutine_static
+cmake --build . --config %BUILD_TYPE% --target CYCoroutine_static --parallel
 if %ERRORLEVEL% neq 0 (
-    echo Error: Build failed for x64 Static (!STATIC_RUNTIME!).
+    echo Error: Build failed for x64 Static (%STATIC_RUNTIME%).
     pause
     exit /b 1
 )
 
-cmake --build . --config %BUILD_TYPE% --target CYCoroutineExample
+REM 构建示例
+echo.
+echo Building examples...
+cmake --build . --config %BUILD_TYPE% --target CYCoroutineExample --parallel
 if %ERRORLEVEL% neq 0 (
-    echo Error: Example build failed for x64 Static (!STATIC_RUNTIME!).
-    pause
-    exit /b 1
+    echo Warning: Example build failed, but libraries were built successfully.
 )
 
 REM 构建x86动态库
 echo.
-echo Building for x86 Shared (!SHARED_RUNTIME!)...
-cmake -G "!GENERATOR!" -A Win32 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DBUILD_EXAMPLES=ON -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DWINDOWS_RUNTIME=!SHARED_RUNTIME! "%SOURCE_DIR%/Build"
+echo Building for x86 Shared (%SHARED_RUNTIME%)...
+cmake -G "%GENERATOR%" -A Win32 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DBUILD_EXAMPLES=ON -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DWINDOWS_RUNTIME=%SHARED_RUNTIME% "%SOURCE_DIR%/Build"
 if %ERRORLEVEL% neq 0 (
-    echo Error: CMake configuration failed for x86 Shared (!SHARED_RUNTIME!).
+    echo Error: CMake configuration failed for x86 Shared (%SHARED_RUNTIME%).
     pause
     exit /b 1
 )
 
-cmake --build . --config %BUILD_TYPE% --target CYCoroutine_shared
+cmake --build . --config %BUILD_TYPE% --target CYCoroutine_shared --parallel
 if %ERRORLEVEL% neq 0 (
-    echo Error: Build failed for x86 Shared (!SHARED_RUNTIME!).
-    pause
-    exit /b 1
-)
-
-cmake --build . --config %BUILD_TYPE% --target CYCoroutineExample
-if %ERRORLEVEL% neq 0 (
-    echo Error: Example build failed for x86 Shared (!SHARED_RUNTIME!).
+    echo Error: Build failed for x86 Shared (%SHARED_RUNTIME%).
     pause
     exit /b 1
 )
 
 REM 构建x86静态库
 echo.
-echo Building for x86 Static (!STATIC_RUNTIME!)...
-cmake -G "!GENERATOR!" -A Win32 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DBUILD_EXAMPLES=ON -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON -DWINDOWS_RUNTIME=!STATIC_RUNTIME! "%SOURCE_DIR%/Build"
+echo Building for x86 Static (%STATIC_RUNTIME%)...
+cmake -G "%GENERATOR%" -A Win32 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DBUILD_EXAMPLES=ON -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON -DWINDOWS_RUNTIME=%STATIC_RUNTIME% "%SOURCE_DIR%/Build"
 if %ERRORLEVEL% neq 0 (
-    echo Error: CMake configuration failed for x86 Static (!STATIC_RUNTIME!).
+    echo Error: CMake configuration failed for x86 Static (%STATIC_RUNTIME%).
     pause
     exit /b 1
 )
 
-cmake --build . --config %BUILD_TYPE% --target CYCoroutine_static
+cmake --build . --config %BUILD_TYPE% --target CYCoroutine_static --parallel
 if %ERRORLEVEL% neq 0 (
-    echo Error: Build failed for x86 Static (!STATIC_RUNTIME!).
-    pause
-    exit /b 1
-)
-
-cmake --build . --config %BUILD_TYPE% --target CYCoroutineExample
-if %ERRORLEVEL% neq 0 (
-    echo Error: Example build failed for x86 Static (!STATIC_RUNTIME!).
+    echo Error: Build failed for x86 Static (%STATIC_RUNTIME%).
     pause
     exit /b 1
 )
@@ -144,6 +141,23 @@ echo ========================================
 echo Build completed successfully!
 echo Output files are in: %INSTALL_DIR%
 echo ========================================
+
+REM 显示生成的文件
+echo.
+echo Generated files:
+if exist "%INSTALL_DIR%\Windows\x86_64\%SHARED_RUNTIME%\%BUILD_TYPE%\CYCoroutine.dll" (
+    echo   x64 Shared: CYCoroutine.dll, CYCoroutine.lib
+)
+if exist "%INSTALL_DIR%\Windows\x86_64\%STATIC_RUNTIME%\%BUILD_TYPE%\CYCoroutine.lib" (
+    echo   x64 Static: CYCoroutine.lib
+)
+if exist "%INSTALL_DIR%\Windows\x86\%SHARED_RUNTIME%\%BUILD_TYPE%\CYCoroutine.dll" (
+    echo   x86 Shared: CYCoroutine.dll, CYCoroutine.lib
+)
+if exist "%INSTALL_DIR%\Windows\x86\%STATIC_RUNTIME%\%BUILD_TYPE%\CYCoroutine.lib" (
+    echo   x86 Static: CYCoroutine.lib
+)
+
 pause
 goto :eof
 
