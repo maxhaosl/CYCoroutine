@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iomanip>
 #include <chrono>
+#include <cstring>
 #include <format>
 
 CYCOROUTINE_NAMESPACE_BEGIN

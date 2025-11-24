@@ -45,6 +45,8 @@
 
 #include "CYCoroutine/Results/Impl/CYLazyResultState.hpp"
 
+#include <utility>
+
 CYCOROUTINE_NAMESPACE_BEGIN
 
 //////////////////////////////////////////////////////////////////////////

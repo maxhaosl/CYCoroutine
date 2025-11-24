@@ -1,18 +1,19 @@
 cmake_minimum_required(VERSION 3.16)
 project(CYCoroutine VERSION 1.0.0 LANGUAGES CXX)
 
-# 设置C++标准
+# Configure the C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# 确保所有目标使用C++20
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
+# Force every target to compile as C++20
 if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++20")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 endif()
 
-# 添加库类型选项
+# Library flavor toggles
 if(NOT DEFINED BUILD_SHARED_LIBS)
     option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 endif()
@@ -20,29 +21,41 @@ if(NOT DEFINED BUILD_STATIC_LIBS)
     option(BUILD_STATIC_LIBS "Build static libraries" ON)
 endif()
 
-# Windows运行时库选项
+# Windows runtime library selection
 if(WIN32)
-    set(WINDOWS_RUNTIME "MD" CACHE STRING "Windows runtime library")
-    set_property(CACHE WINDOWS_RUNTIME PROPERTY STRINGS "MD" "MT" "MDd" "MTd")
-    
-    if(WINDOWS_RUNTIME MATCHES "MD")
-        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
-    elseif(WINDOWS_RUNTIME MATCHES "MT")
-        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
-    elseif(WINDOWS_RUNTIME MATCHES "MDd")
-        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebugDLL")
-    elseif(WINDOWS_RUNTIME MATCHES "MTd")
-        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
+    set(_CYCOROUTINE_VALID_RUNTIMES "MD" "MT" "MDD" "MTD")
+    if(NOT DEFINED WINDOWS_RUNTIME)
+        set(WINDOWS_RUNTIME "MD" CACHE STRING "Windows runtime library")
+    else()
+        set(WINDOWS_RUNTIME "${WINDOWS_RUNTIME}" CACHE STRING "Windows runtime library" FORCE)
     endif()
+    set_property(CACHE WINDOWS_RUNTIME PROPERTY STRINGS "MD" "MT" "MDD" "MTD")
+    
+    string(TOUPPER "${WINDOWS_RUNTIME}" _CYCOROUTINE_RUNTIME_UPPER)
+    list(FIND _CYCOROUTINE_VALID_RUNTIMES "${_CYCOROUTINE_RUNTIME_UPPER}" _CYCOROUTINE_RUNTIME_INDEX)
+    if(_CYCOROUTINE_RUNTIME_INDEX EQUAL -1)
+        message(FATAL_ERROR "WINDOWS_RUNTIME must be one of MT, MD, MTD, or MDD (got ${WINDOWS_RUNTIME}).")
+    endif()
+    
+    if(_CYCOROUTINE_RUNTIME_UPPER STREQUAL "MT")
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded" CACHE STRING "MSVC runtime selection" FORCE)
+    elseif(_CYCOROUTINE_RUNTIME_UPPER STREQUAL "MTD")
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug" CACHE STRING "MSVC runtime selection" FORCE)
+    elseif(_CYCOROUTINE_RUNTIME_UPPER STREQUAL "MDD")
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebugDLL" CACHE STRING "MSVC runtime selection" FORCE)
+    else()
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL" CACHE STRING "MSVC runtime selection" FORCE)
+    endif()
+    message(STATUS "Windows Runtime: ${_CYCOROUTINE_RUNTIME_UPPER}")
 endif()
 
-# 设置输出目录结构
+# Output directory layout
 if(WIN32)
     set(PLATFORM_NAME "Windows")
     if(CMAKE_SIZEOF_VOID_P EQUAL 4)
         set(ARCH_NAME "x86")
     else()
-        set(ARCH_NAME "x64")
+        set(ARCH_NAME "x86_64")
     endif()
 elseif(APPLE)
     if(IOS)
@@ -50,21 +63,53 @@ elseif(APPLE)
     else()
         set(PLATFORM_NAME "macOS")
     endif()
-    if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64|aarch64")
-        set(ARCH_NAME "arm64")
+    # Prefer CMAKE_OSX_ARCHITECTURES as it explicitly specifies the target architecture
+    # This is especially important when cross-compiling (e.g., x86_64 host building for arm64)
+    if(DEFINED CMAKE_OSX_ARCHITECTURES)
+        if(CMAKE_OSX_ARCHITECTURES MATCHES "arm64")
+            set(ARCH_NAME "arm64")
+        elseif(CMAKE_OSX_ARCHITECTURES MATCHES "x86_64")
+            set(ARCH_NAME "x86_64")
+        elseif(CMAKE_OSX_ARCHITECTURES MATCHES "i386|i686")
+            set(ARCH_NAME "x86")
+        else()
+            # Use the first architecture if multiple are specified
+            list(GET CMAKE_OSX_ARCHITECTURES 0 first_arch)
+            if(first_arch MATCHES "arm64|aarch64")
+                set(ARCH_NAME "arm64")
+            elseif(first_arch MATCHES "x86_64|AMD64")
+                set(ARCH_NAME "x86_64")
+            elseif(first_arch MATCHES "i386|i686")
+                set(ARCH_NAME "x86")
+            else()
+                set(ARCH_NAME ${first_arch})
+            endif()
+        endif()
+    # Fall back to CMAKE_SYSTEM_PROCESSOR if CMAKE_OSX_ARCHITECTURES is not set
+    elseif(DEFINED CMAKE_SYSTEM_PROCESSOR)
+        if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64|aarch64")
+            set(ARCH_NAME "arm64")
+        elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
+            set(ARCH_NAME "x86_64")
+        elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "i386|i686")
+            set(ARCH_NAME "x86")
+        else()
+            set(ARCH_NAME ${CMAKE_SYSTEM_PROCESSOR})
+        endif()
+    # Default fallback
     else()
-        set(ARCH_NAME "x64")
+        set(ARCH_NAME "x86_64")
     endif()
 elseif(ANDROID)
     set(PLATFORM_NAME "Android")
     if(CMAKE_ANDROID_ARCH_ABI STREQUAL "armeabi-v7a")
-        set(ARCH_NAME "armv7")
+        set(ARCH_NAME "armeabi-v7a")
     elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "arm64-v8a")
-        set(ARCH_NAME "arm64")
+        set(ARCH_NAME "arm64-v8a")
     elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86")
         set(ARCH_NAME "x86")
     elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86_64")
-        set(ARCH_NAME "x64")
+        set(ARCH_NAME "x86_64")
     endif()
 elseif(UNIX)
     set(PLATFORM_NAME "Linux")
@@ -73,64 +118,84 @@ elseif(UNIX)
     elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "i386|i686")
         set(ARCH_NAME "x86")
     else()
-        set(ARCH_NAME "x64")
+        set(ARCH_NAME "x86_64")
     endif()
 endif()
 
-# 设置输出目录
-set(OUTPUT_BASE_DIR ${CMAKE_SOURCE_DIR}/../Bin/${PLATFORM_NAME}/${ARCH_NAME})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_BASE_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_BASE_DIR})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_BASE_DIR})
+# Use absolute output directories to keep artifacts organized
+# Match CYLogger's output directory structure for consistency
+if(DEFINED CYLOGGER_ROOT_DIR)
+    get_filename_component(OUTPUT_BASE_DIR "${CYLOGGER_ROOT_DIR}/Bin/${PLATFORM_NAME}/${ARCH_NAME}" ABSOLUTE)
+else()
+    get_filename_component(OUTPUT_BASE_DIR "${CMAKE_SOURCE_DIR}/../Bin/${PLATFORM_NAME}/${ARCH_NAME}" ABSOLUTE)
+endif()
 
-# 多配置生成器（如Visual Studio）的输出目录
+# On Windows, include runtime library type in output path (MD/MT)
+if(WIN32 AND DEFINED WINDOWS_RUNTIME)
+    set(OUTPUT_BASE_DIR "${OUTPUT_BASE_DIR}/${WINDOWS_RUNTIME}")
+endif()
+
+# For single-config generators (like Android), include build type in output path
+# This matches CYLogger's output directory structure
+if(CMAKE_BUILD_TYPE)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_BASE_DIR}/${CMAKE_BUILD_TYPE}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OUTPUT_BASE_DIR}/${CMAKE_BUILD_TYPE}")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT_BASE_DIR}/${CMAKE_BUILD_TYPE}")
+else()
+    # Fallback if CMAKE_BUILD_TYPE is not set
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_BASE_DIR})
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_BASE_DIR})
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_BASE_DIR})
+endif()
+
+# Multi-config generator output directories (Visual Studio, Xcode, etc.)
 foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
     string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${OUTPUT_BASE_DIR}/${OUTPUTCONFIG})
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${OUTPUT_BASE_DIR}/${OUTPUTCONFIG})
-    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${OUTPUT_BASE_DIR}/${OUTPUTCONFIG})
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${OUTPUT_BASE_DIR}/${OUTPUTCONFIG}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${OUTPUT_BASE_DIR}/${OUTPUTCONFIG}")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${OUTPUT_BASE_DIR}/${OUTPUTCONFIG}")
 endforeach()
 
-# 包含目录
+# Include directories
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../Inc)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../Src)
 
-# 收集源文件
+# Gather sources
 file(GLOB_RECURSE CYCOROUTINE_SOURCES 
     "${CMAKE_CURRENT_SOURCE_DIR}/../Src/*.cpp"
 )
 
-# 收集头文件
+# Gather headers
 file(GLOB_RECURSE CYCOROUTINE_HEADERS 
     "${CMAKE_CURRENT_SOURCE_DIR}/../Inc/*.hpp"
 )
 
-# 函数：设置目标属性
+# Helper to apply platform-specific properties
 function(set_target_properties_by_platform TARGET)
     if(WIN32)
-        # Windows特定设置
+        # Windows-specific defines
         target_compile_definitions(${TARGET} PRIVATE 
             _WIN32_WINNT=0x0601  # Windows 7
             WIN32_LEAN_AND_MEAN
             NOMINMAX
         )
         
-        # 设置为动态库
+        # Dynamic library tweaks
         if(${TARGET} MATCHES "shared")
             target_compile_definitions(${TARGET} PRIVATE
-                CYCOROUTINE_IMPORT_API
+                CYCOROUTINE_EXPORT_API
             )
             set_target_properties(${TARGET} PROPERTIES
                 WINDOWS_EXPORT_ALL_SYMBOLS ON
             )
         endif()
         
-        # 设置Windows运行时库
+        # Honor the selected MSVC runtime
         set_property(TARGET ${TARGET} PROPERTY
             MSVC_RUNTIME_LIBRARY "${CMAKE_MSVC_RUNTIME_LIBRARY}")
     elseif(APPLE)
-        # macOS/iOS特定设置
+        # macOS/iOS specific toggles
         if(IOS)
             set_target_properties(${TARGET} PROPERTIES
                 MACOSX_BUNDLE ON
@@ -138,47 +203,47 @@ function(set_target_properties_by_platform TARGET)
             )
         endif()
         
-        # 为动态库添加宏定义
+        # Extra defines for shared builds
         if(${TARGET} MATCHES "shared")
             target_compile_definitions(${TARGET} PRIVATE
-                CYCOROUTINE_IMPORT_API
+                CYCOROUTINE_EXPORT_API
             )
         endif()
     elseif(ANDROID)
-        # Android特定设置
+        # Android-specific flags
         target_compile_definitions(${TARGET} PRIVATE 
             ANDROID
         )
         
-        # 为动态库添加宏定义
+        # Extra defines for shared builds
         if(${TARGET} MATCHES "shared")
             target_compile_definitions(${TARGET} PRIVATE
-                CYCOROUTINE_IMPORT_API
+                CYCOROUTINE_EXPORT_API
             )
         endif()
     elseif(UNIX)
-        # Linux/Unix特定设置
+        # Linux/Unix specific defines
         target_compile_definitions(${TARGET} PRIVATE 
             _GNU_SOURCE
         )
         
-        # 为动态库添加宏定义
+        # Extra defines for shared builds
         if(${TARGET} MATCHES "shared")
             target_compile_definitions(${TARGET} PRIVATE
-                CYCOROUTINE_IMPORT_API
+                CYCOROUTINE_EXPORT_API
             )
         endif()
     endif()
 endfunction()
 
-# 创建动态库
+# Shared library target
 if(BUILD_SHARED_LIBS)
     add_library(CYCoroutine_shared SHARED
         ${CYCOROUTINE_SOURCES}
         ${CYCOROUTINE_HEADERS}
     )
     
-    # 设置库的属性
+    # Shared library metadata
     set_target_properties(CYCoroutine_shared PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
@@ -186,43 +251,43 @@ if(BUILD_SHARED_LIBS)
         OUTPUT_NAME "CYCoroutine"
     )
     
-    # 应用平台特定设置
+    # Apply per-platform settings
     set_target_properties_by_platform(CYCoroutine_shared)
     
-    # 为了兼容性，创建一个别名
+    # Provide an ALIAS for downstream targets
     add_library(CYCoroutine::shared ALIAS CYCoroutine_shared)
 endif()
 
-# 创建静态库
+# Static library target
 if(BUILD_STATIC_LIBS)
     add_library(CYCoroutine_static STATIC
         ${CYCOROUTINE_SOURCES}
         ${CYCOROUTINE_HEADERS}
     )
     
-    # 设置库的属性
+    # Static library metadata
     set_target_properties(CYCoroutine_static PROPERTIES
         VERSION ${PROJECT_VERSION}
         PUBLIC_HEADER "${CYCOROUTINE_HEADERS}"
         OUTPUT_NAME "CYCoroutine"
     )
     
-    # 应用平台特定设置
+    # Apply per-platform settings
     set_target_properties_by_platform(CYCoroutine_static)
     
-    # 为了兼容性，创建一个别名
+    # Provide an ALIAS for downstream targets
     add_library(CYCoroutine::static ALIAS CYCoroutine_static)
 endif()
 
-# 添加构建示例的选项
+# Optional examples
 option(BUILD_EXAMPLES "Build example applications" ON)
 
 if(BUILD_EXAMPLES AND EXISTS ${CMAKE_SOURCE_DIR}/../Example)
-    # 添加示例子目录
+    # Build the bundled examples
     add_subdirectory(${CMAKE_SOURCE_DIR}/../Example ${CMAKE_BINARY_DIR}/example)
 endif()
 
-# 安装规则
+# Install rules
 if(BUILD_SHARED_LIBS)
     install(TARGETS CYCoroutine_shared
         LIBRARY DESTINATION lib
@@ -240,7 +305,7 @@ if(BUILD_STATIC_LIBS)
     )
 endif()
 
-# 打印配置信息
+# Diagnostics
 message(STATUS "CYCoroutine Version: ${PROJECT_VERSION}")
 message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
 message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")

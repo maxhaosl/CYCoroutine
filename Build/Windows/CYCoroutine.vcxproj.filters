@@ -232,6 +232,15 @@
     <ClInclude Include="..\..\Inc\CYCoroutine\Common\CYDebugString.hpp">
       <Filter>Inc\CYCoroutine\Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYAtomicEx.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYBinarySemaphore.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYCountingSemaphore.hpp">
+      <Filter>Inc\CYCoroutine\Results\Impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Executors\CYExecutor.cpp">

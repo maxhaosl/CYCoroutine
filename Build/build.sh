@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# 设置变量
+# Configure base paths
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SOURCE_DIR="$(dirname "$SCRIPT_DIR")"
 
-# 检测操作系统
+# Detect host operating system
 OS=$(uname -s)
 
 echo "========================================"
@@ -12,7 +12,7 @@ echo "CYCoroutine Cross-Platform Build Script"
 echo "========================================"
 echo "Detected OS: $OS"
 
-# 根据操作系统选择构建脚本
+# Dispatch to the platform-specific builder
 case "$OS" in
     Darwin*)
         echo "Building for macOS..."
@@ -32,7 +32,7 @@ case "$OS" in
         ;;
 esac
 
-# 检查构建是否成功
+# Check build status and report
 if [ $? -eq 0 ]; then
     echo ""
     echo "========================================"

@@ -5,6 +5,7 @@
 #else
 #include <exception>
 #include <errno.h>
+#include <cstring>
 #endif
 #include <sstream>
 #include <string>

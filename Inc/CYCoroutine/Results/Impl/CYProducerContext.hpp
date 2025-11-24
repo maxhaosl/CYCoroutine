@@ -47,6 +47,7 @@
 
 #include <cassert>
 #include <exception>
+#include <utility>
 
 CYCOROUTINE_NAMESPACE_BEGIN
 

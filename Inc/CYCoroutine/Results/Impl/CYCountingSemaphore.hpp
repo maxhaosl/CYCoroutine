@@ -164,8 +164,10 @@ template <ptrdiff_t Max = std::numeric_limits<ptrdiff_t>::max()>
 using cy_counting_semaphore = CYCountingSemaphore<Max>;
 #else
 #include <semaphore>
+constexpr ptrdiff_t cy_native_semaphore_max = static_cast<ptrdiff_t>(std::numeric_limits<int>::max());
+
 template <ptrdiff_t Max = std::numeric_limits<ptrdiff_t>::max()>
-using cy_counting_semaphore = std::counting_semaphore<Max>;
+using cy_counting_semaphore = std::counting_semaphore<(Max < cy_native_semaphore_max) ? Max : cy_native_semaphore_max>;
 #endif
 
 CYCOROUTINE_NAMESPACE_END
