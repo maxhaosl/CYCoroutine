@@ -232,7 +232,7 @@
     <ClInclude Include="..\..\Inc\CYCoroutine\Common\CYDebugString.hpp">
       <Filter>Inc\CYCoroutine\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYAtomicEx.hpp">
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYAtomic.hpp">
       <Filter>Inc\CYCoroutine\Results\Impl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYBinarySemaphore.hpp">

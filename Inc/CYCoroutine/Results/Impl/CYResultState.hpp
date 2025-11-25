@@ -46,7 +46,7 @@
 #include "CYCoroutine/CYCoroutineDefine.hpp"
 #include "CYCoroutine/Results/Impl/CYConsumerContext.hpp"
 #include "CYCoroutine/Results/Impl/CYProducerContext.hpp"
-#include "CYCoroutine/Results/Impl/CYAtomicEx.hpp"
+#include "CYCoroutine/Results/Impl/CYAtomic.hpp"
 #include "CYCoroutine/Results/Impl/CYBinarySemaphore.hpp"
 
 class CYCOROUTINE_API CYResultStateBase

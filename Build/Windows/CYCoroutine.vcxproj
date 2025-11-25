@@ -40,7 +40,7 @@
     <ClInclude Include="..\..\Inc\CYCoroutine\Executors\CYThreadPoolExecutor.hpp" />
     <ClInclude Include="..\..\Inc\CYCoroutine\Executors\CYWorkerThreadExecutor.hpp" />
     <ClInclude Include="..\..\Inc\CYCoroutine\Results\CYGenerator.hpp" />
-    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYAtomicEx.hpp" />
+    <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYAtomic.hpp" />
     <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYBinarySemaphore.hpp" />
     <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYConsumerContext.hpp" />
     <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYCountingSemaphore.hpp" />
@@ -218,6 +218,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>

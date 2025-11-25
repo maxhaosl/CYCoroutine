@@ -29,9 +29,9 @@ CYCOROUTINE_NAMESPACE_END
  * CYAwaitViaFunctor
  */
 
-    CYAwaitViaFunctor::CYAwaitViaFunctor(coroutine_handle<void> handleCaller, bool* pbInterrupted) noexcept
-    : m_handleCaller(handleCaller)
-    , m_pbInterrupted(pbInterrupted)
+CYAwaitViaFunctor::CYAwaitViaFunctor(coroutine_handle<void> handleCaller, bool* pbInterrupted) noexcept
+: m_handleCaller(handleCaller)
+, m_pbInterrupted(pbInterrupted)
 {
     assert(static_cast<bool>(handleCaller));
     assert(!handleCaller.done());

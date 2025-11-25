@@ -51,7 +51,7 @@
 #include <mutex>
 #include <condition_variable>
 
-#if defined(__cpp_lib_atomic_wait) && __cplusplus >= 202002L
+#if defined(_MSC_VER)
 #define ATOMIC_HAS_WAIT 1
 #else
 #define ATOMIC_HAS_WAIT 0

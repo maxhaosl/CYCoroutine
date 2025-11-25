@@ -6,118 +6,132 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9B1EDAAF2ED57EB40072A2D0 /* libCYCoroutine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1EDAAE2ED57EB40072A2D0 /* libCYCoroutine.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9B1EDA9F2ED57D970072A2D0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		9B1ED8B02ED5578E0072A2D0 /* libCYCoroutine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libCYCoroutine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B1EDA7A2ED563610072A2D0 /* Inc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Inc; path = ../../../Inc; sourceTree = "<group>"; };
+		9B1EDAA12ED57D970072A2D0 /* CYCoroutineTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CYCoroutineTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B1EDAAE2ED57EB40072A2D0 /* libCYCoroutine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libCYCoroutine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9B1EDA3B2ED55B640072A2D0 /* Src */ = {
+		9B1EDAA32ED57D970072A2D0 /* CYCoroutineTest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			name = Src;
-			path = "/Volumes/文件阵列/Work/CYLogger/ThirdParty/CYCoroutine/Src";
-			sourceTree = "<absolute>";
+			path = CYCoroutineTest;
+			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9B1ED8AE2ED5578E0072A2D0 /* Frameworks */ = {
+		9B1EDA9E2ED57D970072A2D0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B1EDAAF2ED57EB40072A2D0 /* libCYCoroutine.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9B1ED8A72ED5578E0072A2D0 = {
+		9B1EDA982ED57D970072A2D0 = {
 			isa = PBXGroup;
 			children = (
-				9B1ED8B12ED5578E0072A2D0 /* Products */,
-				9B1EDA7A2ED563610072A2D0 /* Inc */,
-				9B1EDA3B2ED55B640072A2D0 /* Src */,
+				9B1EDAA32ED57D970072A2D0 /* CYCoroutineTest */,
+				9B1EDAAD2ED57EB40072A2D0 /* Frameworks */,
+				9B1EDAA22ED57D970072A2D0 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		9B1ED8B12ED5578E0072A2D0 /* Products */ = {
+		9B1EDAA22ED57D970072A2D0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9B1ED8B02ED5578E0072A2D0 /* libCYCoroutine.dylib */,
+				9B1EDAA12ED57D970072A2D0 /* CYCoroutineTest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9B1EDAAD2ED57EB40072A2D0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B1EDAAE2ED57EB40072A2D0 /* libCYCoroutine.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		9B1ED8AC2ED5578E0072A2D0 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		9B1ED8AF2ED5578E0072A2D0 /* CYCoroutine */ = {
+		9B1EDAA02ED57D970072A2D0 /* CYCoroutineTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9B1ED8BB2ED5578E0072A2D0 /* Build configuration list for PBXNativeTarget "CYCoroutine" */;
+			buildConfigurationList = 9B1EDAA82ED57D970072A2D0 /* Build configuration list for PBXNativeTarget "CYCoroutineTest" */;
 			buildPhases = (
-				9B1ED8AC2ED5578E0072A2D0 /* Headers */,
-				9B1ED8AD2ED5578E0072A2D0 /* Sources */,
-				9B1ED8AE2ED5578E0072A2D0 /* Frameworks */,
+				9B1EDA9D2ED57D970072A2D0 /* Sources */,
+				9B1EDA9E2ED57D970072A2D0 /* Frameworks */,
+				9B1EDA9F2ED57D970072A2D0 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				9B1EDA3B2ED55B640072A2D0 /* Src */,
+				9B1EDAA32ED57D970072A2D0 /* CYCoroutineTest */,
 			);
-			name = CYCoroutine;
+			name = CYCoroutineTest;
 			packageProductDependencies = (
 			);
-			productName = CYCoroutine;
-			productReference = 9B1ED8B02ED5578E0072A2D0 /* libCYCoroutine.dylib */;
-			productType = "com.apple.product-type.library.dynamic";
+			productName = CYCoroutineTest;
+			productReference = 9B1EDAA12ED57D970072A2D0 /* CYCoroutineTest */;
+			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9B1ED8A82ED5578E0072A2D0 /* Project object */ = {
+		9B1EDA992ED57D970072A2D0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
-					9B1ED8AF2ED5578E0072A2D0 = {
+					9B1EDAA02ED57D970072A2D0 = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
 				};
 			};
-			buildConfigurationList = 9B1ED8AB2ED5578E0072A2D0 /* Build configuration list for PBXProject "CYCoroutine" */;
+			buildConfigurationList = 9B1EDA9C2ED57D970072A2D0 /* Build configuration list for PBXProject "CYCoroutineTest" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 9B1ED8A72ED5578E0072A2D0;
+			mainGroup = 9B1EDA982ED57D970072A2D0;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 9B1ED8B12ED5578E0072A2D0 /* Products */;
+			productRefGroup = 9B1EDAA22ED57D970072A2D0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9B1ED8AF2ED5578E0072A2D0 /* CYCoroutine */,
+				9B1EDAA02ED57D970072A2D0 /* CYCoroutineTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9B1ED8AD2ED5578E0072A2D0 /* Sources */ = {
+		9B1EDA9D2ED57D970072A2D0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -127,7 +141,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		9B1ED8B92ED5578E0072A2D0 /* Debug */ = {
+		9B1EDAA62ED57D970072A2D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -189,7 +203,7 @@
 			};
 			name = Debug;
 		};
-		9B1ED8BA2ED5578E0072A2D0 /* Release */ = {
+		9B1EDAA72ED57D970072A2D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -244,76 +258,50 @@
 			};
 			name = Release;
 		};
-		9B1ED8BC2ED5578E0072A2D0 /* Debug */ = {
+		9B1EDAA92ED57D970072A2D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6KUBQ5K5V7;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				EXECUTABLE_PREFIX = lib;
-				GCC_ENABLE_CPP_EXCEPTIONS = YES;
-				GCC_ENABLE_CPP_RTTI = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../../Inc",
-					"$(PROJECT_DIR)/../../../Src",
-					"$(PROJECT_DIR)/../../../",
-				);
-				INSTALL_PATH = "$(BUILD_ROOT)/../Bin/MacOS/Lib/";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../../Inc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		9B1ED8BD2ED5578E0072A2D0 /* Release */ = {
+		9B1EDAAA2ED57D970072A2D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6KUBQ5K5V7;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				EXECUTABLE_PREFIX = lib;
-				GCC_ENABLE_CPP_EXCEPTIONS = YES;
-				GCC_ENABLE_CPP_RTTI = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../../Inc",
-					"$(PROJECT_DIR)/../../../Src",
-					"$(PROJECT_DIR)/../../../",
-				);
-				INSTALL_PATH = "$(BUILD_ROOT)/../Bin/MacOS/Lib/";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../../Inc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9B1ED8AB2ED5578E0072A2D0 /* Build configuration list for PBXProject "CYCoroutine" */ = {
+		9B1EDA9C2ED57D970072A2D0 /* Build configuration list for PBXProject "CYCoroutineTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9B1ED8B92ED5578E0072A2D0 /* Debug */,
-				9B1ED8BA2ED5578E0072A2D0 /* Release */,
+				9B1EDAA62ED57D970072A2D0 /* Debug */,
+				9B1EDAA72ED57D970072A2D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9B1ED8BB2ED5578E0072A2D0 /* Build configuration list for PBXNativeTarget "CYCoroutine" */ = {
+		9B1EDAA82ED57D970072A2D0 /* Build configuration list for PBXNativeTarget "CYCoroutineTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9B1ED8BC2ED5578E0072A2D0 /* Debug */,
-				9B1ED8BD2ED5578E0072A2D0 /* Release */,
+				9B1EDAA92ED57D970072A2D0 /* Debug */,
+				9B1EDAAA2ED57D970072A2D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 9B1ED8A82ED5578E0072A2D0 /* Project object */;
+	rootObject = 9B1EDA992ED57D970072A2D0 /* Project object */;
 }
