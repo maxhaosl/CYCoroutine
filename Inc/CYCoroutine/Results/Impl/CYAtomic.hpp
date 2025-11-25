@@ -52,15 +52,15 @@
 #include <condition_variable>
 
 #if defined(_MSC_VER)
-#define ATOMIC_HAS_WAIT 1
+#define ATOMIC_HAS_WAIT 0
 #else
 #define ATOMIC_HAS_WAIT 0
 #endif
 
 CYCOROUTINE_NAMESPACE_BEGIN
 
-template <typename Derived, typename T>
-class AtomicBase : public std::atomic<T>
+template <typename T>
+class CYAtomicBase : public std::atomic<T>
 {
 public:
     using Base = std::atomic<T>;
@@ -68,63 +68,32 @@ public:
 
     void wait(const T& oldValue)
     {
-        static_cast<Derived*>(this)->wait_impl(oldValue, std::memory_order_seq_cst);
+        wait_impl(oldValue, std::memory_order_seq_cst);
+
     }
 
     void wait(const T& oldValue, std::memory_order order)
     {
-        static_cast<Derived*>(this)->wait_impl(oldValue, order);
+        wait_impl(oldValue, order);
     }
 
     void notify_one()
     {
-        static_cast<Derived*>(this)->notify_one_impl();
+        notify_one_impl();
     }
 
     void notify_all()
     {
-        static_cast<Derived*>(this)->notify_all_impl();
+        notify_all_impl();
     }
 
     void store(T v, std::memory_order order = std::memory_order_seq_cst)
     {
         Base::store(v, order);
-        static_cast<Derived*>(this)->store_notify_impl();
+        store_notify_impl();
     }
-};
 
-template <typename T>
-class NativeAtomic final : public AtomicBase<NativeAtomic<T>, T>
-{
-public:
-    using Base = AtomicBase<NativeAtomic<T>, T>;
-    using Base::Base;
-
-    void wait_impl(const T& oldValue, std::memory_order order)
-    {
-        this->Base::wait(oldValue, order);
-    }
-    void notify_one_impl()
-    {
-        this->Base::notify_one();
-    }
-    void notify_all_impl()
-    {
-        this->Base::notify_all();
-    }
-    void store_notify_impl()
-    {
-        this->Base::notify_all();
-    }
-};
-
-template <typename T>
-class EmulatedAtomic final : public AtomicBase<EmulatedAtomic<T>, T>
-{
-public:
-    using Base = AtomicBase<EmulatedAtomic<T>, T>;
-    using Base::Base;
-
+private:
     void wait_impl(const T& oldValue, std::memory_order)
     {
         if (this->load() != oldValue)
@@ -153,19 +122,18 @@ public:
         m_bWaiting = true;
         cv_.notify_all();
     }
-
 private:
     std::atomic_bool m_bWaiting{ false };
     std::mutex mtx_;
     std::condition_variable cv_;
 };
 
+
 template <typename T>
-using cy_atomic =
 #if ATOMIC_HAS_WAIT
-NativeAtomic<T>;
+using cy_atomic = std::atomic<T>;
 #else
-EmulatedAtomic<T>;
+using cy_atomic = CYAtomicBase<T>;
 #endif
 
 #endif // !__CY_ATOMIC_EX_HPP__
