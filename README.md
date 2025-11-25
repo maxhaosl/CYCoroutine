@@ -1,38 +1,40 @@
-# CYCorotine
+[English](README.md) | [中文](README_zh.md)
+
+# CYCoroutine
 Coroutine library based on C++20
 
 Coroutine library based on C++ 20, supports cross-platform, has a simple and easy-to-use interface, and is continuously updated.
 
-## 构建脚本详细使用说明
+## Build Scripts Usage
 
-项目提供了多个平台专用的构建脚本，以简化构建过程：
+The project provides platform-specific build scripts to simplify the build process:
 
-### 通用构建脚本
+### General Build Scripts
 
-#### build.sh (跨平台)
-适用于 macOS 和 Linux 系统的通用构建脚本，会自动检测操作系统并调用相应的构建脚本。
+#### build.sh (Cross-platform)
+A general build script for macOS and Linux systems that automatically detects the operating system and calls the corresponding build script.
 ```bash
 chmod +x Build/build.sh
 ./Build/build.sh
 ```
 
-### 平台专用构建脚本
+### Platform-Specific Build Scripts
 
 #### build_mac.sh (macOS)
-专门用于构建 macOS 版本的脚本，支持 Intel (x86_64) 和 Apple Silicon (arm64) 架构。
+Script specifically for building macOS versions, supporting Intel (x86_64) and Apple Silicon (arm64) architectures.
 ```bash
 chmod +x Build/build_mac.sh
 ./Build/build_mac.sh
 ```
-> 当 arm64 与 x86_64 两个切片都构建完成后，脚本会自动使用 `lipo` 生成 `Bin/macOS/universal/<配置>/libCYCoroutine.{a,dylib}`。
+> After both arm64 and x86_64 slices are built, the script automatically uses `lipo` to generate `Bin/macOS/universal/<config>/libCYCoroutine.{a,dylib}`.
 
 #### build_unix.sh (Unix/Linux)
-用于构建 Unix/Linux 版本的脚本。
+Script for building Unix/Linux versions.
 ```bash
 chmod +x Build/build_unix.sh
 ./Build/build_unix.sh
 ```
-> Linux 构建会优先自动查找 `clang-17`/`clang++-17` 作为默认编译器对；如果系统安装位置不同，可在运行脚本前设置 `CYLOGGER_CC` / `CYLOGGER_CXX` 环境变量进行覆盖，例如：
+> Linux builds will automatically search for `clang-17`/`clang++-17` as the default compiler pair; if the system installation location is different, you can set the `CYLOGGER_CC` / `CYLOGGER_CXX` environment variables before running the script to override, for example:
 > ```bash
 > export CYLOGGER_CC=/opt/llvm/bin/clang
 > export CYLOGGER_CXX=/opt/llvm/bin/clang++
@@ -40,35 +42,35 @@ chmod +x Build/build_unix.sh
 > ```
 
 #### build_windows.bat / build_windows_all.bat (Windows)
-Windows 平台的批处理脚本只生成静态库 (`CYCoroutine.lib`)，以便直接链接到 CYLogger：
+Windows batch scripts only generate static libraries (`CYCoroutine.lib`) for direct linking to CYLogger:
 ```batch
-REM 单次构建：BuildType [Release|Debug], LibType 固定为 Static, Arch [x64|x86], CRT [MD|MT]
+REM Single build: BuildType [Release|Debug], LibType fixed to Static, Arch [x64|x86], CRT [MD|MT]
 Build\build_windows.bat Release Static x64 MD
 
-REM 枚举全部组合（同样仅静态库）
+REM Enumerate all combinations (static libraries only)
 Build\build_windows_all.bat
 ```
 
-> 输出目录遵循 `Bin\Windows\<arch>\<CRT>\<config>\CYCoroutine.lib`，与 CYLogger 的依赖检测逻辑保持一致。传入 `Shared` 将被脚本拒绝，以避免旧的 DLL 流程再次被调用。
+> Output directory follows `Bin\Windows\<arch>\<CRT>\<config>\CYCoroutine.lib`, consistent with CYLogger's dependency detection logic. Passing `Shared` will be rejected by the script to avoid the old DLL process being called again.
 
 #### build_ios.sh (iOS)
-用于构建 iOS 版本的脚本，支持设备 (arm64) 和模拟器 (x86_64、arm64-simulator) 架构。
+Script for building iOS versions, supporting device (arm64) and simulator (x86_64, arm64-simulator) architectures.
 ```bash
 chmod +x Build/build_ios.sh
 ./Build/build_ios.sh
 ```
-> 只要存在至少两个架构的产物（例如 arm64 与 x86_64），脚本就会自动生成 `Bin/iOS/universal/<配置>/libCYCoroutine.{a,dylib}` 通用库。
+> As long as at least two architecture artifacts exist (e.g., arm64 and x86_64), the script will automatically generate universal libraries `Bin/iOS/universal/<config>/libCYCoroutine.{a,dylib}`.
 
 #### build_android.sh (Android)
-用于构建 Android 版本的脚本，支持多种 ABI 架构。
+Script for building Android versions, supporting multiple ABI architectures.
 ```bash
 chmod +x Build/build_android.sh
 ./Build/build_android.sh
 ```
 
-### 构建输出
+### Build Output
 
-所有构建产物都会输出到项目根目录的 `Bin` 文件夹中，按照平台和架构进行组织：
+All build artifacts are output to the `Bin` folder in the project root directory, organized by platform and architecture:
 
 ```
 Bin/
@@ -94,9 +96,9 @@ Bin/
     └── x86_64/
 ```
 
-macOS / iOS 通用目录下会出现 `libCYCoroutine.a` 与 `libCYCoroutine.dylib`，可直接用于需要 fat binaries 的项目；共享库还会自动附带版本化软链接（例如 `libCYCoroutine.1.0.0.dylib`）。
+The universal directories for macOS / iOS will contain `libCYCoroutine.a` and `libCYCoroutine.dylib`, which can be directly used for projects requiring fat binaries; shared libraries will also automatically include versioned symlinks (e.g., `libCYCoroutine.1.0.0.dylib`).
 
-## 示例代码
+## Example Code
 
 ```cpp
 #include "CYCoroutine/CYCoroutine.hpp"

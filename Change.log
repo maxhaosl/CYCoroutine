@@ -9,16 +9,10 @@ CYCoroutine V1.0.0 features:
 
 Included plugins:
 
-2025-11-24：
-1. `Build/build_mac.sh` 在完成 arm64 与 x86_64 构建后自动调用 `lipo` 生成 `Bin/macOS/universal/<配置>` 下的通用静态、动态库。
-2. `Build/build_ios.sh` 在至少检测到两个 iOS 架构产物时创建通用库，方便直接提供给 CYLogger 及其他上层项目。
-3. README 更新了 Apple 平台通用库产物及使用方式的说明。
-4. README 记录了 Linux 平台默认要求 `clang-17`/`clang++-17`，并提供 `CYLOGGER_CC` / `CYLOGGER_CXX` 覆盖示例，确保与 CYLogger 依赖构建使用相同工具链。
+2025-11-24:
+1. Apple universal libraries: `Build/build_mac.sh` automatically calls `lipo` after completing arm64 and x86_64 builds to generate universal static and dynamic libraries under `Bin/macOS/universal/<config>`. `Build/build_ios.sh` creates universal libraries when at least two iOS architecture artifacts are detected, making them directly available to CYLogger and other upper-level projects. README updated with documentation on Apple platform universal library artifacts and usage.
+2. Linux toolchain requirements: README documents that Linux platform defaults to requiring `clang-17`/`clang++-17`, and provides `CYLOGGER_CC` / `CYLOGGER_CXX` override examples to ensure the same toolchain is used as CYLogger dependency builds.
+3. Windows static-only library: `Build/build_windows.bat` fixed CMake parsing errors caused by trailing slashes in `%SOURCE_DIR%` and unified CRLF line endings to avoid label lookup failures. Windows build script now only accepts `Static` library type and rejects `Shared` option at entry point; static builds still compile `CYCoroutineExample`, while shared library targets are disabled. `Build/build_windows_all.bat` defaults to `LIB_LIST=Static` and explicitly skips Shared combinations in the matrix loop, ensuring only static `CYCoroutine.lib` exists under `Bin/Windows/<arch>/<CRT>/<config>` directory.
 
-2025-11-24（Windows 静态库限定）：
-1. `Build/build_windows.bat` 修复了 `%SOURCE_DIR%` 尾随反斜杠导致的 CMake 解析错误，并统一 CRLF 行结尾避免 label 查找失败。
-2. Windows 构建脚本现在只接受 `Static` 库类型，会在入口处拒绝 `Shared` 选项；静态构建仍会编译 `CYCoroutineExample`，而共享库相关目标已停用。
-3. `Build/build_windows_all.bat` 默认 `LIB_LIST=Static`，并在矩阵循环中显式跳过 Shared 组合，保持 `Bin/Windows/<arch>/<CRT>/<config>` 目录下只有静态 `CYCoroutine.lib`。
-
-2025-4-1：
+2025-04-01:
 1. Fixed the compilation problem of VS engineering different platforms.
