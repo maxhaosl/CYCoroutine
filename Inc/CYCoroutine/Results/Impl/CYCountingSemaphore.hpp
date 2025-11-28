@@ -71,6 +71,7 @@ public:
 
     using ptrdiff_type = ptrdiff_t;
 
+#undef min
     // Construct with initial count (must be in [0, Max])
     explicit CYCountingSemaphore(ptrdiff_type desired = 0)
         : count_(std::max<ptrdiff_type>(0, std::min(desired, Max)))
