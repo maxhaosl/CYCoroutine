@@ -51,7 +51,7 @@
 
 CYCOROUTINE_NAMESPACE_BEGIN
 
-#ifdef WIN32
+#ifdef _WIN32
 using jthread = std::jthread;
 #else
 using jthread = std::thread;
