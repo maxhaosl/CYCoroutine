@@ -174,7 +174,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./;../../Inc;../../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;$(ProjectDir)\..\..\Inc;$(ProjectDir)\..\..\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -194,7 +194,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./;../../Inc;../../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;$(ProjectDir)\..\..\Inc;$(ProjectDir)\..\..\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -214,7 +214,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./;../../Inc;../../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;$(ProjectDir)\..\..\Inc;$(ProjectDir)\..\..\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -239,7 +239,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./;../../Inc;../../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;$(ProjectDir)\..\..\Inc;$(ProjectDir)\..\..\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
