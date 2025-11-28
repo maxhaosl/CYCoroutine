@@ -24,7 +24,7 @@ namespace
 }  // namespace
 
 
-jthread::id CYThread::GetId() const noexcept
+cy_jthread::id CYThread::GetId() const noexcept
 {
     return m_thread.get_id();
 }
@@ -46,7 +46,7 @@ void CYThread::Join()
 
 size_t CYThread::NumberOfCpu() noexcept
 {
-    const auto hc = jthread::hardware_concurrency();
+    const auto hc = cy_jthread::hardware_concurrency();
     return (hc != 0) ? hc : DEFAULT_NUMBER_OF_CORES;
 }
 

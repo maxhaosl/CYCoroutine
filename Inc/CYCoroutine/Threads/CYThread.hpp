@@ -52,9 +52,9 @@
 CYCOROUTINE_NAMESPACE_BEGIN
 
 #ifdef _WIN32
-using jthread = std::jthread;
+using cy_jthread = std::jthread;
 #else
-using jthread = std::thread;
+using cy_jthread = std::thread;
 #endif
 
 class CYCOROUTINE_API CYThread
@@ -70,7 +70,7 @@ public:
     template<class CALLABLE_TYPE>
     CYThread(std::string strName, CALLABLE_TYPE&& callable, FuncThreadDelegate funStartedCallBack, FuncThreadDelegate funTerminatedCallBack)
     {
-        m_thread = jthread([strName = std::move(strName), callable = std::forward<CALLABLE_TYPE>(callable), funStartedCallBack = std::move(funStartedCallBack), funTerminatedCallBack = std::move(funTerminatedCallBack)]() mutable {
+        m_thread = cy_jthread([strName = std::move(strName), callable = std::forward<CALLABLE_TYPE>(callable), funStartedCallBack = std::move(funStartedCallBack), funTerminatedCallBack = std::move(funTerminatedCallBack)]() mutable {
 
             SetName(strName);
 
@@ -88,7 +88,7 @@ public:
             });
     }
 
-    jthread::id GetId() const noexcept;
+    cy_jthread::id GetId() const noexcept;
 
     static std::uintptr_t GetVirtualId() noexcept;
 
@@ -98,7 +98,7 @@ public:
     static size_t NumberOfCpu() noexcept;
 
 private:
-    jthread m_thread;
+    cy_jthread m_thread;
     static void SetName(std::string_view strName) noexcept;
 };
 
