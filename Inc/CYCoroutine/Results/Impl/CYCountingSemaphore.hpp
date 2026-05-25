@@ -70,7 +70,6 @@ public:
     static_assert(Max > 0, "Max must be positive");
 
     using ptrdiff_type = ptrdiff_t;
-
 #undef min
     // Construct with initial count (must be in [0, Max])
     explicit CYCountingSemaphore(ptrdiff_type desired = 0)

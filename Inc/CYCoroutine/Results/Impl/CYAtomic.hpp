@@ -64,12 +64,11 @@ class CYAtomicBase : public std::atomic<T>
 {
 public:
     using Base = std::atomic<T>;
-    using Base::Base;  
+    using Base::Base;
 
     void wait(const T& oldValue)
     {
         wait_impl(oldValue, std::memory_order_seq_cst);
-
     }
 
     void wait(const T& oldValue, std::memory_order order)
@@ -100,34 +99,33 @@ private:
             return;
 
         std::unique_lock<std::mutex> lock(mtx_);
-        cv_.wait(lock, [&] { return this->load() != oldValue || m_bWaiting.load(); });
+        while (!cv_.wait_for(lock, std::chrono::milliseconds(100), [&] { return this->load() != oldValue || m_epoch > 0; }));
 
-        m_bWaiting = false;
+        m_epoch--;
     }
 
     void notify_one_impl()
     {
-        m_bWaiting = true;
+        m_epoch++;
         cv_.notify_one();
     }
 
     void notify_all_impl()
     {
-        m_bWaiting = true;
+        m_epoch++;
         cv_.notify_all();
     }
 
     void store_notify_impl()
     {
-        m_bWaiting = true;
+        m_epoch++;
         cv_.notify_all();
     }
 private:
-    std::atomic_bool m_bWaiting{ false };
+    std::atomic_int m_epoch{ 0 };
     std::mutex mtx_;
     std::condition_variable cv_;
 };
-
 
 template <typename T>
 #if ATOMIC_HAS_WAIT

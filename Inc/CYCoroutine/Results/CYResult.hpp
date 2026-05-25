@@ -31,14 +31,14 @@
  *
  * ===============================================================================
  */
-/*
- * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
- * VERSION:  1.0.0
- * PURPOSE:  A cross-platform efficient and stable Coroutine library.
- * CREATION: 2023.04.15
- * LCHANGE:  2023.04.15
- * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
- */
+ /*
+  * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
+  * VERSION:  1.0.0
+  * PURPOSE:  A cross-platform efficient and stable Coroutine library.
+  * CREATION: 2023.04.15
+  * LCHANGE:  2023.04.15
+  * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
+  */
 
 #ifndef __CY_RESULT_CORO_HPP__
 #define __CY_RESULT_CORO_HPP__
@@ -67,12 +67,10 @@ public:
 
     CYResult(CYConsumerResultStatePtr<TYPE> ptrState) noexcept
         : m_ptrState(std::move(ptrState))
-    {
-    }
+    {}
     CYResult(CYResultState<TYPE>* ptrState) noexcept
         : m_ptrState(ptrState)
-    {
-    }
+    {}
 
     CYResult& operator=(CYResult&& rhs) noexcept
     {
@@ -166,8 +164,7 @@ public:
 
     CYResultPromise(CYResultPromise&& rhs) noexcept :
         m_objProducerState(std::move(rhs.m_objProducerState)), m_objConsumerState(std::move(rhs.m_objConsumerState))
-    {
-    }
+    {}
 
     virtual ~CYResultPromise() noexcept
     {

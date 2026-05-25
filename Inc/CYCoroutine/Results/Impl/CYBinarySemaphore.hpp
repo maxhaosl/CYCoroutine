@@ -63,8 +63,7 @@ class BinarySemaphore
 public:
     explicit BinarySemaphore(ptrdiff_t desired)
         : flag(desired > 0 ? 1 : 0)
-    {
-    }
+    {}
 
 #undef max
     static constexpr ptrdiff_t max() noexcept

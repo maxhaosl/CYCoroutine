@@ -31,14 +31,14 @@
  *
  * ===============================================================================
  */
-/*
- * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
- * VERSION:  1.0.0
- * PURPOSE:  A cross-platform efficient and stable Coroutine library.
- * CREATION: 2023.04.15
- * LCHANGE:  2023.04.15
- * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
- */
+ /*
+  * AUTHORS:  ShiLiang.Hao <newhaosl@163.com>, foobra<vipgs99@gmail.com>
+  * VERSION:  1.0.0
+  * PURPOSE:  A cross-platform efficient and stable Coroutine library.
+  * CREATION: 2023.04.15
+  * LCHANGE:  2023.04.15
+  * LICENSE:  Expat/MIT License, See Copyright Notice at the begin of this file.
+  */
 
 #ifndef __CY_TYPE_DEFINE_CORO_HPP__
 #define __CY_TYPE_DEFINE_CORO_HPP__
@@ -70,8 +70,8 @@
 #endif
 #endif
 
-// macro
-//////////////////////////////////////////////////////////////////////////
+  // macro
+  //////////////////////////////////////////////////////////////////////////
 #define WIDEN2(x)       L ## x
 #define WIDEN(x)        WIDEN2(x)
 #define __WFILE__       WIDEN(__FILE__)
@@ -183,15 +183,14 @@ inline int cy_vscprintf_impl(const char* format, va_list args)
 #ifndef LockGuard
 #define LockGuard               std::lock_guard<std::mutex>
 #endif
-using FuncThreadDelegate        = std::function<void(std::string_view thread_name)>;
+using FuncThreadDelegate = std::function<void(std::string_view thread_name)>;
 
 template<class F>
 struct function_traits;
 
 template<class R, class... Args>
 struct function_traits<R(*)(Args...)> : public function_traits<R(Args...)>
-{
-};
+{};
 
 template<class R, class... Args>
 struct function_traits<R(Args...)>
@@ -250,14 +249,14 @@ typedef char            TChar;
 
 #ifndef TEXT
 #if defined(_WIN32) && CY_USE_UNICODE
-#define __TEXT(quote) L##quote 
+#define __TEXT(quote) L##quote
 #define TEXT_BYTE_LEN 2
 #else
-#define __TEXT(quote) quote    
+#define __TEXT(quote) quote
 #define TEXT_BYTE_LEN 1
 #endif
 
-#define TEXT(quote) __TEXT(quote)  
+#define TEXT(quote) __TEXT(quote)
 #endif
 
 #endif //__CY_TYPE_DEFINE_CORO_HPP__

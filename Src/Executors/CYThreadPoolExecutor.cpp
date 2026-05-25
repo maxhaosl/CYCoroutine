@@ -31,8 +31,7 @@ namespace
             : pPoolWorker(nullptr)
             , nThreadIndex(static_cast<size_t>(-1))
             , nThreadHashId(CalculateHashId())
-        {
-        }
+        {}
     };
 
     thread_local CYThreadPoolPerThreadData m_objThreadPoolData;
@@ -69,7 +68,7 @@ private:
     void EnsureWorkerActive(bool bFirstEnqueuer, UniqueLock& lock);
 
 private:
-    bool m_bIdle;
+    std::atomic_bool m_bIdle;
     bool m_bAbort;
     const size_t m_nIndex;
     const size_t m_nPoolSize;
@@ -96,8 +95,7 @@ CYIdleWorkerSet::CYIdleWorkerSet(size_t size)
     : m_nApproxSize(0)
     , m_ptrIdleFlags(MakeUnique<CYPaddedFlag[]>(size))
     , m_nSize(size)
-{
-}
+{}
 
 void CYIdleWorkerSet::SetIdle(size_t nIdleThread) noexcept
 {
