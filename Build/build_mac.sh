@@ -4,12 +4,20 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+CYCOMMON_ROOT="$(dirname "$PROJECT_ROOT")/CYCommon"
 CMAKE_SOURCE_DIR="$PROJECT_ROOT/Build"
 OUTPUT_BASE="$PROJECT_ROOT/Bin"
 mkdir -p "$OUTPUT_BASE"
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
     echo "This script must be run on macOS."
+    exit 1
+fi
+
+# Verify CYCommon exists
+if [ ! -f "$CYCOMMON_ROOT/Build/CMakeLists.txt" ]; then
+    echo "Error: CYCommon not found at $CYCOMMON_ROOT"
+    echo "Ensure CYCommon is checked out as a sibling of CYCoroutine under ThirdParty/"
     exit 1
 fi
 
@@ -39,6 +47,33 @@ detect_jobs() {
 }
 BUILD_JOBS=${BUILD_JOBS:-$(detect_jobs)}
 
+build_cycommon_slice() {
+    local arch=$1
+    local build_type=$2
+    local shared_flag=$3
+
+    local shared_tag
+    if [ "$shared_flag" = "ON" ]; then
+        shared_tag="shared"
+    else
+        shared_tag="static"
+    fi
+
+    local cycommon_build_dir="$CYCOMMON_ROOT/Build/build_macos_${arch}_${build_type}_${shared_tag}"
+    echo "=== Building CYCommon (macOS / $arch / $build_type / $shared_tag) ==="
+
+    cmake -S "$CYCOMMON_ROOT/Build" \
+          -B "$cycommon_build_dir" \
+          -DCMAKE_BUILD_TYPE="$build_type" \
+          -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOS_DEPLOYMENT_TARGET" \
+          -DCMAKE_OSX_ARCHITECTURES="$arch" \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DBUILD_STATIC_LIBS=ON
+
+    local cycommon_target="CYCommon_static"
+    cmake --build "$cycommon_build_dir" --target "$cycommon_target" --parallel "$BUILD_JOBS"
+}
+
 build_slice() {
     local arch=$1
     local build_type=$2
@@ -56,6 +91,8 @@ build_slice() {
     fi
 
     local build_dir="$SCRIPT_DIR/build_macos_${arch}_${build_type}_${shared_tag}"
+
+    build_cycommon_slice "$arch" "$build_type" "$shared_flag"
 
     echo "=== macOS / $arch / $build_type / $shared_tag ==="
 
@@ -140,4 +177,3 @@ for build_type in "${BUILD_TYPES[@]}"; do
 done
 
 echo "macOS builds complete. See $OUTPUT_BASE/macOS/* for artifacts."
-

@@ -43,7 +43,8 @@
 #ifndef __CY_DERIVABLE_EXECUTOR_CORO_HPP__
 #define __CY_DERIVABLE_EXECUTOR_CORO_HPP__
 
-#include "CYCoroutine/Common/CYBind.hpp"
+#include "CYCommon/Common/CYBind.hpp"
+
 #include "CYCoroutine/CYCoroutineDefine.hpp"
 #include "CYCoroutine/Executors/CYExecutor.hpp"
 

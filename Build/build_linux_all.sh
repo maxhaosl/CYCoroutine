@@ -4,10 +4,18 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+CYCOMMON_ROOT="$(dirname "$PROJECT_ROOT")/CYCommon"
 CMAKE_SOURCE_DIR="$PROJECT_ROOT/Build"
 OUTPUT_BASE="$PROJECT_ROOT/Bin"
 mkdir -p "$OUTPUT_BASE"
 source "$SCRIPT_DIR/output_layout.sh"
+
+# Verify CYCommon exists
+if [ ! -f "$CYCOMMON_ROOT/Build/CMakeLists.txt" ]; then
+    echo "Error: CYCommon not found at $CYCOMMON_ROOT"
+    echo "Ensure CYCommon is checked out as a sibling of CYCoroutine under ThirdParty/"
+    exit 1
+fi
 
 # 固定架构为 x86_64
 TARGET_ARCH="x86_64"
@@ -119,10 +127,28 @@ for config in "${BUILD_CONFIGS[@]}"; do
         "-DCMAKE_CXX_STANDARD=20"
         "-DCMAKE_CXX_STANDARD_REQUIRED=ON"
     )
-    
+
     # 设置架构标志
     C_FLAGS=("-m64")
     CXX_FLAGS=("-m64")
+
+    # Build CYCommon first (static only)
+    local cycommon_build_dir="$CYCOMMON_ROOT/Build/build_linux_${TARGET_ARCH}_${BUILD_TYPE}_static"
+    echo "=== Building CYCommon (Linux / $TARGET_ARCH / $BUILD_TYPE / static) ==="
+    if [ ! -f "$CYCOMMON_ROOT/Bin/Linux/$TARGET_ARCH/$BUILD_TYPE/libCYCommon_static.a" ]; then
+        mkdir -p "$cycommon_build_dir"
+        cmake -S "$CYCOMMON_ROOT/Build" \
+              -B "$cycommon_build_dir" \
+              "-DCMAKE_C_COMPILER=$CC_BIN" \
+              "-DCMAKE_CXX_COMPILER=$CXX_BIN" \
+              "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" \
+              "-DBUILD_SHARED_LIBS=OFF" \
+              "-DBUILD_STATIC_LIBS=ON" \
+              "-DCMAKE_SYSTEM_PROCESSOR_OVERRIDE=$TARGET_ARCH"
+        cmake --build "$cycommon_build_dir" --target CYCommon_static --parallel "$(detect_jobs)"
+    else
+        echo "CYCommon already built, skipping."
+    fi
     
     if [ ${#C_FLAGS[@]} -gt 0 ]; then
         CMAKE_ARGS+=("-DCMAKE_C_FLAGS=${C_FLAGS[*]}")

@@ -1,6 +1,117 @@
 cmake_minimum_required(VERSION 3.16)
 project(CYCoroutine VERSION 1.0.0 LANGUAGES CXX)
 
+# ---------------------------------------------------------------------------
+# CYCommon dependency
+# CYCommon is a sibling library under the same ThirdParty root:
+#   ThirdParty/
+#     CYCommon/     <- CYCOMMON_ROOT_DIR
+#     CYCoroutine/  <- CYCOROUTINE_ROOT_DIR (this project)
+# ---------------------------------------------------------------------------
+if(NOT DEFINED CYCOMMON_ROOT_DIR)
+    get_filename_component(CYCOMMON_ROOT_DIR "${CMAKE_SOURCE_DIR}/../../CYCommon" ABSOLUTE)
+endif()
+if(NOT EXISTS "${CYCOMMON_ROOT_DIR}/Build/CMakeLists.txt")
+    message(FATAL_ERROR "CYCommon not found at ${CYCOMMON_ROOT_DIR}. "
+        "Ensure CYCommon is checked out as a sibling of CYCoroutine under ThirdParty/.")
+endif()
+
+# Build CYCommon if its library hasn't been built yet
+# Check if CYCommon library already exists
+set(_CYCOMMON_NEED_BUILD TRUE)
+
+# Check known library paths (static libs)
+if(BUILD_STATIC_LIBS)
+    set(_CYCOMMON_LIB_PATHS
+        "${CYCOMMON_ROOT_DIR}/Bin/Windows/x64/MD/Release/CYCommon.lib"
+        "${CYCOMMON_ROOT_DIR}/Bin/Windows/x64/MT/Release/CYCommon.lib"
+        "${CYCOMMON_ROOT_DIR}/Bin/Windows/x86/MD/Release/CYCommon.lib"
+        "${CYCOMMON_ROOT_DIR}/Bin/Windows/x86/MT/Release/CYCommon.lib"
+    )
+    foreach(_lib_path ${_CYCOMMON_LIB_PATHS})
+        if(EXISTS "${_lib_path}")
+            message(STATUS "Found CYCommon library: ${_lib_path}")
+            set(_CYCOMMON_NEED_BUILD FALSE)
+            break()
+        endif()
+    endforeach()
+endif()
+
+if(_CYCOMMON_NEED_BUILD)
+    message(STATUS "CYCommon library not found; building it as part of CYCoroutine")
+    set(_CYCOMMON_BUILD_SCRIPT "${CYCOMMON_ROOT_DIR}/Build/build.sh")
+    if(WIN32)
+        set(_CYCOMMON_BUILD_SCRIPT "${CYCOMMON_ROOT_DIR}/Build/build.bat")
+    endif()
+    if(NOT EXISTS "${_CYCOMMON_BUILD_SCRIPT}")
+        message(FATAL_ERROR "CYCommon build script not found: ${_CYCOMMON_BUILD_SCRIPT}")
+    endif()
+
+    # Forward matching build options to CYCommon
+    set(_CYCOMMON_BUILD_SCRIPT_FULL "${CYCOMMON_ROOT_DIR}/Build/build_windows.bat")
+    if(WIN32)
+        execute_process(
+            COMMAND cmd /c "\"${_CYCOMMON_BUILD_SCRIPT_FULL}\" Release Static x64 MD"
+            WORKING_DIRECTORY "${CYCOMMON_ROOT_DIR}/Build"
+            RESULT_VARIABLE _CYCOMMON_BUILD_RESULT
+            TIMEOUT 600
+        )
+    else()
+        execute_process(
+            COMMAND "${_CYCOMMON_BUILD_SCRIPT_FULL}"
+            WORKING_DIRECTORY "${CYCOMMON_ROOT_DIR}/Build"
+            RESULT_VARIABLE _CYCOMMON_BUILD_RESULT
+            TIMEOUT 600
+        )
+    endif()
+
+    if(_CYCOMMON_BUILD_RESULT AND NOT _CYCOMMON_BUILD_RESULT EQUAL 0)
+        message(FATAL_ERROR "CYCommon build failed with exit code ${_CYCOMMON_BUILD_RESULT}. "
+            "Build CYCommon manually before building CYCoroutine.")
+    endif()
+endif()
+
+# Locate CYCommon's include directory and library
+set(CYCOMMON_INCLUDE_DIR "${CYCOMMON_ROOT_DIR}/Inc")
+if(NOT EXISTS "${CYCOMMON_INCLUDE_DIR}")
+    message(FATAL_ERROR "CYCommon include directory not found: ${CYCOMMON_INCLUDE_DIR}")
+endif()
+
+# Find CYCommon's library files
+# Use the same paths as the explicit check above
+set(_CYCOMMON_LIB_DIR "${CYCOMMON_ROOT_DIR}/Bin")
+
+# Check common library locations
+set(_CYCOMMON_STATIC_LIB "")
+set(_CYCOMMON_KNOWN_PATHS
+    "${CYCOMMON_ROOT_DIR}/Bin/Windows/x64/MD/Release/CYCommon.lib"
+    "${CYCOMMON_ROOT_DIR}/Bin/Windows/x64/MT/Release/CYCommon.lib"
+    "${CYCOMMON_ROOT_DIR}/Bin/Windows/x86/MD/Release/CYCommon.lib"
+    "${CYCOMMON_ROOT_DIR}/Bin/Windows/x86/MT/Release/CYCommon.lib"
+)
+foreach(_lib_path ${_CYCOMMON_KNOWN_PATHS})
+    if(EXISTS "${_lib_path}")
+        set(_CYCOMMON_STATIC_LIB "${_lib_path}")
+        break()
+    endif()
+endforeach()
+
+if(_CYCOMMON_STATIC_LIB)
+    message(STATUS "CYCommon static library: ${_CYCOMMON_STATIC_LIB}")
+    # Create an IMPORTED target for CYCommon::static
+    if(NOT TARGET CYCommon::static)
+        add_library(CYCommon::static STATIC IMPORTED)
+        set_target_properties(CYCommon::static PROPERTIES
+            IMPORTED_LOCATION "${_CYCOMMON_STATIC_LIB}"
+            INTERFACE_INCLUDE_DIRECTORIES "${CYCOMMON_INCLUDE_DIR}"
+        )
+    endif()
+endif()
+
+# ---------------------------------------------------------------------------
+# Standard project setup follows
+# ---------------------------------------------------------------------------
+
 # Configure the C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -55,7 +166,7 @@ if(WIN32)
     if(CMAKE_SIZEOF_VOID_P EQUAL 4)
         set(ARCH_NAME "x86")
     else()
-        set(ARCH_NAME "x86_64")
+        set(ARCH_NAME "x64")
     endif()
 elseif(APPLE)
     if(IOS)
@@ -169,6 +280,7 @@ endforeach()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../Inc)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../Src)
+include_directories(${CYCOMMON_INCLUDE_DIR})
 
 # Gather sources
 file(GLOB_RECURSE CYCOROUTINE_SOURCES 
@@ -268,7 +380,15 @@ if(BUILD_SHARED_LIBS)
     elseif(TARGET fmt)
         target_link_libraries(CYCoroutine_shared PUBLIC fmt)
     endif()
-    
+
+    if(_CYCOMMON_STATIC_LIB)
+        target_link_libraries(CYCoroutine_shared PUBLIC "${_CYCOMMON_STATIC_LIB}")
+    elseif(_CYCOMMON_SHARED_LIB)
+        target_link_libraries(CYCoroutine_shared PUBLIC "${_CYCOMMON_SHARED_LIB}")
+    else()
+        target_link_libraries(CYCoroutine_shared PUBLIC CYCommon::static)
+    endif()
+
     # Provide an ALIAS for downstream targets
     add_library(CYCoroutine::shared ALIAS CYCoroutine_shared)
 endif()
@@ -295,7 +415,15 @@ if(BUILD_STATIC_LIBS)
     elseif(TARGET fmt)
         target_link_libraries(CYCoroutine_static PUBLIC fmt)
     endif()
-    
+
+    if(_CYCOMMON_STATIC_LIB)
+        target_link_libraries(CYCoroutine_static PUBLIC "${_CYCOMMON_STATIC_LIB}")
+    elseif(_CYCOMMON_SHARED_LIB)
+        target_link_libraries(CYCoroutine_static PUBLIC "${_CYCOMMON_SHARED_LIB}")
+    else()
+        target_link_libraries(CYCoroutine_static PUBLIC CYCommon::static)
+    endif()
+
     # Provide an ALIAS for downstream targets
     add_library(CYCoroutine::static ALIAS CYCoroutine_static)
 endif()

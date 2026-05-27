@@ -92,8 +92,8 @@ private:
     std::atomic_bool m_bAtomicAbort;
     cy_binary_semaphore m_semaphore;
 
-    const std::function<void(std::string_view)> m_funcStartedCallBack;
-    const std::function<void(std::string_view)> m_funcTerminatedCallback;
+    const FuncThreadDelegate m_funcStartedCallBack;
+    const FuncThreadDelegate m_funcTerminatedCallback;
 };
 
 CYCOROUTINE_NAMESPACE_END

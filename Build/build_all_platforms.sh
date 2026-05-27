@@ -24,9 +24,17 @@ log_error() {
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+CYCOMMON_ROOT="$(dirname "$PROJECT_ROOT")/CYCommon"
 CMAKE_SOURCE_DIR="$PROJECT_ROOT/Build"
 OUTPUT_DIR="$PROJECT_ROOT/Bin"
 mkdir -p "$OUTPUT_DIR"
+
+# Verify CYCommon exists
+if [ ! -f "$CYCOMMON_ROOT/Build/CMakeLists.txt" ]; then
+    echo "Error: CYCommon not found at $CYCOMMON_ROOT"
+    echo "Ensure CYCommon is checked out as a sibling of CYCoroutine under ThirdParty/"
+    exit 1
+fi
 
 MACOS_DEPLOYMENT_TARGET=${MACOS_DEPLOYMENT_TARGET:-"11.0"}
 IOS_DEPLOYMENT_TARGET=${IOS_DEPLOYMENT_TARGET:-"14.0"}
@@ -202,6 +210,53 @@ prepare_android_toolchain() {
     log_info "Detected Android NDK at $ANDROID_NDK_HOME"
 }
 
+build_cycommon() {
+    local platform=$1
+    local arch=$2
+    local build_type=$3
+    local deployment_target=${4:-}
+
+    local shared_tag="static"
+    local cycommon_build_dir="$CYCOMMON_ROOT/Build/build_${platform}_${arch}_${build_type}_${shared_tag}"
+
+    local -a cmake_args=(
+        -S "$CYCOMMON_ROOT/Build"
+        -B "$cycommon_build_dir"
+        "-DCMAKE_BUILD_TYPE=$build_type"
+        -DBUILD_SHARED_LIBS=OFF
+        -DBUILD_STATIC_LIBS=ON
+    )
+
+    case "$platform" in
+        macos)
+            cmake_args+=("-DCMAKE_OSX_DEPLOYMENT_TARGET=$deployment_target")
+            cmake_args+=("-DCMAKE_OSX_ARCHITECTURES=$arch")
+            ;;
+        ios)
+            cmake_args+=("-DCMAKE_SYSTEM_NAME=iOS")
+            cmake_args+=("-DCMAKE_OSX_ARCHITECTURES=$arch")
+            cmake_args+=("-DCMAKE_OSX_DEPLOYMENT_TARGET=$deployment_target")
+            cmake_args+=("-DCMAKE_OSX_SYSROOT=$(ios_sysroot_for_arch "$arch")")
+            ;;
+        android)
+            prepare_android_toolchain
+            cmake_args+=("-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake")
+            cmake_args+=("-DANDROID_ABI=$arch")
+            cmake_args+=("-DANDROID_PLATFORM=android-$deployment_target")
+            cmake_args+=("-DANDROID_STL=c++_static")
+            ;;
+        *)
+            log_error "Unknown platform for CYCommon build: $platform"
+            return 1
+            ;;
+    esac
+
+    echo "[INFO] Building CYCommon for ${platform}/${arch}/${build_type}"
+    mkdir -p "$cycommon_build_dir"
+    cmake "${cmake_args[@]}"
+    cmake --build "$cycommon_build_dir" --target CYCommon_static --parallel "$BUILD_JOBS"
+}
+
 android_api_for_abi() {
     local abi=$1
     local min_api
@@ -324,6 +379,7 @@ build_macos_matrix() {
         for shared in "${SHARED_KINDS[@]}"; do
             local arch
             for arch in "${MAC_ARCHES[@]}"; do
+                build_cycommon "macos" "$arch" "$build_type" "$deployment_target"
                 build_slice "macos" "$arch" "$build_type" "$shared" "$deployment_target"
             done
             combine_universal "macos" "$build_type" "$shared"
@@ -337,6 +393,7 @@ build_ios_matrix() {
         for shared in "${SHARED_KINDS[@]}"; do
             local arch
             for arch in "${IOS_ARCHES[@]}"; do
+                build_cycommon "ios" "$arch" "$build_type" "$deployment_target"
                 build_slice "ios" "$arch" "$build_type" "$shared" "$deployment_target"
             done
             combine_universal "ios" "$build_type" "$shared"
@@ -352,6 +409,7 @@ build_android_matrix() {
             for abi in "${ANDROID_ABIS[@]}"; do
                 local api_level
                 api_level=$(android_api_for_abi "$abi")
+                build_cycommon "android" "$abi" "$build_type" "$api_level"
                 build_slice "android" "$abi" "$build_type" "$shared" "$api_level"
             done
         done

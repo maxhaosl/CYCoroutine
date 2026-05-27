@@ -2,7 +2,20 @@
 setlocal enableextensions enabledelayedexpansion
 
 set "SCRIPT_DIR=%~dp0"
-set "PROJECT_ROOT=%SCRIPT_DIR%.."
+if "%SCRIPT_DIR:~-1%"=="\" set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
+set "PROJECT_ROOT=%SCRIPT_DIR%"
+for %%I in ("%PROJECT_ROOT%") do set "PROJECT_ROOT=%%~fI"
+set "CYCOMMON_ROOT=%PROJECT_ROOT%\..\..\CYCommon"
+for %%I in ("%CYCOMMON_ROOT%") do set "CYCOMMON_ROOT=%%~fI"
+set "CYCOMMON_BUILD_SCRIPT=%CYCOMMON_ROOT%\Build\build_windows.bat"
+
+REM Verify CYCommon exists
+if not exist "%CYCOMMON_ROOT%\Build\CMakeLists.txt" (
+    echo Error: CYCommon not found at "%CYCOMMON_ROOT%"
+    echo Ensure CYCommon is checked out as a sibling of CYCoroutine under ThirdParty/
+    exit /b 1
+)
+
 set "SOURCE_DIR=%SCRIPT_DIR%"
 if "%SOURCE_DIR:~-1%"=="\" set "SOURCE_DIR=%SOURCE_DIR:~0,-1%"
 set "BUILD_ROOT=%SCRIPT_DIR%out"
@@ -30,11 +43,6 @@ if errorlevel 1 exit /b 1
 call :NormalizeLibType LIB_TYPE
 if errorlevel 1 exit /b 1
 
-if /I "%LIB_TYPE%"=="Shared" (
-    echo Error: CYCoroutine build scripts now only support static libraries.
-    exit /b 1
-)
-
 call :NormalizeArch TARGET_ARCH
 if errorlevel 1 exit /b 1
 
@@ -53,6 +61,20 @@ if /I "%VS_ENV_ARCH%"=="x64" set "VS_ENV_ARCH=x64"
 
 call :EnsureVisualStudioEnvironment "%VS_ENV_ARCH%"
 if errorlevel 1 exit /b 1
+
+REM Build CYCommon first with matching configuration
+echo ========================================
+echo Building CYCommon first (dependency)
+echo   Build Type : %BUILD_TYPE%
+echo   Library    : %LIB_TYPE%
+echo   Arch       : %OUTPUT_ARCH%
+echo   CRT        : %EFFECTIVE_RUNTIME%
+echo ========================================
+call "%CYCOMMON_BUILD_SCRIPT%" %BUILD_TYPE% %LIB_TYPE% %TARGET_ARCH% %CRT_TYPE%
+if errorlevel 1 (
+    echo Error: CYCommon build failed.
+    exit /b 1
+)
 
 call :SelectGenerator
 if errorlevel 1 exit /b 1
@@ -91,6 +113,7 @@ cmake -G "%GENERATOR%" -A %CMAKE_ARCH% ^
     -DBUILD_STATIC_LIBS=%BUILD_STATIC% ^
     -DBUILD_EXAMPLES=%ENABLE_EXAMPLES% ^
     -DWINDOWS_RUNTIME=%EFFECTIVE_RUNTIME% ^
+    -DCYCOMMON_ROOT_DIR="%CYCOMMON_ROOT%" ^
     "%SOURCE_DIR%"
 if errorlevel 1 (
     popd >nul
@@ -249,16 +272,26 @@ if defined GENERATOR (
     exit /b 0
 )
 
+set "_FOUND_GENERATOR="
 for %%G in ("Visual Studio 17 2022" "Visual Studio 16 2019" "Visual Studio 15 2017") do (
     call :IsGeneratorAvailable "%%~G"
-    if not errorlevel 1 (
-        set "GENERATOR=%%~G"
-        exit /b 0
+    if !errorlevel! equ 0 (
+        if not defined _FOUND_GENERATOR (
+            set "_FOUND_GENERATOR=%%~G"
+        )
     )
+)
+
+if defined _FOUND_GENERATOR (
+    set "GENERATOR=%_FOUND_GENERATOR%"
+    exit /b 0
 )
 
 echo Error: No supported Visual Studio generator detected. Install Visual Studio C++ workloads or set CMAKE_GENERATOR.
 exit /b 1
+
+:SelectGenerator_Done
+exit /b 0
 
 :IsGeneratorAvailable
 set "GEN_NAME=%~1"

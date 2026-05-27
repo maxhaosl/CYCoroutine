@@ -43,7 +43,8 @@
 #ifndef __CY_ASYNC_LOCK_CORO_HPP__
 #define __CY_ASYNC_LOCK_CORO_HPP__
 
-#include "CYCoroutine/Common/CYList.hpp"
+#include "CYCommon/Common/CYList.hpp"
+
 #include "CYCoroutine/CYCoroutineDefine.hpp"
 #include "CYCoroutine/Executors/CYExecutor.hpp"
 #include "CYCoroutine/Results/CYLazyResult.hpp"

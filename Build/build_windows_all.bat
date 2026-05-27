@@ -3,6 +3,15 @@ setlocal enableextensions enabledelayedexpansion
 
 set "SCRIPT_DIR=%~dp0"
 set "PROJECT_ROOT=%SCRIPT_DIR%.."
+set "CYCOMMON_ROOT=%PROJECT_ROOT%..\CYCommon"
+set "CYCOMMON_BUILD_SCRIPT=%CYCOMMON_ROOT%\Build\build_windows.bat"
+
+REM Verify CYCommon exists
+if not exist "%CYCOMMON_ROOT%\Build\CMakeLists.txt" (
+    echo Error: CYCommon not found at "%CYCOMMON_ROOT%"
+    echo Ensure CYCommon is checked out as a sibling of CYCoroutine under ThirdParty/
+    exit /b 1
+)
 
 set "ARCH_LIST=%~1"
 if "%ARCH_LIST%"=="" set "ARCH_LIST=x64,x86"
@@ -38,10 +47,16 @@ for %%A in (%ARCH_LIST%) do (
                 if /I not "%%L"=="Shared" (
                     call :ValidateBuildRuntimeCombination "%%C" "%%R"
                     if not errorlevel 1 (
-                        echo ---- Building %%A ^| %%L ^| %%C ^| %%R ----
+                        echo ---- Building CYCommon %%A ^| %%L ^| %%C ^| %%R ----
+                        call "%CYCOMMON_BUILD_SCRIPT%" %%C %%L %%A %%R
+                        if errorlevel 1 (
+                            echo CYCommon build failed for %%A / %%L / %%C / %%R
+                            exit /b 1
+                        )
+                        echo ---- Building CYCoroutine %%A ^| %%L ^| %%C ^| %%R ----
                         call "%SCRIPT_DIR%build_windows.bat" %%C %%L %%A %%R
                         if errorlevel 1 (
-                            echo Build failed for %%A / %%L / %%C / %%R
+                            echo CYCoroutine build failed for %%A / %%L / %%C / %%R
                             exit /b 1
                         )
                     ) else (

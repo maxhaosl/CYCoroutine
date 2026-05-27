@@ -44,47 +44,17 @@
     <Filter Include="Src\Timers">
       <UniqueIdentifier>{7935702e-3860-49be-a05c-4c96fadaaff4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Inc\CYCoroutine\Common">
-      <UniqueIdentifier>{02bdd4a1-42da-43b5-9947-b9493881a5de}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Inc\CYCoroutine\Task">
       <UniqueIdentifier>{41c8c98f-cfa3-4b49-b9de-f8641c6a2ef2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Task">
       <UniqueIdentifier>{a5b19128-7369-4930-9860-2fbd6696818d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Common">
-      <UniqueIdentifier>{f8245adb-2979-41ad-b57f-c1cd3d74b5ba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Engine">
       <UniqueIdentifier>{a144df6a-668a-4186-92e9-98a295c37e2e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Inc\CYCoroutine\Engine">
       <UniqueIdentifier>{09fb9a79-bd4b-4385-b83e-319093df46ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\CYCoroutine\Common\Exception">
-      <UniqueIdentifier>{662b4459-582c-4220-a4f5-f9cc4d455780}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\CYCoroutine\Common\Message">
-      <UniqueIdentifier>{579934af-afe1-477e-a563-93a37ae9b135}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\CYCoroutine\Common\Structure">
-      <UniqueIdentifier>{f4e7d106-48c1-49a8-9afd-4708f5a2011e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\CYCoroutine\Common\Time">
-      <UniqueIdentifier>{b177d517-4c3c-4bec-9477-e807f04f768b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Common\Exception">
-      <UniqueIdentifier>{c0ac3071-e90e-48f1-b885-df13c180468c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Common\Message">
-      <UniqueIdentifier>{7ebc33c4-983b-4deb-8f28-7d8b807b0461}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Common\Time">
-      <UniqueIdentifier>{36ff6e63-a798-438d-8ee0-d3bb9aa53c98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Common\Structure">
-      <UniqueIdentifier>{5956808c-27ec-4ecb-8e1a-2dbc0dbac748}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -181,12 +151,6 @@
     <ClInclude Include="..\..\Inc\CYCoroutine\CYCoroutineDefine.hpp">
       <Filter>Inc\CYCoroutine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\Common\CYBind.hpp">
-      <Filter>Inc\CYCoroutine\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\Common\CYList.hpp">
-      <Filter>Inc\CYCoroutine\Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Inc\CYCoroutine\Timers\CYTimer.hpp">
       <Filter>Inc\CYCoroutine\Timers</Filter>
     </ClInclude>
@@ -210,27 +174,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Executors\CYExecutorDefine.hpp">
       <Filter>Src\Executors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\CYTypeDefine.hpp">
-      <Filter>Inc\CYCoroutine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Exception\CYBaseException.hpp">
-      <Filter>Inc\CYCoroutine\Common\Exception</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Exception\CYException.hpp">
-      <Filter>Inc\CYCoroutine\Common\Exception</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Message\CYBaseMessage.hpp">
-      <Filter>Inc\CYCoroutine\Common\Message</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Time\CYTimeStamps.hpp">
-      <Filter>Inc\CYCoroutine\Common\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\Common\Structure\CYStringUtils.hpp">
-      <Filter>Inc\CYCoroutine\Common\Structure</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Inc\CYCoroutine\Common\CYDebugString.hpp">
-      <Filter>Inc\CYCoroutine\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Inc\CYCoroutine\Results\Impl\CYAtomic.hpp">
       <Filter>Inc\CYCoroutine\Results\Impl</Filter>
@@ -296,21 +239,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Executors\CYInlineExecutor.cpp">
       <Filter>Src\Executors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Common\Exception\CYBaseException.cpp">
-      <Filter>Src\Common\Exception</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Common\Message\CYBaseMessage.cpp">
-      <Filter>Src\Common\Message</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Common\Time\CYTimeStamps.cpp">
-      <Filter>Src\Common\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Common\CYDebugString.cpp">
-      <Filter>Src\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Common\Structure\CYStringUtils.cpp">
-      <Filter>Src\Common\Structure</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -43,8 +43,9 @@
 #ifndef __CY_WHEN_RESULT_CORO_HPP__
 #define __CY_WHEN_RESULT_CORO_HPP__
 
+#include "CYCommon/Common/Exception/CYException.hpp"
+
 #include "CYCoroutine/CYCoroutineDefine.hpp"
-#include "CYCoroutine/Common/Exception/CYException.hpp"
 #include "CYCoroutine/Results/CYLazyResult.hpp"
 #include "CYCoroutine/Results/CYResumeOn.hpp"
 

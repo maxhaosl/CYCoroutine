@@ -48,7 +48,7 @@
 #include <tuple>
 #include <string>
 
-#include "CYCoroutine/CYTypeDefine.hpp"
+#include "CYCommon/CYTypeDefine.hpp"
 
 #if !__has_include(<coroutine>) && __has_include(<experimental/coroutine>)
 #    include <experimental/coroutine>

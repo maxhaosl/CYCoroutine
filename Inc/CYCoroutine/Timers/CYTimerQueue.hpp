@@ -43,9 +43,10 @@
 #ifndef __CY_TIMER_QUEUE_CORO_HPP__
 #define __CY_TIMER_QUEUE_CORO_HPP__
 
-#include "CYCoroutine/Common/CYBind.hpp"
+#include "CYCommon/Common/CYBind.hpp"
+#include "CYCommon/Common/Exception/CYException.hpp"
+
 #include "CYCoroutine/CYCoroutineDefine.hpp"
-#include "CYCoroutine/Common/Exception/CYException.hpp"
 #include "CYCoroutine/Results/CYLazyResult.hpp"
 #include "CYCoroutine/Threads/CYThread.hpp"
 #include "CYTimer.hpp"

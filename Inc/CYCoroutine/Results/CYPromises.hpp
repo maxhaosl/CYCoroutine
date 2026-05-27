@@ -43,8 +43,9 @@
 #ifndef __CY_PROMISES_CORO_HPP__
 #define __CY_PROMISES_CORO_HPP__
 
+#include "CYCommon/Common/Exception/CYException.hpp"
+
 #include "CYCoroutine/CYCoroutineDefine.hpp"
-#include "CYCoroutine/Common/Exception/CYException.hpp"
 #include "CYCoroutine/Results/Impl/CYLazyResultState.hpp"
 #include "CYCoroutine/Results/Impl/CYResultState.hpp"
 #include "CYCoroutine/Results/Impl/CYReturnValueStruct.hpp"

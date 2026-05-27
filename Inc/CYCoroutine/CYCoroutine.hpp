@@ -43,8 +43,9 @@
 #ifndef __CY_COROUTINE_CORO_HPP__
 #define __CY_COROUTINE_CORO_HPP__
 
+#include "CYCommon/Common/CYDebugString.hpp"
+
 #include "CYCoroutine/CYCoroutineDefine.hpp"
-#include "CYCoroutine/Common/CYDebugString.hpp"
 #include "CYCoroutine/Results/CYPromises.hpp"
 #include "CYCoroutine/Executors/CYDerivableExecutor.hpp"
 #include "CYCoroutine/Executors/CYInlineExecutor.hpp"

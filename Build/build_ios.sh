@@ -4,9 +4,17 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+CYCOMMON_ROOT="$(dirname "$PROJECT_ROOT")/CYCommon"
 CMAKE_SOURCE_DIR="$PROJECT_ROOT/Build"
 OUTPUT_BASE="$PROJECT_ROOT/Bin"
 mkdir -p "$OUTPUT_BASE"
+
+# Verify CYCommon exists
+if [ ! -f "$CYCOMMON_ROOT/Build/CMakeLists.txt" ]; then
+    echo "Error: CYCommon not found at $CYCOMMON_ROOT"
+    echo "Ensure CYCommon is checked out as a sibling of CYCoroutine under ThirdParty/"
+    exit 1
+fi
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
     echo "iOS builds require a macOS host."
@@ -48,6 +56,36 @@ ios_sysroot_for_arch() {
     esac
 }
 
+build_cycommon_slice() {
+    local arch=$1
+    local build_type=$2
+    local shared_flag=$3
+
+    local shared_tag
+    if [ "$shared_flag" = "ON" ]; then
+        shared_tag="shared"
+    else
+        shared_tag="static"
+    fi
+
+    local cycommon_build_dir="$CYCOMMON_ROOT/Build/build_ios_${arch}_${build_type}_${shared_tag}"
+    local sysroot
+    sysroot=$(ios_sysroot_for_arch "$arch")
+    echo "=== Building CYCommon (iOS / $arch / $build_type / $shared_tag) ==="
+
+    cmake -S "$CYCOMMON_ROOT/Build" \
+          -B "$cycommon_build_dir" \
+          -DCMAKE_SYSTEM_NAME=iOS \
+          -DCMAKE_OSX_ARCHITECTURES="$arch" \
+          -DCMAKE_OSX_SYSROOT="$sysroot" \
+          -DCMAKE_OSX_DEPLOYMENT_TARGET="$IOS_DEPLOYMENT_TARGET" \
+          -DCMAKE_BUILD_TYPE="$build_type" \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DBUILD_STATIC_LIBS=ON
+
+    cmake --build "$cycommon_build_dir" --target CYCommon_static --parallel "$BUILD_JOBS"
+}
+
 build_slice() {
     local arch=$1
     local build_type=$2
@@ -65,8 +103,8 @@ build_slice() {
     fi
 
     local build_dir="$SCRIPT_DIR/build_ios_${arch}_${build_type}_${shared_tag}"
-    local sysroot
-    sysroot=$(ios_sysroot_for_arch "$arch")
+
+    build_cycommon_slice "$arch" "$build_type" "$shared_flag"
 
     echo "=== iOS / $arch / $build_type / $shared_tag ==="
 
