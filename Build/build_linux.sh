@@ -81,13 +81,29 @@ detect_compiler() {
     echo ""
 }
 
+detect_compiler_fallback() {
+    local override="$1"
+    local -a candidates=("clang-17" "clang" "gcc")
+    if [ -n "$override" ]; then
+        echo "$override"
+        return
+    fi
+    for candidate in "${candidates[@]}"; do
+        if command -v "$candidate" >/dev/null 2>&1; then
+            echo "$(command -v "$candidate")"
+            return
+        fi
+    done
+    echo ""
+}
+
 TARGET_ARCH=$(canonicalize_linux_arch "$RAW_ARCH")
 LIB_TYPE=$(normalize_lib_type "$LIB_TYPE_RAW")
-CC_BIN=$(detect_compiler "${CYCOROUTINE_CC:-}" "clang-17")
-CXX_BIN=$(detect_compiler "${CYCOROUTINE_CXX:-}" "clang++-17")
+CC_BIN=$(detect_compiler_fallback "${CYCOROUTINE_CC:-}")
+CXX_BIN=$(detect_compiler_fallback "${CYCOROUTINE_CXX:-}")
 
 if [ -z "$CC_BIN" ] || [ -z "$CXX_BIN" ]; then
-    echo "Error: clang-17 toolchain not found (set CYCOROUTINE_CC/CYCOROUTINE_CXX to override)." >&2
+    echo "Error: No C/C++ compiler found (set CYCOROUTINE_CC/CYCOROUTINE_CXX to override)." >&2
     exit 1
 fi
 
@@ -162,26 +178,26 @@ if [ ${#EXE_LINKER_FLAGS[@]} -gt 0 ]; then
     CMAKE_ARGS+=("-DCMAKE_EXE_LINKER_FLAGS=${EXE_LINKER_FLAGS[*]}")
 fi
 
-    # Build CYCommon first (static only)
-    local cycommon_build_dir="$CYCOMMON_ROOT/Build/build_linux_${TARGET_ARCH}_${BUILD_TYPE}_static"
-    echo "=== Building CYCommon (Linux / $TARGET_ARCH / $BUILD_TYPE) ==="
-    if [ ! -f "$CYCOMMON_ROOT/Bin/Linux/$TARGET_ARCH/$BUILD_TYPE/libCYCommon_static.a" ]; then
-        mkdir -p "$cycommon_build_dir"
-        cmake -S "$CYCOMMON_ROOT/Build" \
-              -B "$cycommon_build_dir" \
-              "-DCMAKE_C_COMPILER=$CC_BIN" \
-              "-DCMAKE_CXX_COMPILER=$CXX_BIN" \
-              "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" \
-              "-DBUILD_SHARED_LIBS=OFF" \
-              "-DBUILD_STATIC_LIBS=ON" \
-              "-DCMAKE_SYSTEM_PROCESSOR_OVERRIDE=$TARGET_ARCH"
-        cmake --build "$cycommon_build_dir" --target CYCommon_static --parallel "$(detect_jobs)"
-    else
-        echo "CYCommon already built, skipping."
-    fi
+# Build CYCommon first (static only)
+cycommon_build_dir="$CYCOMMON_ROOT/Build/build_linux_${TARGET_ARCH}_${BUILD_TYPE}_static"
+echo "=== Building CYCommon (Linux / $TARGET_ARCH / $BUILD_TYPE) ==="
+if [ ! -f "$CYCOMMON_ROOT/Bin/Linux/$TARGET_ARCH/$BUILD_TYPE/libCYCommon.a" ]; then
+    mkdir -p "$cycommon_build_dir"
+    cmake -S "$CYCOMMON_ROOT/Build" \
+          -B "$cycommon_build_dir" \
+          "-DCMAKE_C_COMPILER=$CC_BIN" \
+          "-DCMAKE_CXX_COMPILER=$CXX_BIN" \
+          "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" \
+          "-DBUILD_SHARED_LIBS=OFF" \
+          "-DBUILD_STATIC_LIBS=ON" \
+          "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
+    cmake --build "$cycommon_build_dir" --target CYCommon_static --parallel "$(detect_jobs)"
+else
+    echo "CYCommon already built, skipping."
+fi
 
-    cmake "${CMAKE_ARGS[@]}"
-    cmake --build "$BUILD_PATH" --target "$TARGET_NAME" --parallel "$(detect_jobs)"
+cmake "${CMAKE_ARGS[@]}"
+cmake --build "$BUILD_PATH" --target "$TARGET_NAME" --parallel "$(detect_jobs)"
 
 OUTPUT_DIR="$(platform_slice_dir linux "$TARGET_ARCH" "$BUILD_TYPE")"
 mkdir -p "$OUTPUT_DIR"

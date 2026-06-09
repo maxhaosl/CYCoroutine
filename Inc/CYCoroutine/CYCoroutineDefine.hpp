@@ -104,6 +104,15 @@
 #    define CYCOROUTINE_API
 #endif
 
+// MSVC: `class __declspec(dllexport) alignas(N) T`. GCC/Clang cannot combine visibility and alignas separately on one class.
+#if defined(CYCOROUTINE_MSVC_COMPILER)
+#    define CYCOROUTINE_CLASS_ALIGN(ALIGNMENT) CYCOROUTINE_API alignas(ALIGNMENT)
+#elif (defined(CYCOROUTINE_EXPORT_API) || defined(CYCOROUTINE_IMPORT_API)) && (defined(CYCOROUTINE_GCC_COMPILER) || defined(CYCOROUTINE_CLANG_COMPILER))
+#    define CYCOROUTINE_CLASS_ALIGN(ALIGNMENT) __attribute__((visibility("default"), aligned(ALIGNMENT)))
+#else
+#    define CYCOROUTINE_CLASS_ALIGN(ALIGNMENT) alignas(ALIGNMENT)
+#endif
+
 #include <exception>
 
 #if defined(_LIBCPP_VERSION)

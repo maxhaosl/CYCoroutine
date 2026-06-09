@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# ============================================================
+# CYCoroutine Android Build Script
+#   Usage: build_android.sh [all|Release|Debug]
+#   Default: all
+# ============================================================
+
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -21,9 +27,37 @@ if ! command -v cmake >/dev/null 2>&1; then
     exit 1
 fi
 
-ANDROID_API_LEVEL_DEFAULT=${ANDROID_API_LEVEL:-"23"}
-BUILD_TYPES=(${CYCOROUTINE_BUILD_TYPES:-Release})
-ANDROID_ABIS=(${CYCOROUTINE_ANDROID_ABIS:-arm64-v8a armeabi-v7a x86_64 x86})
+# ---------- Arguments ----------
+BUILD_TYPE="${1:-all}"
+ABI_ARG="${2:-}"
+API_LEVEL_ARG="${3:-${ANDROID_API_LEVEL:-23}}"
+
+# ---------- Build types ----------
+case "$BUILD_TYPE" in
+    all|a|A|both|b|B)
+        BUILD_TYPES=(Release Debug)
+        ;;
+    d|D|debug)
+        BUILD_TYPES=(Debug)
+        ;;
+    r|R|release|Release)
+        BUILD_TYPES=(Release)
+        ;;
+    Debug)
+        BUILD_TYPES=(Debug)
+        ;;
+    *)
+        echo "ERROR: Unknown BUILD_TYPE '$BUILD_TYPE'. Use: all, Release, Debug"
+        exit 1
+        ;;
+esac
+
+ANDROID_API_LEVEL_DEFAULT="${API_LEVEL_ARG}"
+if [ -n "$ABI_ARG" ]; then
+    ANDROID_ABIS=("$ABI_ARG")
+else
+    ANDROID_ABIS=(${CYCOROUTINE_ANDROID_ABIS:-arm64-v8a armeabi-v7a x86_64 x86})
+fi
 SHARED_KINDS=(${CYCOROUTINE_SHARED_KINDS:-OFF ON})
 
 detect_jobs() {
@@ -216,6 +250,20 @@ build_slice() {
 
     local abi_dir="$OUTPUT_BASE/Android/$abi/$build_type"
     echo "Artifacts: $abi_dir"
+
+    # Copy CYCommon to CYCoroutine output directory
+    local cycommon_src_dir="$CYCOMMON_ROOT/Bin/Android/$abi/$build_type"
+    local cycommon_lib_name
+    if [ "$build_type" = "Debug" ]; then
+        cycommon_lib_name="libCYCommonD.a"
+    else
+        cycommon_lib_name="libCYCommon.a"
+    fi
+    if [ -f "$cycommon_src_dir/$cycommon_lib_name" ]; then
+        mkdir -p "$abi_dir"
+        cp "$cycommon_src_dir/$cycommon_lib_name" "$abi_dir/"
+        echo "  Copied CYCommon: $cycommon_lib_name -> $abi_dir/"
+    fi
 }
 
 prepare_android_toolchain

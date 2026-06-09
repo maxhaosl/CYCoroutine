@@ -1,15 +1,22 @@
 @echo off
 setlocal enableextensions enabledelayedexpansion
 
-set "SCRIPT_DIR=%~dp0"
-set "PROJECT_ROOT=%SCRIPT_DIR%.."
-set "CYCOMMON_ROOT=%PROJECT_ROOT%..\CYCommon"
-set "CYCOMMON_BUILD_SCRIPT=%CYCOMMON_ROOT%\Build\build_windows.bat"
+REM Change to script directory first so all relative paths are correct
+pushd "%~dp0" >nul 2>&1
+if errorlevel 1 (
+    echo Error: Could not change to script directory
+    exit /b 1
+)
+set "SCRIPT_DIR=%cd%"
+set "PROJECT_ROOT=%cd%\.."
+for %%I in ("!PROJECT_ROOT!") do set "PROJECT_ROOT=%%~fI"
+set "CYCOMMON_ROOT=%PROJECT_ROOT%\..\CYCommon"
+for %%I in ("!CYCOMMON_ROOT!") do set "CYCOMMON_ROOT=%%~fI"
+set "CYCOMMON_BUILD_SCRIPT=!CYCOMMON_ROOT!\Build\build_windows.bat"
+popd >nul 2>&1
 
-REM Verify CYCommon exists
-if not exist "%CYCOMMON_ROOT%\Build\CMakeLists.txt" (
-    echo Error: CYCommon not found at "%CYCOMMON_ROOT%"
-    echo Ensure CYCommon is checked out as a sibling of CYCoroutine under ThirdParty/
+if not exist "!CYCOMMON_BUILD_SCRIPT!" (
+    echo Error: CYCommon not found at "!CYCOMMON_ROOT!"
     exit /b 1
 )
 
@@ -54,7 +61,7 @@ for %%A in (%ARCH_LIST%) do (
                             exit /b 1
                         )
                         echo ---- Building CYCoroutine %%A ^| %%L ^| %%C ^| %%R ----
-                        call "%SCRIPT_DIR%build_windows.bat" %%C %%L %%A %%R
+                        call "!SCRIPT_DIR!\build_windows.bat" "!SCRIPT_DIR!" %%C %%L %%A %%R
                         if errorlevel 1 (
                             echo CYCoroutine build failed for %%A / %%L / %%C / %%R
                             exit /b 1
@@ -96,4 +103,3 @@ if /I "%CFG%"=="Debug" (
 )
 
 exit /b 0
-

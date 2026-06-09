@@ -54,7 +54,7 @@
 
 CYCOROUTINE_NAMESPACE_BEGIN
 
-class CYCOROUTINE_API alignas(CACHE_LINE_ALIGNMENT) CYWorkerThreadExecutor final : public CYDerivableExecutor<CYWorkerThreadExecutor>
+class CYCOROUTINE_CLASS_ALIGN(CACHE_LINE_ALIGNMENT) CYWorkerThreadExecutor final : public CYDerivableExecutor<CYWorkerThreadExecutor>
 {
 public:
     CYWorkerThreadExecutor(const FuncThreadDelegate & funStartedCallBack = {}, const FuncThreadDelegate & funTerminatedCallBack = {});

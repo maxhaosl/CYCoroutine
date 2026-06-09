@@ -9,7 +9,7 @@ map_platform_dir() {
     lower=$(printf '%s' "$raw" | tr '[:upper:]' '[:lower:]')
     case "$lower" in
         macos|mac|darwin)
-            echo "macOS"
+            echo "MacOS"
             ;;
         ios|iphone|ipad)
             echo "iOS"

@@ -87,7 +87,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////////
 class CYThreadPoolWorker;
-class CYCOROUTINE_API alignas(CACHE_LINE_ALIGNMENT) CYThreadPoolExecutor final
+class CYCOROUTINE_CLASS_ALIGN(CACHE_LINE_ALIGNMENT) CYThreadPoolExecutor final
     : public CYDerivableExecutor<CYThreadPoolExecutor>
 {
     friend class CYThreadPoolWorker;

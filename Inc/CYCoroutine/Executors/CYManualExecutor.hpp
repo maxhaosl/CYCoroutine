@@ -53,7 +53,7 @@
 
 CYCOROUTINE_NAMESPACE_BEGIN
 
-class CYCOROUTINE_API alignas(CACHE_LINE_ALIGNMENT) CYManualExecutor final : public CYDerivableExecutor<CYManualExecutor>
+class CYCOROUTINE_CLASS_ALIGN(CACHE_LINE_ALIGNMENT) CYManualExecutor final : public CYDerivableExecutor<CYManualExecutor>
 {
 public:
     CYManualExecutor();

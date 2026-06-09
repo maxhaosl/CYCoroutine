@@ -7,18 +7,29 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # 确保所有目标使用C++20
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++20")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 endif()
 
 # 设置输出目录结构
 if(WIN32)
     set(PLATFORM_NAME "Windows")
-    if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    # Prefer TARGET_ARCH if explicitly specified
+    if(DEFINED TARGET_ARCH)
+        if(TARGET_ARCH STREQUAL "x86_64" OR TARGET_ARCH STREQUAL "x64" OR TARGET_ARCH STREQUAL "amd64")
+            set(ARCH_NAME "x86_64")
+        elseif(TARGET_ARCH STREQUAL "x86" OR TARGET_ARCH STREQUAL "Win32" OR TARGET_ARCH STREQUAL "i386" OR TARGET_ARCH STREQUAL "i686")
+            set(ARCH_NAME "x86")
+        else()
+            set(ARCH_NAME "${TARGET_ARCH}")
+        endif()
+    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
         set(ARCH_NAME "x86")
     else()
-        set(ARCH_NAME "x64")
+        # Default to x86_64 for 64-bit Windows (not x64)
+        set(ARCH_NAME "x86_64")
     endif()
 elseif(APPLE)
     if(IOS)
@@ -26,54 +37,97 @@ elseif(APPLE)
     else()
         set(PLATFORM_NAME "macOS")
     endif()
-    if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64|aarch64")
+    # Prefer TARGET_ARCH if explicitly specified
+    if(DEFINED TARGET_ARCH)
+        if(TARGET_ARCH STREQUAL "x86_64" OR TARGET_ARCH STREQUAL "x64" OR TARGET_ARCH STREQUAL "amd64")
+            set(ARCH_NAME "x86_64")
+        elseif(TARGET_ARCH STREQUAL "arm64" OR TARGET_ARCH STREQUAL "aarch64")
+            set(ARCH_NAME "arm64")
+        else()
+            set(ARCH_NAME "${TARGET_ARCH}")
+        endif()
+    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64|aarch64")
         set(ARCH_NAME "arm64")
     else()
-        set(ARCH_NAME "x64")
+        set(ARCH_NAME "x86_64")
     endif()
 elseif(ANDROID)
     set(PLATFORM_NAME "Android")
-    if(CMAKE_ANDROID_ARCH_ABI STREQUAL "armeabi-v7a")
+    # Prefer TARGET_ARCH if explicitly specified
+    if(DEFINED TARGET_ARCH)
+        if(TARGET_ARCH STREQUAL "x86_64" OR TARGET_ARCH STREQUAL "x64" OR TARGET_ARCH STREQUAL "amd64")
+            set(ARCH_NAME "x86_64")
+        elseif(TARGET_ARCH STREQUAL "armeabi-v7a")
+            set(ARCH_NAME "armv7")
+        elseif(TARGET_ARCH STREQUAL "arm64-v8a" OR TARGET_ARCH STREQUAL "arm64" OR TARGET_ARCH STREQUAL "aarch64")
+            set(ARCH_NAME "arm64")
+        elseif(TARGET_ARCH STREQUAL "x86")
+            set(ARCH_NAME "x86")
+        else()
+            set(ARCH_NAME "${TARGET_ARCH}")
+        endif()
+    elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "armeabi-v7a")
         set(ARCH_NAME "armv7")
     elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "arm64-v8a")
         set(ARCH_NAME "arm64")
     elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86")
         set(ARCH_NAME "x86")
     elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86_64")
-        set(ARCH_NAME "x64")
+        set(ARCH_NAME "x86_64")
     endif()
 elseif(UNIX)
     set(PLATFORM_NAME "Linux")
-    if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64|aarch64")
+    # Prefer TARGET_ARCH if explicitly specified
+    if(DEFINED TARGET_ARCH)
+        if(TARGET_ARCH STREQUAL "x86_64" OR TARGET_ARCH STREQUAL "x64" OR TARGET_ARCH STREQUAL "amd64")
+            set(ARCH_NAME "x86_64")
+        elseif(TARGET_ARCH STREQUAL "arm64" OR TARGET_ARCH STREQUAL "aarch64")
+            set(ARCH_NAME "arm64")
+        elseif(TARGET_ARCH STREQUAL "i386" OR TARGET_ARCH STREQUAL "i686" OR TARGET_ARCH STREQUAL "x86")
+            set(ARCH_NAME "x86")
+        else()
+            set(ARCH_NAME "${TARGET_ARCH}")
+        endif()
+    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64|aarch64")
         set(ARCH_NAME "arm64")
     elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "i386|i686")
         set(ARCH_NAME "x86")
     else()
-        set(ARCH_NAME "x64")
+        set(ARCH_NAME "x86_64")
     endif()
 endif()
 
 # 设置输出目录
-set(OUTPUT_BASE_DIR ${CMAKE_SOURCE_DIR}/../Bin/Example/${PLATFORM_NAME}/${ARCH_NAME})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_BASE_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_BASE_DIR})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_BASE_DIR})
+get_filename_component(CYCOROUTINE_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
+set(OUTPUT_BASE_DIR "${CYCOROUTINE_ROOT_DIR}/Bin/Example/${PLATFORM_NAME}/${ARCH_NAME}")
+
+# 对于多配置生成器，不在此处添加配置类型目录
+# 单配置生成器添加配置类型到路径
+if(NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_BASE_DIR}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OUTPUT_BASE_DIR}")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT_BASE_DIR}")
+else()
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_BASE_DIR}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OUTPUT_BASE_DIR}")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT_BASE_DIR}")
+endif()
 
 # 多配置生成器（如Visual Studio）的输出目录
+# 注意：CMake默认配置类型是大写（Debug/Release），但这里直接使用保持原样
 foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
-    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${OUTPUT_BASE_DIR}/${OUTPUTCONFIG})
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${OUTPUT_BASE_DIR}/${OUTPUTCONFIG})
-    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${OUTPUT_BASE_DIR}/${OUTPUTCONFIG})
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${OUTPUT_BASE_DIR}/${OUTPUTCONFIG}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${OUTPUT_BASE_DIR}/${OUTPUTCONFIG}")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${OUTPUT_BASE_DIR}/${OUTPUTCONFIG}")
 endforeach()
 
 # 包含目录
-include_directories(${CMAKE_SOURCE_DIR}/../Inc)
+include_directories(${CYCOROUTINE_ROOT_DIR}/Inc)
 
 # 如果在主CMakeLists.txt中构建示例，则需要添加库目录
 if(NOT TARGET CYCoroutine_shared AND NOT TARGET CYCoroutine_static)
     # 添加库目录
-    link_directories(${CMAKE_SOURCE_DIR}/../../Build)
+    link_directories(${CYCOROUTINE_ROOT_DIR}/Build)
 endif()
 
 # 创建示例可执行文件
@@ -132,11 +186,25 @@ if(WIN32)
             OUTPUT_NAME "CYCoroutineExample_x86"
             RUNTIME_OUTPUT_NAME "CYCoroutineExample_x86"
         )
+        # PDB name must match the executable name
+        if(MSVC)
+            set_target_properties(CYCoroutineExample PROPERTIES
+                COMPILE_PDB_NAME "CYCoroutineExample_x86"
+                COMPILE_PDB_OUTPUT_DIRECTORY "$<IF:$<CONFIG:Debug>,${OUTPUT_BASE_DIR}/Debug,${OUTPUT_BASE_DIR}/Release>"
+            )
+        endif()
     else()
         set_target_properties(CYCoroutineExample PROPERTIES
-            OUTPUT_NAME "CYCoroutineExample_x64"
-            RUNTIME_OUTPUT_NAME "CYCoroutineExample_x64"
+            OUTPUT_NAME "CYCoroutineExample_x86_64"
+            RUNTIME_OUTPUT_NAME "CYCoroutineExample_x86_64"
         )
+        # PDB name must match the executable name
+        if(MSVC)
+            set_target_properties(CYCoroutineExample PROPERTIES
+                COMPILE_PDB_NAME "CYCoroutineExample_x86_64"
+                COMPILE_PDB_OUTPUT_DIRECTORY "$<IF:$<CONFIG:Debug>,${OUTPUT_BASE_DIR}/Debug,${OUTPUT_BASE_DIR}/Release>"
+            )
+        endif()
     endif()
 elseif(APPLE)
     # macOS/iOS特定设置
@@ -167,8 +235,8 @@ elseif(APPLE)
             )
         else()
             set_target_properties(CYCoroutineExample PROPERTIES
-                OUTPUT_NAME "CYCoroutineExample_x64"
-                RUNTIME_OUTPUT_NAME "CYCoroutineExample_x64"
+                OUTPUT_NAME "CYCoroutineExample_x86_64"
+                RUNTIME_OUTPUT_NAME "CYCoroutineExample_x86_64"
             )
         endif()
     endif()
@@ -196,8 +264,8 @@ elseif(ANDROID)
         )
     elseif(CMAKE_ANDROID_ARCH_ABI STREQUAL "x86_64")
         set_target_properties(CYCoroutineExample PROPERTIES
-            OUTPUT_NAME "CYCoroutineExample_x64"
-            RUNTIME_OUTPUT_NAME "CYCoroutineExample_x64"
+            OUTPUT_NAME "CYCoroutineExample_x86_64"
+            RUNTIME_OUTPUT_NAME "CYCoroutineExample_x86_64"
         )
     endif()
 elseif(UNIX)
@@ -219,8 +287,8 @@ elseif(UNIX)
         )
     else()
         set_target_properties(CYCoroutineExample PROPERTIES
-            OUTPUT_NAME "CYCoroutineExample_x64"
-            RUNTIME_OUTPUT_NAME "CYCoroutineExample_x64"
+            OUTPUT_NAME "CYCoroutineExample_x86_64"
+            RUNTIME_OUTPUT_NAME "CYCoroutineExample_x86_64"
         )
     endif()
 endif()
